@@ -48,9 +48,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [])
   return (
-    <div className="m-0">
+    <div className="m-0 text-black-800 dark:text-white-200">
       <Navbar></Navbar>
       <Component is_dark={is_dark} setDark={setDark} {...pageProps} />
+      {/* Dark Theme Button */}
+      <button
+        onClick={() => setDark(!is_dark)}
+        className="fixed bottom-1 right-1 border-2 border-black-500 p-2"
+      >
+        Toggle Theme
+      </button>
     </div>
   )
 }

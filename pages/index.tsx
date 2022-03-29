@@ -24,14 +24,7 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center ">
-        <button
-          onClick={() => props.setDark(!is_dark)}
-          className="border-2 border-black-500 p-2"
-        >
-          Toggle Theme
-        </button>
-      </main>
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center "></main>
     </div>
   )
 }
