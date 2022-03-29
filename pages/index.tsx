@@ -18,13 +18,13 @@ const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex min-h-screen flex-col items-center justify-center py-2 dark:bg-black-700 dark:text-white-100">
       <Head>
-        <title>Create Next App</title>
+        <title>Tournamint</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center dark:text-white-100">
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center ">
         <button
           onClick={() => props.setDark(!is_dark)}
           className="border-2 border-black-500 p-2"
