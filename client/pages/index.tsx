@@ -48,6 +48,15 @@ const Home: NextPage<Props> = (props) => {
 
         {userData.length !== 0 && (
           <>
+            <Image
+              src={
+                'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                userData.profileIconId +
+                '.png'
+              }
+              width={100}
+              height={100}
+            ></Image>
             <div>
               {userData.name} Level: {userData.summonerLevel}
             </div>
