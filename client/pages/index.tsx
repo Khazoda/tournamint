@@ -15,20 +15,21 @@ const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
 
   const [searchQuery, setSearchQuery] = useState('')
-  const [gameList, setGameList] = useState([])
+  const [userData, setUserData] = useState<any>([])
 
-  function getPlayerGames(event?: Event) {
+  function getUserData(event?: Event) {
     axios
-      .get('http://localhost:4000/past5Games')
+      .get('http://localhost:4000/userData', {
+        params: { username: searchQuery },
+      })
       .then(function (response) {
-        setGameList(response.data)
+        setUserData(response.data)
+        console.log(response.data)
       })
       .catch(function (error) {
         console.log(error)
       })
   }
-
-  console.log(gameList)
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2 dark:bg-black-700 dark:text-white-100">
@@ -38,26 +39,37 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center ">
-        <input type="text" className="bg-black-400 outline-black-400" />
-        <button onClick={(e) => getPlayerGames()}>Search</button>
-        {console.log(gameList)}{' '}
-        {gameList.length !== 0 && (
+        <input
+          type="text"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="bg-black-400 outline-black-400"
+        />
+        <button onClick={(e) => getUserData()}>Search</button>
+
+        {userData.length !== 0 && (
+          <>
+            <div>
+              {userData.name} Level: {userData.summonerLevel}
+            </div>
+          </>
+        )}
+        {/* {gameList.length !== 0 && (
           <>
             <p>Data!</p>
             {gameList.map((gameData: any, index) => {
               ;<>
                 <h2>Game {index + 1}</h2>
                 <div>
-                  {/* {gameData.info.participants.map(
+                  {gameData.info.participants.map(
                     (data: any, participantIndex: number) => (
                       <p>PLAYER {participantIndex + 1}</p>
                     )
-                  )} */}
+                  )}
                 </div>
               </>
             })}
           </>
-        )}
+        )} */}
       </main>
     </div>
   )
