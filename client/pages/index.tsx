@@ -39,8 +39,8 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid w-full grid-cols-3 justify-between text-center ">
-        <div id="left" className="flex h-screen gap-3 bg-red-300">
+      <main className="grid w-full grid-cols-[200px_minmax(900px,_1fr)_200px] justify-between text-center ">
+        <div id="left" className="flex h-screen flex-col gap-3 bg-red-300 px-2">
           <Button text="Create Tournament"></Button>
           <Button text="Join Tournament"></Button>
         </div>
