@@ -11,7 +11,7 @@ type Props = {}
 
 export default function Navbar({}: Props) {
   return (
-    <div className="fixed mx-1 flex h-20 w-[calc(100%-0.5rem)] flex-col items-center justify-between border-b-white-500 py-1 px-1 dark:border-b-black-500 md:flex-row-reverse md:border-b-[1px]">
+    <div className="fixed flex h-20 w-full flex-col items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:flex-row-reverse md:border-b-[1px]">
       {/* Profile */}
       <div className="inline-flex w-full place-content-end text-right ">
         <div className="flex flex-col items-end justify-between pr-3">
@@ -48,7 +48,7 @@ export default function Navbar({}: Props) {
       <div className="inline-flex w-full justify-center gap-3">
         <Link href="/">
           <a href="" className="border-b-2 border-b-green-500">
-            Lorem
+            Home
           </a>
         </Link>
         <Link href="/">

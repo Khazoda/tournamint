@@ -33,61 +33,48 @@ const Home: NextPage<Props> = (props) => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2 dark:bg-black-700 dark:text-white-100">
+    <div className=" min-h-screen py-24">
       <Head>
         <title>Tournamint</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center ">
-        <div className="flex gap-3 ">
+      <main className="grid w-full grid-cols-3 justify-between text-center ">
+        <div id="left" className="flex h-screen gap-3 bg-red-300">
           <Button text="Create Tournament"></Button>
           <Button text="Join Tournament"></Button>
         </div>
-        <input
-          type="text"
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="bg-white-600 outline-black-400 dark:bg-black-400"
-        />
-        <button onClick={(e) => getUserData()}>Search</button>
+        <div id="center">
+          <input
+            type="text"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-white-600 outline-black-400 dark:bg-black-400"
+          />
+          <button onClick={(e) => getUserData()}>Search</button>
+        </div>
 
-        {userData.length !== 0 && (
-          <>
-            <div className="relative h-20 w-20">
-              <Image
-                src={
-                  'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                  userData.profileIconId +
-                  '.png'
-                }
-                alt="Profile picture"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              ></Image>
-            </div>
-            <div>
-              {userData.name} Level: {userData.summonerLevel}
-            </div>
-          </>
-        )}
-        {/* {gameList.length !== 0 && (
-          <>
-            <p>Data!</p>
-            {gameList.map((gameData: any, index) => {
-              ;<>
-                <h2>Game {index + 1}</h2>
-                <div>
-                  {gameData.info.participants.map(
-                    (data: any, participantIndex: number) => (
-                      <p>PLAYER {participantIndex + 1}</p>
-                    )
-                  )}
-                </div>
-              </>
-            })}
-          </>
-        )} */}
+        <div id="right">
+          {userData.length !== 0 && (
+            <>
+              <div className="relative h-20 w-20">
+                <Image
+                  src={
+                    'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                    userData.profileIconId +
+                    '.png'
+                  }
+                  alt="Profile picture"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                ></Image>
+              </div>
+              <div>
+                {userData.name} Level: {userData.summonerLevel}
+              </div>
+            </>
+          )}
+        </div>
       </main>
     </div>
   )
