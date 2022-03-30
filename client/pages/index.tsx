@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Navbar from '../components/common/Navbar'
+import Button from '../components/common/Button'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -40,8 +41,8 @@ const Home: NextPage<Props> = (props) => {
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center ">
         <div className="flex gap-3 ">
-          <button>Create Tournament</button>
-          <button>Join Tournament</button>
+          <Button text="Create Tournament"></Button>
+          <Button text="Join Tournament"></Button>
         </div>
         <input
           type="text"
