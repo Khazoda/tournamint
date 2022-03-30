@@ -16,10 +16,10 @@ export default function Navbar({}: Props) {
       <div className="inline-flex w-full place-content-end text-right ">
         <div className="flex flex-col items-end justify-between pr-3">
           <div className="flex content-center gap-2">
-            <button>
+            <button title="Change Theme">
               <IoMoonOutline className="h-full w-full hover:text-green-500"></IoMoonOutline>
             </button>
-            <button>
+            <button title="Settings">
               <IoSettingsOutline className="h-full w-full hover:text-green-500"></IoSettingsOutline>
             </button>
             <button className="w-24 border-2 px-2 hover:border-green-500 hover:text-green-500">
@@ -28,7 +28,10 @@ export default function Navbar({}: Props) {
           </div>
           <span className="">June loves kegs</span>
         </div>
-        <div className="group relative inline h-[60px] w-[60px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800">
+        <div
+          title="View Profile"
+          className="group relative inline h-[60px] w-[60px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 "
+        >
           <Image
             src="http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/503.png"
             alt="Profile picture"
@@ -65,7 +68,10 @@ export default function Navbar({}: Props) {
         </Link>
       </div>
       {/* Logo */}
-      <div className="inline-block w-full text-left">
+      <div
+        title="Home"
+        className="inline-block w-full text-left hover:cursor-pointer"
+      >
         <Image src="/images/logo.png" height={70} width={70}></Image>
       </div>
     </div>
