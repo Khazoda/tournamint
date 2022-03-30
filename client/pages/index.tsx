@@ -39,6 +39,10 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center ">
+        <div className="flex gap-3 ">
+          <button>Create Tournament</button>
+          <button>Join Tournament</button>
+        </div>
         <input
           type="text"
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -48,15 +52,19 @@ const Home: NextPage<Props> = (props) => {
 
         {userData.length !== 0 && (
           <>
-            <Image
-              src={
-                'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                userData.profileIconId +
-                '.png'
-              }
-              width={100}
-              height={100}
-            ></Image>
+            <div className="relative h-20 w-20">
+              <Image
+                src={
+                  'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                  userData.profileIconId +
+                  '.png'
+                }
+                alt="Profile picture"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              ></Image>
+            </div>
             <div>
               {userData.name} Level: {userData.summonerLevel}
             </div>

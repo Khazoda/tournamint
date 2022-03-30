@@ -37,13 +37,15 @@ export default function Navbar({}: Props) {
           <span className="">June loves kegs</span>
           <button className="mt-1 border-2 px-2">Log Out</button>
         </div>
-        <div className="relative inline h-[60px] w-[60px]  border-2 border-green-500">
+        <div className="group relative inline h-[60px] w-[60px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800">
           <Image
             src="http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/503.png"
-            width={60}
-            height={60}
+            alt="Profile picture"
+            layout="fill"
+            objectFit="cover"
+            className=""
           ></Image>
-          <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-sm">
+          <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-center text-sm transition-[border] group-hover:border-green-800">
             106
           </span>
         </div>
