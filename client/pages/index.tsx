@@ -42,7 +42,7 @@ const Home: NextPage<Props> = (props) => {
         <input
           type="text"
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="bg-black-400 outline-black-400"
+          className="bg-white-600 outline-black-400 dark:bg-black-400"
         />
         <button onClick={(e) => getUserData()}>Search</button>
 
