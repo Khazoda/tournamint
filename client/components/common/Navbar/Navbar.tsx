@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import React from 'react'
-import { IoSettingsOutline } from 'react-icons/io5'
+import {
+  IoSettingsOutline,
+  IoSunnyOutline,
+  IoMoonOutline,
+} from 'react-icons/io5'
 
 type Props = {}
 
@@ -11,8 +15,18 @@ export default function Navbar({}: Props) {
       {/* Profile */}
       <div className="inline-flex w-full place-content-end text-right ">
         <div className="flex flex-col items-end justify-between pr-3">
+          <div className="flex content-center gap-2">
+            <button>
+              <IoMoonOutline className="h-full w-full hover:text-green-500"></IoMoonOutline>
+            </button>
+            <button>
+              <IoSettingsOutline className="h-full w-full hover:text-green-500"></IoSettingsOutline>
+            </button>
+            <button className="w-24 border-2 px-2 hover:border-green-500 hover:text-green-500">
+              Log Out
+            </button>
+          </div>
           <span className="">June loves kegs</span>
-          <button className="mt-1 border-2 px-2">Log Out</button>
         </div>
         <div className="group relative inline h-[60px] w-[60px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800">
           <Image
@@ -25,9 +39,6 @@ export default function Navbar({}: Props) {
           <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
             106
           </span>
-        </div>
-        <div className="ml-5 mr-4 flex items-center">
-          <IoSettingsOutline className="h-[45px] w-[45px]"></IoSettingsOutline>
         </div>
       </div>
       {/* Navbar */}
