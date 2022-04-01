@@ -7,17 +7,26 @@ import {
   IoMoonOutline,
 } from 'react-icons/io5'
 
-type Props = {}
+export interface Props {
+  is_dark: boolean
+  setDark: Function
+}
 
-export default function Navbar({}: Props) {
+export default function Navbar(props: Props) {
+  const { is_dark = false, setDark = null, ...restProps } = props
+
   return (
     <div className="fixed flex h-20 w-full flex-col items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:flex-row-reverse md:border-b-[1px]">
       {/* Profile */}
       <div className="inline-flex w-full place-content-end text-right ">
         <div className="flex flex-col items-end justify-between pr-3">
           <div className="flex content-center gap-2">
-            <button title="Change Theme">
-              <IoMoonOutline className="h-full w-full hover:text-green-500"></IoMoonOutline>
+            <button title="Change Theme" onClick={() => setDark?.(!is_dark)}>
+              {is_dark ? (
+                <IoSunnyOutline className="h-full w-full hover:text-green-500"></IoSunnyOutline>
+              ) : (
+                <IoMoonOutline className="h-full w-full hover:text-green-500"></IoMoonOutline>
+              )}
             </button>
             <button title="Settings">
               <IoSettingsOutline className="h-full w-full hover:text-green-500"></IoSettingsOutline>

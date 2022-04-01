@@ -6,7 +6,7 @@ const { request, response } = require('express')
 var app = express()
 app.use(cors())
 
-const API_KEY = 'RGAPI-19afb879-aa13-4e53-9d01-df57aa2f5464'
+const API_KEY = 'RGAPI-0d7ee564-2f07-4d70-ac9a-617d9c9034f4'
 
 function getPlayerUUID(userName) {
     return axios.get("https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-name/" + userName + "?api_key=" + API_KEY)
