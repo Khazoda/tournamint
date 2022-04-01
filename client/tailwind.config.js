@@ -7,6 +7,10 @@ module.exports = {
   darkMode: 'class', // or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        'heading': ['Inter'],
+        'body': ['Mukta']
+      },
       colors: {
         green: {
           100: "#e5faef",

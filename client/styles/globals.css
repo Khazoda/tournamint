@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Scrollbar */
+body::-webkit-scrollbar {
+  width: 15px;
+  background: #f8f8f8;
+}
+/* Scrollbar Dark*/
+body.dark::-webkit-scrollbar {
+  width: 15px;
+  background: #1a1a1a;
+}
+
+/* Track */
+body.light::wekbit-scrollbar-track {
+  background: #f8f8f8;
+}
+/* Track Dark*/
+body.dark::wekbit-scrollbar-track {
+  background: #dddddd;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Handle Dark*/
+body.dark::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* Handle on hover Dark*/
+body.dark::-webkit-scrollbar-thumb:hover {
+  background: #808080;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter/Inter-Variable.ttf');
+}
+
+@font-face {
+  font-family: 'Mukta';
+  src: url('/fonts/Mukta/Mukta-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Mukta';
+  src: url('/fonts/Mukta/Mukta-SemiBold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Mukta';
+  src: url('/fonts/Mukta/Mukta-Bold.ttf');
+  font-weight: bold;
+}

@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [])
   return (
-    <div className="m-0 bg-white-100 text-black-800 dark:bg-black-700 dark:text-white-200">
+    <div className=" m-0 bg-white-100 text-black-800 dark:bg-black-700 dark:text-white-200">
       <Navbar is_dark={is_dark} setDark={setDark}></Navbar>
       <Component {...pageProps} />
     </div>

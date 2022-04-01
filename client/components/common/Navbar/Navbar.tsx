@@ -28,9 +28,14 @@ export default function Navbar(props: Props) {
                 <IoMoonOutline className="h-full w-full hover:text-green-500"></IoMoonOutline>
               )}
             </button>
-            <button title="Settings">
-              <IoSettingsOutline className="h-full w-full hover:text-green-500"></IoSettingsOutline>
-            </button>
+            <Link href="/settings">
+              <div className="hover:cursor-pointer">
+                <IoSettingsOutline
+                  title="settings"
+                  className="h-full w-full hover:text-green-500"
+                ></IoSettingsOutline>
+              </div>
+            </Link>
             <button className="w-24 border-2 px-2 hover:border-green-500 hover:text-green-500">
               Log Out
             </button>
@@ -56,22 +61,22 @@ export default function Navbar(props: Props) {
       {/* Navbar */}
       <div className="inline-flex w-full justify-center gap-3">
         <Link href="/">
-          <a href="" className="border-b-2 border-b-green-500">
+          <a href="" className="border-b-2 border-b-green-500 font-heading">
             Home
           </a>
         </Link>
         <Link href="/">
-          <a href="" className="border-b-2 border-b-green-500">
+          <a href="" className="border-b-2 border-b-green-500 font-heading">
             Ipsum
           </a>
         </Link>
         <Link href="/">
-          <a href="" className="border-b-2 border-b-green-500">
+          <a href="" className="border-b-2 border-b-green-500 font-heading">
             Sit
           </a>
         </Link>
         <Link href="/">
-          <a href="" className="border-b-2 border-b-green-500">
+          <a href="" className="border-b-2 border-b-green-500 font-heading">
             Dolor
           </a>
         </Link>
