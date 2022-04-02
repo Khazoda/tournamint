@@ -33,6 +33,7 @@ app.get('/userData', async (req, res) => {
         .catch(err => err)
 
     res.json(userData)
+    console.log(userData);
 })
 app.listen(4000, function () {
     console.log("Server started on port 4000");

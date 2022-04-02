@@ -54,11 +54,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   const refreshUserInfo = () => {
-    console.log('refreshing user information...')
+    const ign: any = JSON.parse(localStorage?.userDetails).ign
+    console.log('Localstorage instance: ' + localStorage)
+    console.log(ign)
 
     axios
       .get('http://localhost:4000/userData', {
-        params: { ign: localStorage.userDetails.ign },
+        params: { ign: ign },
       })
       .then(function (response) {
         setUserData(response.data)
