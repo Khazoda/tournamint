@@ -19,7 +19,7 @@ body.light::wekbit-scrollbar-track {
 }
 /* Track Dark*/
 body.dark::wekbit-scrollbar-track {
-  background: #dddddd;
+  background: #1a1a1a;
 }
 
 /* Handle */
