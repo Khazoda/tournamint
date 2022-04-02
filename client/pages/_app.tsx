@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import Navbar from '../components/common/Navbar'
 import axios from 'axios'
+import { StoreContextWrapper } from '../store'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -54,31 +55,43 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   const refreshUserInfo = () => {
-    const ign: any = JSON.parse(localStorage?.userDetails).ign
-    console.log('Localstorage instance: ' + localStorage)
-    console.log(ign)
+    if (localStorage?.userDetails != null) {
+      const username: any = JSON.parse(localStorage?.userDetails).username
+      const biography: any = JSON.parse(localStorage?.userDetails).biography
+      const ign: any = JSON.parse(localStorage?.userDetails).ign
 
-    axios
-      .get('http://localhost:4000/userData', {
-        params: { ign: ign },
-      })
-      .then(function (response) {
-        setUserData(response.data)
-        console.log(response.data)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+      axios
+        .get('http://localhost:4000/userData', {
+          params: { ign: ign },
+        })
+        .then(function (response) {
+          // Initialize Store
+          // store = new Store(username, biography, ign)
+          // console.log(store)
+
+          setUserData(response.data)
+          console.log(response.data)
+          // Return promise
+          return new Promise((resolve) => {
+            resolve('resolved')
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
   return (
     <div className=" m-0 bg-white-100 text-black-800 dark:bg-black-700 dark:text-white-200">
-      <Navbar is_dark={is_dark} setDark={setDark}></Navbar>
-      <Component
-        localStorage={localStorage}
-        userData={userData}
-        refreshUserInfo={refreshUserInfo}
-        {...pageProps}
-      />
+      <StoreContextWrapper>
+        <Navbar is_dark={is_dark} setDark={setDark}></Navbar>
+        <Component
+          localStorage={localStorage}
+          userData={userData}
+          refreshUserInfo={refreshUserInfo}
+          {...pageProps}
+        />
+      </StoreContextWrapper>
     </div>
   )
 }
