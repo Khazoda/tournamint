@@ -20,7 +20,7 @@ export interface UserDetails {
 function Profile(props: Props) {
   const [userDetails, setUserDetails] = useState<UserDetails>()
   const store = { useStore }
-  console.log(store.value)
+  console.log(store)
 
   const {
     localStorage = null,
