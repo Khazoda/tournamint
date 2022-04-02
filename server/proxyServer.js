@@ -8,8 +8,8 @@ app.use(cors())
 
 const API_KEY = 'RGAPI-0d7ee564-2f07-4d70-ac9a-617d9c9034f4'
 
-function getPlayerUUID(userName) {
-    return axios.get("https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-name/" + userName + "?api_key=" + API_KEY)
+function getPlayerUUID(ign) {
+    return axios.get("https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-name/" + ign + "?api_key=" + API_KEY)
         .then(response => {
             return response.data.puuid
         }).catch(err => err)
@@ -24,8 +24,8 @@ app.get('/testAPICall', async (req, res) => {
 
 })
 app.get('/userData', async (req, res) => {
-    const userName = req.query.username
-    const PUUID = await getPlayerUUID(userName)
+    const ign = req.query.ign
+    const PUUID = await getPlayerUUID(ign)
     const API_CALL = "https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-puuid/" + PUUID + "?api_key=" + API_KEY
 
     const userData = await axios.get(API_CALL)

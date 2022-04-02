@@ -15,23 +15,6 @@ export interface Props {
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
 
-  const [searchQuery, setSearchQuery] = useState('')
-  const [userData, setUserData] = useState<any>([])
-
-  function getUserData(event?: Event) {
-    axios
-      .get('http://localhost:4000/userData', {
-        params: { username: searchQuery },
-      })
-      .then(function (response) {
-        setUserData(response.data)
-        console.log(response.data)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }
-
   return (
     <div className=" min-h-screen py-24">
       <Head>
@@ -44,37 +27,9 @@ const Home: NextPage<Props> = (props) => {
           <Button text="Create Tournament"></Button>
           <Button text="Join Tournament"></Button>
         </div>
-        <div id="center">
-          <input
-            type="text"
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-white-600 outline-black-400 dark:bg-black-400"
-          />
-          <button onClick={(e) => getUserData()}>Search</button>
-        </div>
+        <div id="center">amogus</div>
 
-        <div id="right">
-          {userData.length !== 0 && (
-            <>
-              <div className="relative h-20 w-20">
-                <Image
-                  src={
-                    'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                    userData.profileIconId +
-                    '.png'
-                  }
-                  alt="Profile picture"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-full"
-                ></Image>
-              </div>
-              <div>
-                {userData.name} Level: {userData.summonerLevel}
-              </div>
-            </>
-          )}
-        </div>
+        <div id="right">among us</div>
       </main>
     </div>
   )
