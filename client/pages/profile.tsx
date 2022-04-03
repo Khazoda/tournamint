@@ -11,7 +11,7 @@ export interface Props {
   store?: any
 }
 export interface UserDetails {
-  username?: string
+  displayName?: string
   biography?: string
   ign?: string
 }
@@ -35,14 +35,18 @@ function Profile(props: Props) {
       if (localStorage !== null) {
         if (localStorage.userDetails == null) {
           localStorage.userDetails = JSON.stringify({
-            username: 'username',
+            displayName: 'displayName',
             biography: 'biography',
             ign: 'Tryndamere',
           })
         } else {
           {
             setUserDetails(name, bio, ig)
-            localStorage.userDetails = JSON.stringify({ name, bio, ign: ig })
+            localStorage.userDetails = JSON.stringify({
+              displayName: name,
+              biography: bio,
+              ign: ig,
+            })
             if (refreshUserInfo !== null) {
               refreshUserInfo()
             }
@@ -51,7 +55,13 @@ function Profile(props: Props) {
       }
     }
   }
-  console.log(userData)
+  useEffect(() => {
+    if (localStorage != null) {
+      setName(JSON.parse(localStorage?.userDetails).displayName)
+      setBio(JSON.parse(localStorage?.userDetails).biography)
+      console.log(name, bio, ign)
+    }
+  }, [])
 
   return (
     <div className="flex min-h-screen flex-col items-center py-24 md:py-32">

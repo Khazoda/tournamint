@@ -56,10 +56,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const refreshUserInfo = () => {
     if (localStorage?.userDetails != null) {
-      const username: any = JSON.parse(localStorage?.userDetails).username
+      const displayName: any = JSON.parse(localStorage?.userDetails).displayName
       const biography: any = JSON.parse(localStorage?.userDetails).biography
       const ign: string = JSON.parse(localStorage?.userDetails).ign
-      console.log(ign)
 
       axios
         .get('http://localhost:4000/userData', {
@@ -67,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         })
         .then(function (response) {
           // Initialize Store
-          // store = new Store(username, biography, ign)
+          // store = new Store(displayName, biography, ign)
           // console.log(store)
 
           setUserData(response.data)
@@ -83,7 +82,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     } else {
       localStorage.setItem(
         'userDetails',
-        JSON.stringify({ username: 'June', bio: 'Bio', ign: 'June loves kegs' })
+        JSON.stringify({
+          displayName: 'June',
+          bio: 'Bio',
+          ign: 'June loves kegs',
+        })
       )
     }
   }
