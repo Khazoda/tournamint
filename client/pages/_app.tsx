@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import Navbar from '../components/common/Navbar'
 import axios from 'axios'
-import { StoreContextWrapper } from '../store'
+import { UserProvider } from '../context/UserContext'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -58,7 +58,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (localStorage?.userDetails != null) {
       const username: any = JSON.parse(localStorage?.userDetails).username
       const biography: any = JSON.parse(localStorage?.userDetails).biography
-      const ign: any = JSON.parse(localStorage?.userDetails).ign
+      const ign: string = JSON.parse(localStorage?.userDetails).ign
+      console.log(ign)
 
       axios
         .get('http://localhost:4000/userData', {
@@ -70,20 +71,25 @@ function MyApp({ Component, pageProps }: AppProps) {
           // console.log(store)
 
           setUserData(response.data)
-          console.log(response.data)
           // Return promise
           return new Promise((resolve) => {
             resolve('resolved')
           })
         })
         .catch(function (error) {
-          console.log(error)
+          console.error(error)
         })
+      // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
+    } else {
+      localStorage.setItem(
+        'userDetails',
+        JSON.stringify({ username: 'June', bio: 'Bio', ign: 'June loves kegs' })
+      )
     }
   }
   return (
     <div className=" m-0 bg-white-100 text-black-800 dark:bg-black-700 dark:text-white-200">
-      <StoreContextWrapper>
+      <UserProvider>
         <Navbar is_dark={is_dark} setDark={setDark}></Navbar>
         <Component
           localStorage={localStorage}
@@ -91,7 +97,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           refreshUserInfo={refreshUserInfo}
           {...pageProps}
         />
-      </StoreContextWrapper>
+      </UserProvider>
     </div>
   )
 }

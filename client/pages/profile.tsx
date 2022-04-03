@@ -1,8 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Button from '../components/common/Button'
 import Image from 'next/image'
-import { useStore } from '../store'
+import { useUser, userContextType } from '../context/UserContext'
 
 export interface Props {
   localStorage: Storage
@@ -10,7 +10,6 @@ export interface Props {
   refreshUserInfo: Function
   store?: any
 }
-
 export interface UserDetails {
   username?: string
   biography?: string
@@ -18,10 +17,6 @@ export interface UserDetails {
 }
 
 function Profile(props: Props) {
-  const [userDetails, setUserDetails] = useState<UserDetails>()
-  const store = { useStore }
-  console.log(store)
-
   const {
     localStorage = null,
     userData = {},
@@ -29,28 +24,34 @@ function Profile(props: Props) {
     ...restProps
   } = props
 
-  function saveChanges() {
-    if (localStorage !== null) {
-      if (localStorage.userDetails == null) {
-        localStorage.userDetails = JSON.stringify({
-          username: 'username',
-          biography: 'biography',
-          ign: 'Tryndamere',
-        })
-      } else {
-        if (
-          userDetails?.username != null &&
-          userDetails.biography != null &&
-          userDetails.ign != null
-        ) {
-          localStorage.userDetails = JSON.stringify(userDetails)
-          if (refreshUserInfo !== null) {
-            refreshUserInfo()
+  // User Details Properties
+  const { displayName, biography, ign, setUserDetails } = useUser()
+  const [name, setName] = useState<string>('A')
+  const [bio, setBio] = useState<string>('B')
+  const [ig, setIgn] = useState<string>('C')
+
+  const saveUserDetails = () => {
+    if (setUserDetails != null) {
+      if (localStorage !== null) {
+        if (localStorage.userDetails == null) {
+          localStorage.userDetails = JSON.stringify({
+            username: 'username',
+            biography: 'biography',
+            ign: 'Tryndamere',
+          })
+        } else {
+          {
+            setUserDetails(name, bio, ig)
+            localStorage.userDetails = JSON.stringify({ name, bio, ign: ig })
+            if (refreshUserInfo !== null) {
+              refreshUserInfo()
+            }
           }
         }
       }
     }
   }
+  console.log(userData)
 
   return (
     <div className="flex min-h-screen flex-col items-center py-24 md:py-32">
@@ -96,13 +97,13 @@ function Profile(props: Props) {
           {/* Right hand side */}
           <div className="right relative flex h-full w-full flex-col justify-center gap-3 ">
             <p className="text-header relative w-full text-center text-lg font-semibold underline">
-              {userDetails?.username}
+              {displayName}
             </p>
             <p className="text-header font-regular relative w-full pr-6 text-right text-lg">
-              {userDetails?.biography}
+              {biography}
             </p>
             <p className="text-header font-regular relative  w-full text-center text-lg">
-              {userDetails?.ign}
+              {ign}
             </p>
           </div>
         </div>
@@ -115,13 +116,7 @@ function Profile(props: Props) {
               id="username_input"
               type="text"
               className="rounded-md border-2 border-black-400 bg-transparent"
-              onChange={(e) =>
-                setUserDetails({
-                  username: e.target.value,
-                  biography: userDetails?.biography,
-                  ign: userDetails?.ign,
-                })
-              }
+              onChange={(e) => setName(e.target.value)}
             />
           </li>
           <li className="mb-2 flex flex-col">
@@ -130,13 +125,7 @@ function Profile(props: Props) {
               id="biography_input"
               type="text"
               className="rounded-md border-2 border-black-400 bg-transparent"
-              onChange={(e) =>
-                setUserDetails({
-                  biography: e.target.value,
-                  username: userDetails?.username,
-                  ign: userDetails?.ign,
-                })
-              }
+              onChange={(e) => setBio(e.target.value)}
             />
           </li>
           <li className="mb-4 flex flex-col">
@@ -145,13 +134,7 @@ function Profile(props: Props) {
               id="in-game_input"
               type="text"
               className="rounded-md border-2 border-black-400 bg-transparent"
-              onChange={(e) =>
-                setUserDetails({
-                  ign: e.target.value,
-                  username: userDetails?.username,
-                  biography: userDetails?.biography,
-                })
-              }
+              onChange={(e) => setIgn(e.target.value)}
             />
           </li>
           <li>
@@ -159,7 +142,7 @@ function Profile(props: Props) {
               type="positive"
               text="Save Changes"
               noMargin
-              onClick={() => saveChanges()}
+              onClick={() => saveUserDetails()}
             ></Button>
           </li>
         </ul>
