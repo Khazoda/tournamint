@@ -26,9 +26,9 @@ function Profile(props: Props) {
 
   // User Details Properties
   const { displayName, biography, ign, setUserDetails } = useUser()
-  const [name, setName] = useState<string>('A')
-  const [bio, setBio] = useState<string>('B')
-  const [ig, setIgn] = useState<string>('C')
+  const [name, setName] = useState<string>('DefaultName')
+  const [bio, setBio] = useState<string>('DefaultBio')
+  const [ig, setIgn] = useState<string>('ign')
 
   const saveUserDetails = () => {
     if (setUserDetails != null) {
@@ -55,13 +55,6 @@ function Profile(props: Props) {
       }
     }
   }
-  useEffect(() => {
-    if (localStorage != null) {
-      setName(JSON.parse(localStorage?.userDetails).displayName)
-      setBio(JSON.parse(localStorage?.userDetails).biography)
-      console.log(name, bio, ign)
-    }
-  }, [])
 
   return (
     <div className="flex min-h-screen flex-col items-center py-24 md:py-32">

@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import axios from 'axios'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 export type userContextType = {
   displayName: string
@@ -35,8 +42,48 @@ export function UserProvider({ children }: Props) {
       biography: bio,
       ign: ign,
     })
-    console.log(userDetails)
   }
+
+  useEffect(() => {
+    if (localStorage?.userDetails != null) {
+      const displayName: any = JSON.parse(localStorage?.userDetails).displayName
+      const biography: any = JSON.parse(localStorage?.userDetails).biography
+      const ign: string = JSON.parse(localStorage?.userDetails).ign
+      axios
+        .get('http://localhost:4000/userData', {
+          params: { ign: ign },
+        })
+        .then(function (response) {
+          // Initialize Store
+          // store = new Store(displayName, biography, ign)
+          // console.log(store)
+          console.log(displayName, biography, ign)
+
+          setUserDetails(displayName, biography, ign)
+
+          // Return promise
+          return new Promise((resolve) => {
+            resolve('resolved')
+          })
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
+
+      // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
+    } else {
+      localStorage.setItem(
+        'userDetails',
+        JSON.stringify({
+          displayName: 'June',
+          bio: 'Bio',
+          ign: 'June loves kegs',
+        })
+      )
+    }
+
+    return
+  }, [])
 
   const value = {
     displayName: userDetails.displayName,

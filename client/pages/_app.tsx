@@ -12,6 +12,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [is_dark, setIsDark] = useState<boolean>(false)
   const [userData, setUserData] = useState<any>([])
 
+  const [name, setName] = useState<string>()
+  const [bio, setBio] = useState<string>()
+  const [ig, setIgn] = useState<string>()
+
   // Light/Dark theme switching function
   const setDark = (val: boolean) => {
     if (body != null) {
@@ -59,8 +63,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       const displayName: any = JSON.parse(localStorage?.userDetails).displayName
       const biography: any = JSON.parse(localStorage?.userDetails).biography
       const ign: string = JSON.parse(localStorage?.userDetails).ign
-      console.log(ign)
-
       axios
         .get('http://localhost:4000/userData', {
           params: { ign: ign },
@@ -71,6 +73,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           // console.log(store)
 
           setUserData(response.data)
+
           // Return promise
           return new Promise((resolve) => {
             resolve('resolved')
@@ -79,6 +82,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         .catch(function (error) {
           console.error(error)
         })
+
       // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
     } else {
       localStorage.setItem(
