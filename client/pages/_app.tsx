@@ -90,7 +90,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         JSON.stringify({
           displayName: 'June',
           bio: 'Bio',
-          ign: 'June loves kegs',
+          ign: 'June',
         })
       )
     }
@@ -100,7 +100,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <UserProvider>
         <Navbar is_dark={is_dark} setDark={setDark}></Navbar>
         <Component
-          localStorage={localStorage}
           userData={userData}
           refreshUserInfo={refreshUserInfo}
           {...pageProps}

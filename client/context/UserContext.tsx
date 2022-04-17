@@ -20,7 +20,6 @@ const userContextDefaultValues: userContextType = {
   ign: '[Default]',
   setUserDetails: () => {},
 }
-
 const UserContext = createContext<userContextType>(userContextDefaultValues)
 
 export function useUser() {
@@ -46,20 +45,20 @@ export function UserProvider({ children }: Props) {
 
   useEffect(() => {
     if (localStorage?.userDetails != null) {
-      const displayName: any = JSON.parse(localStorage?.userDetails).displayName
-      const biography: any = JSON.parse(localStorage?.userDetails).biography
-      const ign: string = JSON.parse(localStorage?.userDetails).ign
+      const userDetails: any = JSON.parse(
+        localStorage.getItem('userDetails') as string
+      )
+      const displayName: any = userDetails.displayName
+      const biography: any = userDetails.biography
+      const ign: string = userDetails.ign
+      setUserDetails(displayName, biography, ign)
+
       axios
         .get('http://localhost:4000/userData', {
           params: { ign: ign },
         })
         .then(function (response) {
-          // Initialize Store
-          // store = new Store(displayName, biography, ign)
-          // console.log(store)
-          console.log(displayName, biography, ign)
-
-          setUserDetails(displayName, biography, ign)
+          console.log('Context Data: ', displayName, biography, ign)
 
           // Return promise
           return new Promise((resolve) => {
@@ -77,7 +76,7 @@ export function UserProvider({ children }: Props) {
         JSON.stringify({
           displayName: 'June',
           bio: 'Bio',
-          ign: 'June loves kegs',
+          ign: 'June',
         })
       )
     }

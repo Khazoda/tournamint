@@ -17,18 +17,13 @@ export interface UserDetails {
 }
 
 function Profile(props: Props) {
-  const {
-    localStorage = null,
-    userData = {},
-    refreshUserInfo = null,
-    ...restProps
-  } = props
+  const { userData = {}, refreshUserInfo = null, ...restProps } = props
 
   // User Details Properties
   const { displayName, biography, ign, setUserDetails } = useUser()
-  const [name, setName] = useState<string>('DefaultName')
-  const [bio, setBio] = useState<string>('DefaultBio')
-  const [ig, setIgn] = useState<string>('ign')
+  const [name, setName] = useState<string>('')
+  const [bio, setBio] = useState<string>('')
+  const [ig, setIgn] = useState<string>('')
 
   const saveUserDetails = () => {
     if (setUserDetails != null) {
@@ -42,11 +37,14 @@ function Profile(props: Props) {
         } else {
           {
             setUserDetails(name, bio, ig)
-            localStorage.userDetails = JSON.stringify({
-              displayName: name,
-              biography: bio,
-              ign: ig,
-            })
+            localStorage.setItem(
+              'userDetails',
+              JSON.stringify({
+                displayName: name,
+                biography: bio,
+                ign: ig,
+              })
+            )
             if (refreshUserInfo !== null) {
               refreshUserInfo()
             }
@@ -55,6 +53,17 @@ function Profile(props: Props) {
       }
     }
   }
+
+  useEffect(() => {
+    let details = JSON.parse(localStorage.getItem('userDetails') as string)
+
+    setName(details.displayName)
+    setBio(details.biography)
+    setIgn(details.ign)
+
+    console.log('Profile Local: ' + name, bio, ig)
+    console.log('Profile Context: ', displayName, biography, ign)
+  }, [])
 
   return (
     <div className="flex min-h-screen flex-col items-center py-24 md:py-32">
@@ -119,6 +128,7 @@ function Profile(props: Props) {
               id="username_input"
               type="text"
               className="rounded-md border-2 border-black-400 bg-transparent"
+              defaultValue={displayName}
               onChange={(e) => setName(e.target.value)}
             />
           </li>
@@ -128,6 +138,7 @@ function Profile(props: Props) {
               id="biography_input"
               type="text"
               className="rounded-md border-2 border-black-400 bg-transparent"
+              defaultValue={biography}
               onChange={(e) => setBio(e.target.value)}
             />
           </li>
@@ -137,6 +148,7 @@ function Profile(props: Props) {
               id="in-game_input"
               type="text"
               className="rounded-md border-2 border-black-400 bg-transparent"
+              defaultValue={ign}
               onChange={(e) => setIgn(e.target.value)}
             />
           </li>
