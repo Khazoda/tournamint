@@ -59,6 +59,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       const displayName: any = JSON.parse(localStorage?.userDetails).displayName
       const biography: any = JSON.parse(localStorage?.userDetails).biography
       const ign: string = JSON.parse(localStorage?.userDetails).ign
+      console.log(ign)
 
       axios
         .get('http://localhost:4000/userData', {

@@ -6,7 +6,7 @@ const { request, response } = require('express')
 var app = express()
 app.use(cors())
 
-const API_KEY = 'RGAPI-42225763-d143-4e80-a92c-cb1911cb5fc1'
+const API_KEY = 'RGAPI-a65ff374-7f9b-4aed-9b7a-fadf87277db8'
 
 function getPlayerUUID(ign) {
     return axios.get("https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-name/" + ign + "?api_key=" + API_KEY)
@@ -15,7 +15,7 @@ function getPlayerUUID(ign) {
         }).catch(err => err)
 }
 app.get('/testAPICall', async (req, res) => {
-    const API_CALL = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/June loves kegs?api_key=" + API_KEY
+    const API_CALL = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Xpeke?api_key=" + API_KEY
     const champion_rotation = await axios.get(API_CALL)
         .then(response => response.data)
         .catch(err => err)
