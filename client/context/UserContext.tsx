@@ -53,13 +53,12 @@ export function UserProvider({ children }: Props) {
       const ign: string = userDetails.ign
       setUserDetails(displayName, biography, ign)
 
+      // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
         .get('http://localhost:4000/userData', {
           params: { ign: ign },
         })
         .then(function (response) {
-          console.log('Context Data: ', displayName, biography, ign)
-
           // Return promise
           return new Promise((resolve) => {
             resolve('resolved')
@@ -68,6 +67,7 @@ export function UserProvider({ children }: Props) {
         .catch(function (error) {
           console.error(error)
         })
+      //
 
       // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
     } else {

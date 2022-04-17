@@ -71,7 +71,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           // Initialize Store
           // store = new Store(displayName, biography, ign)
           // console.log(store)
-
           setUserData(response.data)
 
           // Return promise

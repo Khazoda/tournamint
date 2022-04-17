@@ -154,6 +154,7 @@ function Profile(props: Props) {
               type="positive"
               text="Save Changes"
               noMargin
+              acceptCharset
               onClick={() => saveUserDetails()}
             ></Button>
           </li>
