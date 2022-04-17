@@ -98,7 +98,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className=" m-0 bg-white-100 text-black-800 dark:bg-black-700 dark:text-white-200">
       <UserProvider>
-        <Navbar is_dark={is_dark} setDark={setDark}></Navbar>
+        <Navbar
+          is_dark={is_dark}
+          setDark={setDark}
+          userData={userData}
+        ></Navbar>
         <Component
           userData={userData}
           refreshUserInfo={refreshUserInfo}

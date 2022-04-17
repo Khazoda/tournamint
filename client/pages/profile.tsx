@@ -60,9 +60,6 @@ function Profile(props: Props) {
     setName(details.displayName)
     setBio(details.biography)
     setIgn(details.ign)
-
-    console.log('Profile Local: ' + name, bio, ig)
-    console.log('Profile Context: ', displayName, biography, ign)
   }, [])
 
   return (

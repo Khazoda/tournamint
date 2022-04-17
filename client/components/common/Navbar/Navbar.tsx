@@ -6,14 +6,17 @@ import {
   IoSunnyOutline,
   IoMoonOutline,
 } from 'react-icons/io5'
+import { useUser } from '../../../context/UserContext'
 
 export interface Props {
   is_dark: boolean
   setDark: Function
+  userData: any
 }
 
 export default function Navbar(props: Props) {
-  const { is_dark = false, setDark = null, ...restProps } = props
+  const { is_dark = false, setDark = null, userData = {}, ...restProps } = props
+  const { displayName, biography, ign, setUserDetails } = useUser()
 
   return (
     <div className="fixed flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
@@ -40,7 +43,7 @@ export default function Navbar(props: Props) {
               Log Out
             </button>
           </div>
-          <span className="">June loves kegs</span>
+          <span className="">{displayName}</span>
         </div>
         <Link href="/profile">
           <div
@@ -48,14 +51,22 @@ export default function Navbar(props: Props) {
             className="group relative inline h-[60px] w-[60px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 "
           >
             <Image
-              src="http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/503.png"
+              src={
+                'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                (userData.profileIconId === undefined
+                  ? '503'
+                  : userData.profileIconId) +
+                '.png'
+              }
               alt="Profile picture"
               layout="fill"
               objectFit="cover"
               className=""
             ></Image>
             <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
-              106
+              {userData.summonerLevel === undefined
+                ? '666'
+                : userData.summonerLevel}
             </span>
           </div>
         </Link>
