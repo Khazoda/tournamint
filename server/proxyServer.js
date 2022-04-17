@@ -30,6 +30,8 @@ app.get('/testAPICall', async (req, res) => {
 
 })
 app.get('/userData', async (req, res) => {
+    console.log("/userData API Call Fired")
+
     const ign = req.query.ign
     const PUUID = await getPlayerUUID(ign)
     const API_CALL = encodeURI("https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-puuid/" + PUUID + "?api_key=" + API_KEY)
@@ -41,13 +43,14 @@ app.get('/userData', async (req, res) => {
     res.json(userData)
 })
 app.get('/userMastery', async (req, res) => {
+    console.log("/userMastery API Call Fired")
+
     const ign = req.query.ign
     const ID = await getPlayerID(ign)
     const API_CALL = encodeURI("https://euw1.api.riotgames.com/" + "lol/champion-mastery/v4/champion-masteries/by-summoner/" + ID + "?api_key=" + API_KEY)
-    console.log(API_CALL);
 
     const userData = await axios.get(API_CALL)
-        .then(response => response.data)
+        .then(response => { response.data; console.log(response.data); })
         .catch(err => err)
 
     res.json(userData)

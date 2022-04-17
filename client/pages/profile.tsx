@@ -24,6 +24,7 @@ function Profile(props: Props) {
   const [name, setName] = useState<string>('')
   const [bio, setBio] = useState<string>('')
   const [ig, setIgn] = useState<string>('')
+  const [favouriteChampion, setFavouriteChampion] = useState<string>('Akali')
 
   const saveUserDetails = () => {
     if (setUserDetails != null) {
@@ -33,6 +34,7 @@ function Profile(props: Props) {
             displayName: 'displayName',
             biography: 'biography',
             ign: 'Tryndamere',
+            favouriteChampion: 'Tryndamere',
           })
         } else {
           {
@@ -43,6 +45,7 @@ function Profile(props: Props) {
                 displayName: name,
                 biography: bio,
                 ign: ig,
+                favouriteChampion: favouriteChampion,
               })
             )
             if (refreshUserInfo !== null) {
@@ -60,6 +63,7 @@ function Profile(props: Props) {
     setName(details.displayName)
     setBio(details.biography)
     setIgn(details.ign)
+    setFavouriteChampion(details.favouriteChampion)
   }, [])
 
   return (
@@ -78,13 +82,19 @@ function Profile(props: Props) {
               id="avatar_display"
               className="relative h-full w-full border-r-2"
             >
+              {/* SPLASH ART PROFILE BACKGROUND */}
               <div className="relative min-h-full min-w-full brightness-50">
                 <Image
-                  src="/images/ahri_splash.jpg"
+                  src={
+                    'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
+                    favouriteChampion +
+                    '_0.jpg'
+                  }
                   layout="fill"
                   objectFit="cover"
                 ></Image>
               </div>
+              {/* PROFILE PICTURE */}
               <div className="absolute top-1/4 left-3/4 h-1/2 w-1/2 rounded-full border-2">
                 <Image
                   src={
@@ -124,7 +134,7 @@ function Profile(props: Props) {
             <input
               id="username_input"
               type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent"
+              className="rounded-md border-2 border-black-400 bg-transparent px-1"
               defaultValue={displayName}
               onChange={(e) => setName(e.target.value)}
             />
@@ -134,7 +144,7 @@ function Profile(props: Props) {
             <input
               id="biography_input"
               type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent"
+              className="rounded-md border-2 border-black-400 bg-transparent px-1"
               defaultValue={biography}
               onChange={(e) => setBio(e.target.value)}
             />
@@ -144,9 +154,19 @@ function Profile(props: Props) {
             <input
               id="in-game_input"
               type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent"
+              className="rounded-md border-2 border-black-400 bg-transparent px-1"
               defaultValue={ign}
               onChange={(e) => setIgn(e.target.value)}
+            />
+          </li>
+          <li className="mb-4 flex flex-col">
+            <label htmlFor="in-game_input">Favourite Champion</label>
+            <input
+              id="in-game_input"
+              type="text"
+              className="rounded-md border-2 border-black-400 bg-transparent px-1"
+              defaultValue={favouriteChampion}
+              onChange={(e) => setFavouriteChampion(e.target.value)}
             />
           </li>
           <li>
