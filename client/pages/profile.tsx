@@ -120,7 +120,7 @@ function Profile(props: Props) {
           </div>
         </div>
         {/* TROPHIES & RANK */}
-        <div className="relative flex h-[250px] w-full flex-row gap-2">
+        <div className="relative flex h-[250px] w-full flex-row gap-2 drop-shadow-lg">
           <div className="relative flex h-full w-full items-center justify-start rounded-md bg-black-500 p-3">
             <div className="h-full w-full rounded-sm drop-shadow-sm">
               <Image
@@ -136,11 +136,69 @@ function Profile(props: Props) {
               </span>
             </div>
           </div>
-          <div className="flex w-12 flex-col gap-1 rounded-md bg-black-500 p-3">
-            <FiAward size={24}></FiAward>
-            <FiAward size={24}></FiAward>
-            <FiAward size={24}></FiAward>
-            <FiAward size={24}></FiAward>
+          <div className="flex w-12 flex-col justify-around gap-1 rounded-md bg-black-500 p-1">
+            <FiAward
+              title="Valerian Cup 2019"
+              color="green"
+              fill="lime"
+              className="h-full w-full"
+            ></FiAward>
+            <FiAward
+              title="Elder Cup 2022"
+              color="#7777EE"
+              fill="aqua"
+              className="h-full w-full"
+            ></FiAward>
+            <FiAward
+              title="Guildford Friendly 2021"
+              color="grey"
+              fill="darkgrey"
+              className="h-full w-full"
+            ></FiAward>
+            <FiAward
+              title="Guildford Friendly 2022"
+              color="darkgrey"
+              fill="grey"
+              className="h-full w-full"
+            ></FiAward>
+          </div>
+        </div>
+
+        {/* WINRATE */}
+        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-2 rounded-md bg-black-500 p-2 drop-shadow-lg">
+          <div className="text-right">
+            <span>Wins </span>{' '}
+            <span className="text-green-500">{userData.wins}</span>
+          </div>
+          <div className="text-left">
+            <span className="text-red-500">{userData.losses}</span>
+            <span> Losses</span>{' '}
+          </div>
+          <div className="text-right">
+            <span>Games </span>
+            <span className="text-blue-500">
+              {userData.wins + userData.losses}
+            </span>
+          </div>
+          <div className="text-left">
+            <span
+              className={`${
+                Number(
+                  (
+                    (userData.wins / (userData.losses + userData.wins)) *
+                    100
+                  ).toPrecision(3)
+                ) >= 50
+                  ? 'text-lime-500'
+                  : 'text-orange-500'
+              }`}
+            >
+              {(
+                (userData.wins / (userData.losses + userData.wins)) *
+                100
+              ).toPrecision(3)}
+            </span>
+            <span>% Winrate</span>
           </div>
         </div>
       </div>
