@@ -218,7 +218,7 @@ function Profile(props: Props) {
       </div>
 
       {/* Right hand side */}
-      <div className=" mx-3 max-h-[250px] min-h-[120px]  w-[250px] overflow-clip break-words rounded-md bg-white-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
+      <div className=" mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[250px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
         <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
           {name.length <= 16
             ? name
