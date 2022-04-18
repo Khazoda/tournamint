@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '../components/common/Button'
 import Image from 'next/image'
-import { FiAward } from 'react-icons/fi'
+import { FiAward, FiCheckCircle } from 'react-icons/fi'
 import { useUser, userContextType } from '../context/UserContext'
 
 export interface Props {
@@ -25,6 +25,9 @@ function Profile(props: Props) {
   const [name, setName] = useState<string>('')
   const [bio, setBio] = useState<string>('')
   const [ig, setIgn] = useState<string>('')
+
+  const [buttonActive, setButtonActive] = useState<boolean>(false)
+  const [text, setText] = useState<string>('Save Changes')
 
   const [favouriteChampion, setFavouriteChampion] = useState<string>('Akali')
 
@@ -56,6 +59,14 @@ function Profile(props: Props) {
                 },
               })
             )
+            setText('Profile Saved')
+            setButtonActive(true)
+
+            setTimeout(() => {
+              setText('Save Changes')
+              setButtonActive(false)
+            }, 1500)
+
             if (refreshUserInfo !== null) {
               refreshUserInfo()
             }
@@ -75,7 +86,7 @@ function Profile(props: Props) {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-24 px-12 md:flex-row">
+    <div className="flex min-h-screen flex-col justify-center py-24 px-12 sm:flex-row">
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center">
         {/* IN GAME NAME */}
@@ -165,7 +176,7 @@ function Profile(props: Props) {
         </div>
 
         {/* WINRATE */}
-        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-2 drop-shadow-lg dark:bg-black-500">
+        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
           <div className="relative text-right">
             <span className="absolute left-0">Wins </span>
             <span className="text-green-700 dark:text-green-500">
@@ -207,15 +218,22 @@ function Profile(props: Props) {
       </div>
 
       {/* Right hand side */}
-      <div className=" ">
-        <p className="">{displayName}</p>
-        <p className="">{biography}</p>
-        <p className="">{ign}</p>
+      <div className=" mx-3 max-h-[250px] min-h-[120px]  w-[250px] overflow-clip break-words rounded-md bg-white-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
+        <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
+          {name.length <= 16
+            ? name
+            : 'Too long! Try shortening your display name.'}
+        </p>
+        <p className="">
+          {bio.length <= 160 ? bio : 'Too long! Try shortening your bio.'}
+        </p>
       </div>
 
       {/* Input Fields */}
-      <ul>
-        <h1 className="font-header text-4xl text-green-500">Edit Profile</h1>
+      <ul className="items-between flex h-full flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
+        <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
+          Edit Profile
+        </h1>
         <li className="mb-2 flex flex-col">
           <label htmlFor="username_input">Username</label>
           <input
@@ -236,7 +254,7 @@ function Profile(props: Props) {
             onChange={(e) => setBio(e.target.value)}
           />
         </li>
-        <li className="mb-4 flex flex-col">
+        <li className="mb-2 flex flex-col">
           <label htmlFor="in-game_input">In-Game Name</label>
           <input
             id="in-game_input"
@@ -259,9 +277,18 @@ function Profile(props: Props) {
         <li>
           <Button
             type="positive"
-            text="Save Changes"
+            text={text}
             noMargin
             acceptCharset
+            className="relative"
+            icon={
+              <FiCheckCircle
+                className={
+                  `${buttonActive ? ' visible ' : ' invisible '}` +
+                  'absolute left-6 top-1/2 -translate-y-1/2 animate-pulse self-center'
+                }
+              ></FiCheckCircle>
+            }
             onClick={() => saveUserDetails()}
           ></Button>
         </li>

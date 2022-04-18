@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styles from './button.module.scss'
 
 const typeColours = {
@@ -49,7 +50,7 @@ const Button = (props: {
       onClick={onClick}
     >
       {/* Button Icon */}
-      <span>{icon}</span>
+      {icon}
       {/* Button Text  */}
       {text}
     </button>
