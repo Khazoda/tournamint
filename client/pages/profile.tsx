@@ -79,11 +79,11 @@ function Profile(props: Props) {
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center">
         {/* IN GAME NAME */}
-        <div className=" min-w-[250px] max-w-[250px] overflow-x-hidden overflow-ellipsis rounded-md bg-black-500 px-3 py-2 drop-shadow-lg">
+        <div className=" min-w-[250px] max-w-[250px] overflow-x-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
           {ign}
         </div>
         {/* PROFILE PICTURE */}
-        <div className="relative h-0 w-full  rounded-md bg-black-500 pb-[100%] drop-shadow-lg">
+        <div className="relative h-0 w-full  rounded-md bg-gray-200 pb-[100%] drop-shadow-lg dark:bg-black-500">
           {/* SPLASH ART BACKGROUND */}
           <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm drop-shadow-sm">
             <Image
@@ -121,7 +121,7 @@ function Profile(props: Props) {
         </div>
         {/* TROPHIES & RANK */}
         <div className="relative flex h-[250px] w-full flex-row gap-2 drop-shadow-lg">
-          <div className="relative flex h-full w-full items-center justify-start rounded-md bg-black-500 p-3">
+          <div className="relative flex h-full w-full items-center justify-start rounded-md bg-gray-200 p-3 dark:bg-black-500">
             <div className="h-full w-full rounded-sm drop-shadow-sm">
               <Image
                 src={'/images/ranks/' + userData.tier + '.png'}
@@ -129,14 +129,14 @@ function Profile(props: Props) {
                 objectFit="contain"
               ></Image>
               {/* Level */}
-              <span className="absolute top-2 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-blue-500 bg-gray-800 px-2 text-center text-sm capitalize text-white-200">
+              <span className="absolute top-2 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-blue-500 bg-gray-100 px-2 text-center text-sm capitalize dark:bg-gray-800">
                 {userData.summonerLevel === undefined
                   ? 'Iron V'
                   : userData.tier + ' ' + userData.rank}
               </span>
             </div>
           </div>
-          <div className="flex w-12 flex-col justify-around gap-1 rounded-md bg-black-500 p-1">
+          <div className="flex w-12 flex-col justify-around gap-1 rounded-md bg-gray-200 p-1 dark:bg-black-500">
             <FiAward
               title="Valerian Cup 2019"
               color="green"
@@ -165,10 +165,12 @@ function Profile(props: Props) {
         </div>
 
         {/* WINRATE */}
-        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-black-500 p-2 drop-shadow-lg">
+        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-2 drop-shadow-lg dark:bg-black-500">
           <div className="relative text-right">
             <span className="absolute left-0">Wins </span>
-            <span className="text-green-500">{userData.wins}</span>
+            <span className="text-green-700 dark:text-green-500">
+              {userData.wins}
+            </span>
           </div>
           <div className="relative text-left">
             <span className="text-red-500">{userData.losses}</span>
@@ -189,7 +191,7 @@ function Profile(props: Props) {
                     100
                   ).toPrecision(3)
                 ) >= 50
-                  ? 'text-lime-500'
+                  ? 'text-lime-700 dark:text-lime-500'
                   : 'text-orange-500'
               }`}
             >

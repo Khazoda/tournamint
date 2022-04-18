@@ -43,7 +43,7 @@ export default function Navbar(props: Props) {
               Log Out
             </button>
           </div>
-          <span className="">{displayName}</span>
+          <span className="text-">{displayName}</span>
         </div>
         <Link href="/profile">
           <div
