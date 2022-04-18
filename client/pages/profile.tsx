@@ -165,22 +165,22 @@ function Profile(props: Props) {
         </div>
 
         {/* WINRATE */}
-        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-2 rounded-md bg-black-500 p-2 drop-shadow-lg">
-          <div className="text-right">
-            <span>Wins </span>{' '}
+        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-black-500 p-2 drop-shadow-lg">
+          <div className="relative text-right">
+            <span className="absolute left-0">Wins </span>
             <span className="text-green-500">{userData.wins}</span>
           </div>
-          <div className="text-left">
+          <div className="relative text-left">
             <span className="text-red-500">{userData.losses}</span>
-            <span> Losses</span>{' '}
+            <span className="absolute right-0"> Losses</span>
           </div>
-          <div className="text-right">
-            <span>Games </span>
+          <div className="relative text-right">
+            <span className="absolute left-0">Games </span>
             <span className="text-blue-500">
               {userData.wins + userData.losses}
             </span>
           </div>
-          <div className="text-left">
+          <div className="relative text-left">
             <span
               className={`${
                 Number(
@@ -197,8 +197,9 @@ function Profile(props: Props) {
                 (userData.wins / (userData.losses + userData.wins)) *
                 100
               ).toPrecision(3)}
+              {''}%
             </span>
-            <span>% Winrate</span>
+            <span className="absolute right-0">Winrate</span>
           </div>
         </div>
       </div>

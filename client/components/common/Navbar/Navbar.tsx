@@ -19,7 +19,7 @@ export default function Navbar(props: Props) {
   const { displayName, biography, ign, setUserDetails } = useUser()
 
   return (
-    <div className="fixed flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
+    <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
       {/* Profile */}
       <div className="inline-flex w-full place-content-end text-right ">
         <div className="flex flex-col items-end justify-between pr-3">
