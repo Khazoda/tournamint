@@ -75,7 +75,7 @@ function Profile(props: Props) {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center py-24 px-12 ">
+    <div className="flex min-h-screen flex-col items-center justify-center py-24 px-12 md:flex-row">
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center">
         {/* IN GAME NAME */}
@@ -205,16 +205,10 @@ function Profile(props: Props) {
       </div>
 
       {/* Right hand side */}
-      <div className="right relative flex h-full w-full flex-col justify-center gap-3 ">
-        <p className="text-header relative w-full text-center text-lg font-semibold underline">
-          {displayName}
-        </p>
-        <p className="text-header font-regular relative w-full pr-6 text-right text-lg">
-          {biography}
-        </p>
-        <p className="text-header font-regular relative  w-full text-center text-lg">
-          {ign}
-        </p>
+      <div className=" ">
+        <p className="">{displayName}</p>
+        <p className="">{biography}</p>
+        <p className="">{ign}</p>
       </div>
 
       {/* Input Fields */}
