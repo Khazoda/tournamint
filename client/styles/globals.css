@@ -61,3 +61,34 @@ body.dark::-webkit-scrollbar-thumb:hover {
   src: url('/fonts/Mukta/Mukta-Bold.ttf');
   font-weight: bold;
 }
+
+@font-face {
+  font-family: 'Harmony';
+  src: url('/fonts/HarmonySans/HarmonyOS_Sans_Medium.ttf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Harmony';
+  src: url('/fonts/HarmonySans/HarmonyOS_Sans_Regular.ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Harmony';
+  src: url('/fonts/HarmonySans/HarmonyOS_Sans_Thin.ttf');
+  font-weight: 200;
+}
+@font-face {
+  font-family: 'Harmony';
+  src: url('/fonts/HarmonySans/HarmonyOS_Sans_Light.ttf');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Harmony';
+  src: url('/fonts/HarmonySans/HarmonyOS_Sans_Bold.ttf');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Harmony';
+  src: url('/fonts/HarmonySans/HarmonyOS_Sans_Black.ttf');
+  font-weight: 700;
+}

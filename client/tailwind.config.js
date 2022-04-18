@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'heading': ['Inter'],
-        'body': ['Mukta']
+        'heading': ['Harmony'],
+        'body': ['Harmony']
       },
       colors: {
         green: {

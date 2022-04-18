@@ -63,18 +63,32 @@ function MyApp({ Component, pageProps }: AppProps) {
       const displayName: any = JSON.parse(localStorage?.userDetails).displayName
       const biography: any = JSON.parse(localStorage?.userDetails).biography
       const ign: string = JSON.parse(localStorage?.userDetails).ign
+
       axios
         .get('http://localhost:4000/userData', {
           params: { ign: ign },
         })
         .then(function (response) {
-          // Initialize Store
-          // store = new Store(displayName, biography, ign)
-          // console.log(store)
-          setUserData(response.data)
-
-          // Return promise
           return new Promise((resolve) => {
+            let userDataResponse = response.data
+
+            axios
+              .get('http://localhost:4000/userRanking', {
+                params: { ign: ign },
+              })
+              .then(function (response) {
+                // Includes account info as well as rank info
+                response.data[0].tier = response.data[0].tier.toLowerCase()
+                setUserData(Object.assign(userDataResponse, response.data[0]))
+
+                // Return promise
+                return new Promise((resolve) => {
+                  resolve('resolved')
+                })
+              })
+              .catch(function (error) {
+                console.error(error)
+              })
             resolve('resolved')
           })
         })
@@ -95,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }
   return (
-    <div className=" m-0 bg-white-100 text-black-800 dark:bg-black-700 dark:text-white-200">
+    <div className=" m-0 bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
       <UserProvider>
         <Navbar
           is_dark={is_dark}

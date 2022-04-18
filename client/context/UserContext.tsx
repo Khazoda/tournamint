@@ -11,13 +11,20 @@ export type userContextType = {
   displayName: string
   biography: string
   ign: string
-  setUserDetails?: (displayName: string, biography: string, ign: string) => void
+  rankInfo: Object
+  setUserDetails?: (
+    displayName: string,
+    biography: string,
+    ign: string,
+    rankInfo: Object
+  ) => void
 }
 
 const userContextDefaultValues: userContextType = {
   displayName: '[Default]',
   biography: '[Default]',
   ign: '[Default]',
+  rankInfo: {},
   setUserDetails: () => {},
 }
 const UserContext = createContext<userContextType>(userContextDefaultValues)
@@ -35,11 +42,17 @@ export function UserProvider({ children }: Props) {
     userContextDefaultValues
   )
 
-  const setUserDetails = (name: string, bio: string, ign: string) => {
+  const setUserDetails = (
+    name: string,
+    bio: string,
+    ign: string,
+    rankInfo: Object
+  ) => {
     updateUserDetails({
       displayName: name,
       biography: bio,
       ign: ign,
+      rankInfo: rankInfo,
     })
   }
 
@@ -51,7 +64,13 @@ export function UserProvider({ children }: Props) {
       const displayName: any = userDetails.displayName
       const biography: any = userDetails.biography
       const ign: string = userDetails.ign
-      setUserDetails(displayName, biography, ign)
+      const rankInfo: Object = [
+        userDetails.tier,
+        userDetails.rank,
+        userDetails.wins,
+        userDetails.losses,
+      ]
+      setUserDetails(displayName, biography, ign, rankInfo)
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
@@ -77,6 +96,7 @@ export function UserProvider({ children }: Props) {
           displayName: 'June',
           bio: 'Bio',
           ign: 'June',
+          rankInfo: { tier: 'Iron', rank: 'IV', wins: '5', losses: '500' },
         })
       )
     }
@@ -88,6 +108,7 @@ export function UserProvider({ children }: Props) {
     displayName: userDetails.displayName,
     biography: userDetails.biography,
     ign: userDetails.ign,
+    rankInfo: userDetails.rankInfo,
     setUserDetails,
   }
 

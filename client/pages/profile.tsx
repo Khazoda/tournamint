@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '../components/common/Button'
 import Image from 'next/image'
+import { FiAward } from 'react-icons/fi'
 import { useUser, userContextType } from '../context/UserContext'
 
 export interface Props {
@@ -24,6 +25,7 @@ function Profile(props: Props) {
   const [name, setName] = useState<string>('')
   const [bio, setBio] = useState<string>('')
   const [ig, setIgn] = useState<string>('')
+
   const [favouriteChampion, setFavouriteChampion] = useState<string>('Akali')
 
   const saveUserDetails = () => {
@@ -38,7 +40,7 @@ function Profile(props: Props) {
           })
         } else {
           {
-            setUserDetails(name, bio, ig)
+            setUserDetails(name, bio, ig, { name: 'sus' })
             localStorage.setItem(
               'userDetails',
               JSON.stringify({
@@ -46,6 +48,12 @@ function Profile(props: Props) {
                 biography: bio,
                 ign: ig,
                 favouriteChampion: favouriteChampion,
+                rankInfo: {
+                  tier: userData.tier,
+                  rank: userData.rank,
+                  wins: userData.wins,
+                  losses: userData.losses,
+                },
               })
             )
             if (refreshUserInfo !== null) {
@@ -67,138 +75,142 @@ function Profile(props: Props) {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center py-24 md:py-32">
-      <div className="flex flex-col items-center gap-4 font-body md:flex-row md:items-start">
-        <div
-          id="profile_preview"
-          className="flex flex-row rounded-md border-2 md:h-[250px] md:w-[500px]"
-        >
-          {/* Left hand side */}
-          <div
-            id="profile_section_left"
-            className="flex h-full w-full flex-col"
-          >
-            <div
-              id="avatar_display"
-              className="relative h-full w-full border-r-2"
-            >
-              {/* SPLASH ART PROFILE BACKGROUND */}
-              <div className="relative min-h-full min-w-full brightness-50">
-                <Image
-                  src={
-                    'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
-                    favouriteChampion +
-                    '_0.jpg'
-                  }
-                  layout="fill"
-                  objectFit="cover"
-                ></Image>
-              </div>
-              {/* PROFILE PICTURE */}
-              <div className="absolute top-1/4 left-3/4 h-1/2 w-1/2 rounded-full border-2">
-                <Image
-                  src={
-                    'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                    (userData.profileIconId === undefined
-                      ? '503'
-                      : userData.profileIconId) +
-                    '.png'
-                  }
-                  alt="Profile picture"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-full"
-                ></Image>
-              </div>
-            </div>
+    <div className="flex min-h-screen flex-col items-center py-24 px-12 ">
+      {/* Profile Showcase */}
+      <div className="flex flex-col items-center gap-3 text-center">
+        {/* IN GAME NAME */}
+        <div className=" min-w-[250px] max-w-[250px] overflow-x-hidden overflow-ellipsis rounded-md bg-black-500 px-3 py-2 drop-shadow-lg">
+          {ign}
+        </div>
+        {/* PROFILE PICTURE */}
+        <div className="relative h-0 w-full  rounded-md bg-black-500 pb-[100%] drop-shadow-lg">
+          {/* SPLASH ART BACKGROUND */}
+          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm drop-shadow-sm">
+            <Image
+              src={
+                'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
+                favouriteChampion +
+                '_0.jpg'
+              }
+              priority
+              layout="fill"
+              objectFit="cover"
+            ></Image>
           </div>
-
-          {/* Right hand side */}
-          <div className="right relative flex h-full w-full flex-col justify-center gap-3 ">
-            <p className="text-header relative w-full text-center text-lg font-semibold underline">
-              {displayName}
-            </p>
-            <p className="text-header font-regular relative w-full pr-6 text-right text-lg">
-              {biography}
-            </p>
-            <p className="text-header font-regular relative  w-full text-center text-lg">
-              {ign}
-            </p>
+          <div className="absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 ">
+            <Image
+              src={
+                'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                (userData.profileIconId === undefined
+                  ? '503'
+                  : userData.profileIconId) +
+                '.png'
+              }
+              alt="Profile picture"
+              layout="fill"
+              objectFit="cover"
+              className=""
+            ></Image>
+            {/* Level */}
+            <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200">
+              {userData.summonerLevel === undefined
+                ? '666'
+                : userData.summonerLevel}
+            </span>
           </div>
         </div>
-
-        <ul>
-          <h1 className="font-header text-4xl text-green-500">Edit Profile</h1>
-          <li className="mb-2 flex flex-col">
-            <label htmlFor="username_input">Username</label>
-            <input
-              id="username_input"
-              type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent px-1"
-              defaultValue={displayName}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </li>
-          <li className="mb-2 flex flex-col">
-            <label htmlFor="biography_input">Biography</label>
-            <input
-              id="biography_input"
-              type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent px-1"
-              defaultValue={biography}
-              onChange={(e) => setBio(e.target.value)}
-            />
-          </li>
-          <li className="mb-4 flex flex-col">
-            <label htmlFor="in-game_input">In-Game Name</label>
-            <input
-              id="in-game_input"
-              type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent px-1"
-              defaultValue={ign}
-              onChange={(e) => setIgn(e.target.value)}
-            />
-          </li>
-          <li className="mb-4 flex flex-col">
-            <label htmlFor="in-game_input">Favourite Champion</label>
-            <input
-              id="in-game_input"
-              type="text"
-              className="rounded-md border-2 border-black-400 bg-transparent px-1"
-              defaultValue={favouriteChampion}
-              onChange={(e) => setFavouriteChampion(e.target.value)}
-            />
-          </li>
-          <li>
-            <Button
-              type="positive"
-              text="Save Changes"
-              noMargin
-              acceptCharset
-              onClick={() => saveUserDetails()}
-            ></Button>
-          </li>
-        </ul>
+        {/* TROPHIES & RANK */}
+        <div className="relative flex h-[250px] w-full flex-row gap-2">
+          <div className="relative flex h-full w-full items-center justify-start rounded-md bg-black-500 p-3">
+            <div className="h-full w-full rounded-sm drop-shadow-sm">
+              <Image
+                src={'/images/ranks/' + userData.tier + '.png'}
+                layout="fill"
+                objectFit="contain"
+              ></Image>
+              {/* Level */}
+              <span className="absolute top-2 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-blue-500 bg-gray-800 px-2 text-center text-sm capitalize text-white-200">
+                {userData.summonerLevel === undefined
+                  ? 'Iron V'
+                  : userData.tier + ' ' + userData.rank}
+              </span>
+            </div>
+          </div>
+          <div className="flex w-12 flex-col gap-1 rounded-md bg-black-500 p-3">
+            <FiAward size={24}></FiAward>
+            <FiAward size={24}></FiAward>
+            <FiAward size={24}></FiAward>
+            <FiAward size={24}></FiAward>
+          </div>
+        </div>
       </div>
-      {/* {userData.length !== 0 && (
-            <>
-              <div className="relative h-20 w-20">
-                <Image
-                  src={
-                    'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                    userData.profileIconId +
-                    '.png'
-                  }
-                  alt="Profile picture"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-full"
-                ></Image>
-              </div>
-              <div>
-                {userData.name} Level: {userData.summonerLevel}
-              </div>
-              </> */}
+
+      {/* Right hand side */}
+      <div className="right relative flex h-full w-full flex-col justify-center gap-3 ">
+        <p className="text-header relative w-full text-center text-lg font-semibold underline">
+          {displayName}
+        </p>
+        <p className="text-header font-regular relative w-full pr-6 text-right text-lg">
+          {biography}
+        </p>
+        <p className="text-header font-regular relative  w-full text-center text-lg">
+          {ign}
+        </p>
+      </div>
+
+      {/* Input Fields */}
+      <ul>
+        <h1 className="font-header text-4xl text-green-500">Edit Profile</h1>
+        <li className="mb-2 flex flex-col">
+          <label htmlFor="username_input">Username</label>
+          <input
+            id="username_input"
+            type="text"
+            className="rounded-md border-2 border-black-400 bg-transparent px-1"
+            defaultValue={displayName}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </li>
+        <li className="mb-2 flex flex-col">
+          <label htmlFor="biography_input">Biography</label>
+          <input
+            id="biography_input"
+            type="text"
+            className="rounded-md border-2 border-black-400 bg-transparent px-1"
+            defaultValue={biography}
+            onChange={(e) => setBio(e.target.value)}
+          />
+        </li>
+        <li className="mb-4 flex flex-col">
+          <label htmlFor="in-game_input">In-Game Name</label>
+          <input
+            id="in-game_input"
+            type="text"
+            className="rounded-md border-2 border-black-400 bg-transparent px-1"
+            defaultValue={ign}
+            onChange={(e) => setIgn(e.target.value)}
+          />
+        </li>
+        <li className="mb-4 flex flex-col">
+          <label htmlFor="in-game_input">Favourite Champion</label>
+          <input
+            id="in-game_input"
+            type="text"
+            className="rounded-md border-2 border-black-400 bg-transparent px-1"
+            defaultValue={favouriteChampion}
+            onChange={(e) => setFavouriteChampion(e.target.value)}
+          />
+        </li>
+        <li>
+          <Button
+            type="positive"
+            text="Save Changes"
+            noMargin
+            acceptCharset
+            onClick={() => saveUserDetails()}
+          ></Button>
+        </li>
+      </ul>
     </div>
   )
 }
