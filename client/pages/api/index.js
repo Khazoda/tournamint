@@ -27,7 +27,7 @@ function getPlayerID(ign) {
       return response.data.id
     }).catch(err => err)
 }
-app.get('/testAPICall', async (req, res) => {
+app.get('/api/testAPICall', async (req, res) => {
   const API_CALL = encodeURI("https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Xpeke?api_key=" + API_KEY)
   const champion_rotation = await axios.get(API_CALL)
     .then(response => response.data)
