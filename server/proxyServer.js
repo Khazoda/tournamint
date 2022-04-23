@@ -56,7 +56,15 @@ app.get('/userRanking', async (req, res) => {
     res.json(userData)
 })
 
+// Root Dummy Query
+app.get("/", (req, res) => {
+    res.send("Express is running");
+});
+
+
 app.listen(4000, function () {
     console.log("Server started on port 4000");
-})
+});
 
+// Export the Express API for Vercel endpoints
+module.exports = app;
