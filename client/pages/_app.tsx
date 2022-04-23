@@ -65,7 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       const ign: string = JSON.parse(localStorage?.userDetails).ign
 
       axios
-        .get('http://localhost:4000/userData', {
+        .get('/api/userData', {
           params: { ign: ign },
         })
         .then(function (response) {
@@ -73,7 +73,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             let userDataResponse = response.data
 
             axios
-              .get('http://localhost:4000/userRanking', {
+              .get('/api/userRanking', {
                 params: { ign: ign },
               })
               .then(function (response) {

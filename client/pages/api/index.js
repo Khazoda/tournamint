@@ -40,7 +40,7 @@ app.get('/api/testAPICall', async (req, res) => {
   res.json(champion_rotation)
 
 })
-app.get('/userData', async (req, res) => {
+app.get('/api/userData', async (req, res) => {
   console.log("/userData API Call Fired")
 
   const ign = req.query.ign
@@ -53,8 +53,8 @@ app.get('/userData', async (req, res) => {
 
   res.json(userData)
 })
-app.get('/userRanking', async (req, res) => {
-  console.log("/userRanking API Call Fired")
+app.get('/api/userRanking', async (req, res) => {
+  console.log("/api/userRanking API Call Fired")
 
   const ign = req.query.ign
   const ID = await getPlayerID(ign)

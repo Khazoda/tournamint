@@ -74,7 +74,7 @@ export function UserProvider({ children }: Props) {
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
-        .get('http://localhost:4000/userData', {
+        .get('/api/userData', {
           params: { ign: ign },
         })
         .then(function (response) {
