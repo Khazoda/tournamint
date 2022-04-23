@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "server/proxyServer.js",
+            "src": "/server/proxyServer.js",
             "use": "@now/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "server/proxyServer.js"
+            "dest": "/server/proxyServer.js"
         }
     ]
 }
