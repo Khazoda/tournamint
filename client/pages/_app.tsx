@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 } else {
                   setUserData(
                     Object.assign(userDataResponse, {
-                      tier: 'Unranked',
+                      tier: 'unranked',
                       rank: '',
                       wins: 0,
                       losses: 0,
