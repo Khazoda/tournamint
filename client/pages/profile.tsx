@@ -30,7 +30,9 @@ function Profile(props: Props) {
   const [text, setText] = useState<string>('Save Changes')
 
   // [favouriteChampion,autocomplete_suggestion] - schema
-  const [favouriteChampion, setFavouriteChampion] = useState<Array<string>>([])
+  const [favouriteChampion, setFavouriteChampion] = useState<Array<string>>([
+    'Teemo,""',
+  ])
 
   const handleUserDetailsFormSubmit = (
     e: React.KeyboardEvent<HTMLInputElement>
