@@ -5,18 +5,21 @@ var cors = require('cors')
 
 app.use(cors())
 
-app.get('/api', (req, res) => {
-  const path = `/api/item/${v4()}`;
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-});
+// app.get('/api', (req, res) => {
+//   const path = `/api/item/${v4()}`;
+//   res.setHeader('Content-Type', 'text/html');
+//   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+//   res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+// });
 
-app.get('/api/item/:slug', (req, res) => {
-  const { slug } = req.params;
-  res.end(`Item: ${slug}`);
-});
+// app.get('/api/item/:slug', (req, res) => {
+//   const { slug } = req.params;
+//   res.end(`Item: ${slug}`);
+// });
 
+app.get('/api/test', async (req, res) => {
+  res = "among us"
+})
 const API_KEY = 'RGAPI-a65ff374-7f9b-4aed-9b7a-fadf87277db8'
 
 function getPlayerUUID(ign) {
@@ -66,5 +69,10 @@ app.get('/api/userRanking', async (req, res) => {
 
   res.json(userData)
 })
+
+// Root Dummy Query
+app.get("/", (req, res) => {
+  res.send("Express is running");
+});
 
 module.exports = app;

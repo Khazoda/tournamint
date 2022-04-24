@@ -21,9 +21,9 @@ export type userContextType = {
 }
 
 const userContextDefaultValues: userContextType = {
-  displayName: '[Default]',
-  biography: '[Default]',
-  ign: '[Default]',
+  displayName: 'Enrique',
+  biography: 'A simple biography',
+  ign: 'DemolitionLuke',
   rankInfo: {},
   setUserDetails: () => {},
 }
@@ -93,9 +93,9 @@ export function UserProvider({ children }: Props) {
       localStorage.setItem(
         'userDetails',
         JSON.stringify({
-          displayName: 'June',
-          bio: 'Bio',
-          ign: 'June',
+          displayName: 'Enrique',
+          bio: "A term to describe a situation where one sneaks into the enemy's base and quickly destroys it.",
+          ign: 'Xpeke',
           rankInfo: { tier: 'Iron', rank: 'IV', wins: '5', losses: '500' },
         })
       )

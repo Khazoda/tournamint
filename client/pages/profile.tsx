@@ -32,6 +32,8 @@ function Profile(props: Props) {
   const [favouriteChampion, setFavouriteChampion] = useState<string>('Akali')
 
   const saveUserDetails = () => {
+    console.log('USER DETAILS SAVED')
+
     if (setUserDetails != null) {
       if (localStorage !== null) {
         if (localStorage.userDetails == null) {
@@ -77,13 +79,16 @@ function Profile(props: Props) {
   }
 
   useEffect(() => {
-    let details = JSON.parse(localStorage.getItem('userDetails') as string)
+    if (localStorage.getItem('userDetails') != null) {
+      let details = JSON.parse(localStorage.getItem('userDetails') as string)
 
-    setName(details.displayName)
-    setBio(details.biography)
-    setIgn(details.ign)
-    setFavouriteChampion(details.favouriteChampion)
+      setName(details.displayName)
+      setBio(details.biography)
+      setIgn(details.ign)
+      setFavouriteChampion(details.favouriteChampion)
+    }
   }, [])
+  console.log(userData)
 
   return (
     <div className="flex min-h-screen flex-col justify-center py-24 px-12 sm:flex-row">
@@ -142,7 +147,7 @@ function Profile(props: Props) {
               {/* Level */}
               <span className="absolute top-2 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-blue-500 bg-gray-100 px-2 text-center text-sm capitalize dark:bg-gray-800">
                 {userData.summonerLevel === undefined
-                  ? 'Iron V'
+                  ? 'Iron III'
                   : userData.tier + ' ' + userData.rank}
               </span>
             </div>
