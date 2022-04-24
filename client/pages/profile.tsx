@@ -113,14 +113,14 @@ function Profile(props: Props) {
               objectFit="cover"
             ></Image>
           </div>
-          <div className="absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 ">
+          <div className="absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 bg-gray-200 dark:bg-black-500">
             <Image
               src={
-                'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                (userData.profileIconId === undefined
-                  ? '503'
-                  : userData.profileIconId) +
-                '.png'
+                userData.profileIconId === undefined
+                  ? '/images/spinner.svg'
+                  : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                    userData.profileIconId +
+                    '.png'
               }
               alt="Profile picture"
               layout="fill"
@@ -140,7 +140,11 @@ function Profile(props: Props) {
           <div className="relative flex h-full w-full items-center justify-start rounded-md bg-gray-200 p-3 dark:bg-black-500">
             <div className="h-full w-full rounded-sm drop-shadow-sm">
               <Image
-                src={'/images/ranks/' + userData.tier + '.png'}
+                src={
+                  userData.tier === undefined
+                    ? '/images/spinner.svg'
+                    : '/images/ranks/' + userData.tier + '.png'
+                }
                 layout="fill"
                 objectFit="contain"
               ></Image>
@@ -181,45 +185,48 @@ function Profile(props: Props) {
         </div>
 
         {/* WINRATE */}
-        <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
-          <div className="relative text-right">
-            <span className="absolute left-0">Wins </span>
-            <span className="text-green-700 dark:text-green-500">
-              {userData.wins}
-            </span>
+        {userData.wins == 0 || userData.losses == 0 ? (
+          <></>
+        ) : (
+          <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
+            <div className="relative text-right">
+              <span className="absolute left-0">Wins </span>
+              <span className="text-green-700 dark:text-green-500">
+                {userData.wins}
+              </span>
+            </div>
+            <div className="relative text-left">
+              <span className="text-red-500">{userData.losses}</span>
+              <span className="absolute right-0"> Losses</span>
+            </div>
+            <div className="relative text-right">
+              <span className="absolute left-0">Games </span>
+              <span className="text-blue-500">
+                {userData.wins + userData.losses}
+              </span>
+            </div>
+            <div className="relative text-left">
+              <span
+                className={`${
+                  Number(
+                    (
+                      (userData.wins / (userData.losses + userData.wins)) *
+                      100
+                    ).toPrecision(3)
+                  ) >= 50
+                    ? 'text-lime-700 dark:text-lime-500'
+                    : 'text-orange-500'
+                }`}
+              >
+                {(
+                  (userData.wins / (userData.losses + userData.wins)) *
+                  100
+                ).toPrecision(3)}
+              </span>
+              <span className="absolute right-0">Winrate</span>
+            </div>
           </div>
-          <div className="relative text-left">
-            <span className="text-red-500">{userData.losses}</span>
-            <span className="absolute right-0"> Losses</span>
-          </div>
-          <div className="relative text-right">
-            <span className="absolute left-0">Games </span>
-            <span className="text-blue-500">
-              {userData.wins + userData.losses}
-            </span>
-          </div>
-          <div className="relative text-left">
-            <span
-              className={`${
-                Number(
-                  (
-                    (userData.wins / (userData.losses + userData.wins)) *
-                    100
-                  ).toPrecision(3)
-                ) >= 50
-                  ? 'text-lime-700 dark:text-lime-500'
-                  : 'text-orange-500'
-              }`}
-            >
-              {(
-                (userData.wins / (userData.losses + userData.wins)) *
-                100
-              ).toPrecision(3)}
-              {''}%
-            </span>
-            <span className="absolute right-0">Winrate</span>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Right hand side */}

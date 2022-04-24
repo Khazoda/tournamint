@@ -52,11 +52,11 @@ export default function Navbar(props: Props) {
           >
             <Image
               src={
-                'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                (userData.profileIconId === undefined
-                  ? '503'
-                  : userData.profileIconId) +
-                '.png'
+                userData.profileIconId === undefined
+                  ? '/images/spinner.svg'
+                  : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                    userData.profileIconId +
+                    '.png'
               }
               alt="Profile picture"
               layout="fill"

@@ -28,6 +28,6 @@
     const userData = await axios.get(API_CALL)
         .then(response => response.data)
         .catch(err => err)
-
+    
     res.status(200).json(userData)
   }

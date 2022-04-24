@@ -77,10 +77,23 @@ function MyApp({ Component, pageProps }: AppProps) {
                 params: { ign: ign },
               })
               .then(function (response) {
-                // Includes account info as well as rank info
-                response.data[0].tier = response.data[0].tier.toLowerCase()
-                setUserData(Object.assign(userDataResponse, response.data[0]))
+                // If user is not ranked
+                console.log(response)
 
+                if (response.data[0] != undefined) {
+                  // Includes account info as well as rank info
+                  response.data[0].tier = response.data[0].tier.toLowerCase()
+                  setUserData(Object.assign(userDataResponse, response.data[0]))
+                } else {
+                  setUserData(
+                    Object.assign(userDataResponse, {
+                      tier: 'Unranked',
+                      rank: '',
+                      wins: 0,
+                      losses: 0,
+                    })
+                  )
+                }
                 // Return promise
                 return new Promise((resolve) => {
                   resolve('resolved')

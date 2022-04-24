@@ -79,6 +79,8 @@ export function UserProvider({ children }: Props) {
         })
         .then(function (response) {
           // Return promise
+          console.log(response)
+
           return new Promise((resolve) => {
             resolve('resolved')
           })
