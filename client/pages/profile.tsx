@@ -22,9 +22,9 @@ function Profile(props: Props) {
 
   // User Details Properties
   const { displayName, biography, ign, setUserDetails } = useUser()
-  const [name, setName] = useState<string>('')
-  const [bio, setBio] = useState<string>('')
-  const [ig, setIgn] = useState<string>('')
+  const [name, setName] = useState<string>('Default')
+  const [bio, setBio] = useState<string>('Default Biography')
+  const [ig, setIgn] = useState<string>('Default')
 
   const [buttonActive, setButtonActive] = useState<boolean>(false)
   const [text, setText] = useState<string>('Save Changes')
@@ -220,12 +220,12 @@ function Profile(props: Props) {
       {/* Right hand side */}
       <div className=" mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[250px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
         <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
-          {name.length <= 16
+          {name?.length <= 16
             ? name
             : 'Too long! Try shortening your display name.'}
         </p>
         <p className="">
-          {bio.length <= 160 ? bio : 'Too long! Try shortening your bio.'}
+          {bio?.length <= 160 ? bio : 'Too long! Try shortening your bio.'}
         </p>
       </div>
 

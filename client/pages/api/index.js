@@ -67,9 +67,4 @@ app.get('/api/userRanking', async (req, res) => {
   res.json(userData)
 })
 
-// Root Dummy Query
-app.get("/", (req, res) => {
-  res.send("Express is running");
-});
-
 module.exports = app;
