@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Button from '../components/common/Button'
 import Image from 'next/image'
 import { FiAward, FiCheckCircle } from 'react-icons/fi'
+import { CgArrowRightR } from 'react-icons/cg'
 import { useUser, userContextType } from '../context/UserContext'
 
 export interface Props {
@@ -44,7 +45,19 @@ function Profile(props: Props) {
     }
   }
 
-  const champions = [
+  const Capitalize = (i: string) => {
+    let result: string = ''
+    if (i.length >= 2) {
+      result =
+        i.substring(0, 1).toUpperCase() + i.substring(1, i.length).toLowerCase()
+    } else if (i.length == 1) {
+      result = i.toUpperCase()
+    } else {
+      result = i
+    }
+    return result
+  }
+  const CHAMPIONS = [
     'aatrox',
     'ahri',
     'akali',
@@ -205,19 +218,63 @@ function Profile(props: Props) {
     'zoe',
     'zyra',
   ]
+  const ALPHABET = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+  ]
   const handleFavouriteChampionFormSubmit = (e: any) => {
+    let value = e.target.value
     // Submit Form
-    if (e.key == 'Enter') {
-      e.preventDefault()
-      saveUserDetails()
-      // Champion Autocomplete code
-    } else {
-      if (e.target.value != undefined) {
-        let match = champions.filter((event) =>
-          event.startsWith(e.target.value.toLowerCase())
-        )[0]
-        setFavouriteChampion([e.target.value, match])
-      }
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault()
+        saveUserDetails()
+        break
+      case 'ArrowRight':
+        e.preventDefault()
+        setFavouriteChampion((arr) => [
+          favouriteChampion[1],
+          favouriteChampion[1],
+        ])
+        e.target.value = Capitalize(favouriteChampion[1])
+        setFavouriteChampion([favouriteChampion[0], ''])
+        break
+      default:
+        if (e.target.value != undefined) {
+          // Capitalize first letter
+          e.target.value = Capitalize(value)
+          if (e.target.value != '') {
+            let match = CHAMPIONS.filter((event) =>
+              event.startsWith(e.target.value.toLowerCase())
+            )[0]
+            setFavouriteChampion([Capitalize(value), match])
+          }
+        }
+        break
     }
   }
   const saveUserDetails = () => {
@@ -467,15 +524,15 @@ function Profile(props: Props) {
         </li>
         <li className="mb-4 flex flex-col">
           <label htmlFor="in-game_input">Favourite Champion</label>
-          <div className="relative h-8">
-            <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 capitalize text-gray-600 dark:text-white-600">
+          <div className="relative h-7 ">
+            <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 lowercase text-gray-600 first-letter:capitalize dark:text-white-600">
               {favouriteChampion == undefined ? '' : favouriteChampion[1]}
             </div>
             <input
               id="in-game_input"
               autoComplete="off"
               type="text"
-              className="absolute top-0 left-0 rounded-md border-2 border-black-400 bg-transparent px-1 capitalize text-black-900 dark:text-white-100"
+              className="absolute top-0 left-0 rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
               defaultValue={
                 favouriteChampion == undefined ? '' : favouriteChampion[0]
               }
@@ -483,6 +540,14 @@ function Profile(props: Props) {
                 handleFavouriteChampionFormSubmit(e)
               }}
             />
+            <div
+              className={
+                `${favouriteChampion[1]?.length > 0 ? 'visible' : 'hidden'}` +
+                ' absolute right-[0.2rem] top-1/2 h-6 w-6 -translate-y-1/2 animate-pulse'
+              }
+            >
+              <CgArrowRightR className="absolute" size={24} />
+            </div>
           </div>
         </li>
         <li>
