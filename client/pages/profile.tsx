@@ -30,6 +30,10 @@ function Profile(props: Props) {
   const [buttonActive, setButtonActive] = useState<boolean>(false)
   const [text, setText] = useState<string>('Save Changes')
 
+  const [splashURL, setSplashURL] = useState<string>(
+    'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Teemo_4.jpg'
+  )
+
   // [favouriteChampion,autocomplete_suggestion] - schema
   const [favouriteChampion, setFavouriteChampion] = useState<Array<string>>([
     'Teemo',
@@ -256,15 +260,13 @@ function Profile(props: Props) {
         break
       case 'ArrowRight':
         e.preventDefault()
-        setFavouriteChampion((arr) => [
-          favouriteChampion[1],
-          favouriteChampion[1],
-        ])
+        setFavouriteChampion([favouriteChampion[1], favouriteChampion[1]])
         e.target.value = Capitalize(favouriteChampion[1])
-        setFavouriteChampion([favouriteChampion[0], ''])
+        // setFavouriteChampion([favouriteChampion[0], ''])
+        triggerSplashUpdate()
         break
       default:
-        if (e.target.value != undefined) {
+        if (value != undefined) {
           // Capitalize first letter
           e.target.value = Capitalize(value)
           if (e.target.value != '') {
@@ -272,9 +274,28 @@ function Profile(props: Props) {
               event.startsWith(e.target.value.toLowerCase())
             )[0]
             setFavouriteChampion([Capitalize(value), match])
+            if (value?.toLowerCase() == match?.toLowerCase()) {
+              triggerSplashUpdate(match)
+            }
           }
         }
         break
+    }
+  }
+  const triggerSplashUpdate = (match?: string | any[]) => {
+    // Update splash art
+    if (match == undefined) {
+      setSplashURL(
+        'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
+          Capitalize(favouriteChampion[0]) +
+          '_0.jpg'
+      )
+    } else if (match?.length > 0) {
+      setSplashURL(
+        'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
+          Capitalize(favouriteChampion[1]) +
+          '_0.jpg'
+      )
     }
   }
   const saveUserDetails = () => {
@@ -290,7 +311,7 @@ function Profile(props: Props) {
             favouriteChampion: ['Tryndamere', ''],
           })
         } else {
-          {
+          if (CHAMPIONS.includes(favouriteChampion[0])) {
             setUserDetails(name, bio, ig, favouriteChampion[0], { name: 'sus' })
             localStorage.setItem(
               'userDetails',
@@ -298,7 +319,7 @@ function Profile(props: Props) {
                 displayName: name,
                 biography: bio,
                 ign: ig,
-                favouriteChampion: favouriteChampion,
+                favouriteChampion: Capitalize(favouriteChampion[0]),
                 rankInfo: {
                   tier: userData.tier,
                   rank: userData.rank,
@@ -314,10 +335,17 @@ function Profile(props: Props) {
               setText('Save Changes')
               setButtonActive(false)
             }, 1500)
+          } else {
+            setText('Invalid Champion')
 
-            if (refreshUserInfo !== null) {
-              refreshUserInfo()
-            }
+            setTimeout(() => {
+              setText('Save Changes')
+              setButtonActive(false)
+            }, 1500)
+          }
+
+          if (refreshUserInfo !== null) {
+            refreshUserInfo()
           }
         }
       }
@@ -335,6 +363,9 @@ function Profile(props: Props) {
     }
   }, [])
 
+  setTimeout(() => {
+    triggerSplashUpdate()
+  }, 200)
   return (
     <div className="flex min-h-screen flex-col justify-center py-24 px-12 sm:flex-row">
       {/* Profile Showcase */}
@@ -346,15 +377,8 @@ function Profile(props: Props) {
         {/* PROFILE PICTURE */}
         <div className="relative h-0 w-full  rounded-md bg-gray-200 pb-[100%] drop-shadow-lg dark:bg-black-500">
           {/* SPLASH ART BACKGROUND */}
-          {/* 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
-                  favouriteChampion +
-                  '_0.jpg' || */}
           <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-gray-300 shadow-inner dark:bg-black-600">
-            <Image
-              src={'/images/ahri_splash.jpg'}
-              layout="fill"
-              objectFit="cover"
-            ></Image>
+            <Image src={splashURL} layout="fill" objectFit="cover"></Image>
           </div>
           <div className="absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 bg-gray-200 dark:bg-black-500">
             <Image

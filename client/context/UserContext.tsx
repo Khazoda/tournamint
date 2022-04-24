@@ -69,7 +69,7 @@ export function UserProvider({ children }: Props) {
       const displayName: any = userDetails.displayName
       const biography: any = userDetails.biography
       const ign: string = userDetails.ign
-      const favouriteChampion = userDetails.favouriteChampion
+      const favouriteChampion: string = userDetails.favouriteChampion
       const rankInfo: Object = [
         userDetails.tier,
         userDetails.rank,
