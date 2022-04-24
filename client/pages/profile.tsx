@@ -31,7 +31,8 @@ function Profile(props: Props) {
 
   // [favouriteChampion,autocomplete_suggestion] - schema
   const [favouriteChampion, setFavouriteChampion] = useState<Array<string>>([
-    'Teemo,""',
+    'Teemo',
+    '',
   ])
 
   const handleUserDetailsFormSubmit = (
