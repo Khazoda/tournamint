@@ -29,8 +29,194 @@ function Profile(props: Props) {
   const [buttonActive, setButtonActive] = useState<boolean>(false)
   const [text, setText] = useState<string>('Save Changes')
 
-  const [favouriteChampion, setFavouriteChampion] = useState<string>('Akali')
+  // [favouriteChampion,autocomplete_suggestion] - schema
+  const [favouriteChampion, setFavouriteChampion] = useState<Array<string>>([])
 
+  const handleUserDetailsFormSubmit = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key == 'Enter') {
+      e.preventDefault()
+      saveUserDetails()
+    }
+  }
+
+  const champions = [
+    'aatrox',
+    'ahri',
+    'akali',
+    'akshan',
+    'alistar',
+    'amumu',
+    'anivia',
+    'annie',
+    'aphelios',
+    'ashe',
+    'aurelionsol',
+    'azir',
+    'bard',
+    'blitzcrank',
+    'brand',
+    'braum',
+    'caitlyn',
+    'camille',
+    'cassiopeia',
+    'chogath',
+    'corki',
+    'darius',
+    'diana',
+    'draven',
+    'drmundo',
+    'ekko',
+    'elise',
+    'evelynn',
+    'ezreal',
+    'fiddlesticks',
+    'fiora',
+    'fizz',
+    'galio',
+    'gangplank',
+    'garen',
+    'gnar',
+    'gragas',
+    'graves',
+    'gwen',
+    'hecarim',
+    'heimerdinger',
+    'illaoi',
+    'irelia',
+    'ivern',
+    'janna',
+    'jarvaniv',
+    'jax',
+    'jayce',
+    'jhin',
+    'jinx',
+    'kaisa',
+    'kalista',
+    'karma',
+    'karthus',
+    'kassadin',
+    'katarina',
+    'kayle',
+    'kayn',
+    'kennen',
+    'khazix',
+    'kindred',
+    'kled',
+    'kogmaw',
+    'leblanc',
+    'leesin',
+    'leona',
+    'lillia',
+    'lissandra',
+    'lucian',
+    'lulu',
+    'lux',
+    'malphite',
+    'malzahar',
+    'maokai',
+    'masteryi',
+    'missfortune',
+    'monkeyking',
+    'mordekaiser',
+    'morgana',
+    'nami',
+    'nasus',
+    'nautilus',
+    'neeko',
+    'nidalee',
+    'nocturne',
+    'nunu',
+    'olaf',
+    'orianna',
+    'ornn',
+    'pantheon',
+    'poppy',
+    'pyke',
+    'qiyana',
+    'quinn',
+    'rakan',
+    'rammus',
+    'reksai',
+    'rell',
+    'renata',
+    'renekton',
+    'rengar',
+    'riven',
+    'rumble',
+    'ryze',
+    'samira',
+    'sejuani',
+    'senna',
+    'seraphine',
+    'sett',
+    'shaco',
+    'shen',
+    'shyvana',
+    'singed',
+    'sion',
+    'sivir',
+    'skarner',
+    'sona',
+    'soraka',
+    'swain',
+    'sylas',
+    'syndra',
+    'tahmkench',
+    'taliyah',
+    'talon',
+    'taric',
+    'teemo',
+    'thresh',
+    'tristana',
+    'trundle',
+    'tryndamere',
+    'twistedfate',
+    'twitch',
+    'udyr',
+    'urgot',
+    'varus',
+    'vayne',
+    'veigar',
+    'velkoz',
+    'vex',
+    'vi',
+    'viego',
+    'viktor',
+    'vladimir',
+    'volibear',
+    'warwick',
+    'xayah',
+    'xerath',
+    'xinzhao',
+    'yasuo',
+    'yone',
+    'yorick',
+    'yuumi',
+    'zac',
+    'zed',
+    'zeri',
+    'ziggs',
+    'zilean',
+    'zoe',
+    'zyra',
+  ]
+  const handleFavouriteChampionFormSubmit = (e: any) => {
+    // Submit Form
+    if (e.key == 'Enter') {
+      e.preventDefault()
+      saveUserDetails()
+      // Champion Autocomplete code
+    } else {
+      if (e.target.value != undefined) {
+        let match = champions.filter((event) =>
+          event.startsWith(e.target.value.toLowerCase())
+        )[0]
+        setFavouriteChampion([e.target.value, match])
+      }
+    }
+  }
   const saveUserDetails = () => {
     console.log('USER DETAILS SAVED')
 
@@ -88,7 +274,6 @@ function Profile(props: Props) {
       setFavouriteChampion(details.favouriteChampion)
     }
   }, [])
-  console.log(userData)
 
   return (
     <div className="flex min-h-screen flex-col justify-center py-24 px-12 sm:flex-row">
@@ -101,14 +286,12 @@ function Profile(props: Props) {
         {/* PROFILE PICTURE */}
         <div className="relative h-0 w-full  rounded-md bg-gray-200 pb-[100%] drop-shadow-lg dark:bg-black-500">
           {/* SPLASH ART BACKGROUND */}
-          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm drop-shadow-sm">
+          {/* 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
+                  favouriteChampion +
+                  '_0.jpg' || */}
+          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-gray-300 shadow-inner dark:bg-black-600">
             <Image
-              src={
-                'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
-                favouriteChampion +
-                '_0.jpg'
-              }
-              priority
+              src={'/images/ahri_splash.jpg'}
               layout="fill"
               objectFit="cover"
             ></Image>
@@ -253,6 +436,7 @@ function Profile(props: Props) {
             type="text"
             className="rounded-md border-2 border-black-400 bg-transparent px-1"
             defaultValue={displayName}
+            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
             onChange={(e) => setName(e.target.value)}
           />
         </li>
@@ -263,6 +447,7 @@ function Profile(props: Props) {
             type="text"
             className="rounded-md border-2 border-black-400 bg-transparent px-1"
             defaultValue={biography}
+            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
             onChange={(e) => setBio(e.target.value)}
           />
         </li>
@@ -273,18 +458,27 @@ function Profile(props: Props) {
             type="text"
             className="rounded-md border-2 border-black-400 bg-transparent px-1"
             defaultValue={ign}
+            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
             onChange={(e) => setIgn(e.target.value)}
           />
         </li>
         <li className="mb-4 flex flex-col">
           <label htmlFor="in-game_input">Favourite Champion</label>
-          <input
-            id="in-game_input"
-            type="text"
-            className="rounded-md border-2 border-black-400 bg-transparent px-1"
-            defaultValue={favouriteChampion}
-            onChange={(e) => setFavouriteChampion(e.target.value)}
-          />
+          <div className="relative h-8">
+            <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 capitalize text-gray-600 dark:text-white-600">
+              {favouriteChampion[1]}
+            </div>
+            <input
+              id="in-game_input"
+              autoComplete="off"
+              type="text"
+              className="absolute top-0 left-0 rounded-md border-2 border-black-400 bg-transparent px-1 capitalize text-black-900 dark:text-white-100"
+              defaultValue={favouriteChampion[0]}
+              onKeyUp={(e) => {
+                handleFavouriteChampionFormSubmit(e)
+              }}
+            />
+          </div>
         </li>
         <li>
           <Button
