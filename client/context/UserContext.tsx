@@ -11,11 +11,13 @@ export type userContextType = {
   displayName: string
   biography: string
   ign: string
+  favouriteChampion: string
   rankInfo: Object
   setUserDetails?: (
     displayName: string,
     biography: string,
     ign: string,
+    favouriteChampion: string,
     rankInfo: Object
   ) => void
 }
@@ -24,6 +26,7 @@ const userContextDefaultValues: userContextType = {
   displayName: 'Enrique',
   biography: 'A simple biography',
   ign: 'DemolitionLuke',
+  favouriteChampion: 'Teemo',
   rankInfo: {},
   setUserDetails: () => {},
 }
@@ -46,12 +49,14 @@ export function UserProvider({ children }: Props) {
     name: string,
     bio: string,
     ign: string,
+    favouriteChampion: string,
     rankInfo: Object
   ) => {
     updateUserDetails({
       displayName: name,
       biography: bio,
       ign: ign,
+      favouriteChampion: favouriteChampion,
       rankInfo: rankInfo,
     })
   }
@@ -64,13 +69,14 @@ export function UserProvider({ children }: Props) {
       const displayName: any = userDetails.displayName
       const biography: any = userDetails.biography
       const ign: string = userDetails.ign
+      const favouriteChampion = userDetails.favouriteChampion
       const rankInfo: Object = [
         userDetails.tier,
         userDetails.rank,
         userDetails.wins,
         userDetails.losses,
       ]
-      setUserDetails(displayName, biography, ign, rankInfo)
+      setUserDetails(displayName, biography, ign, favouriteChampion, rankInfo)
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
@@ -98,6 +104,7 @@ export function UserProvider({ children }: Props) {
           displayName: 'Enrique',
           bio: "A term to describe a situation where one sneaks into the enemy's base and quickly destroys it.",
           ign: 'Xpeke',
+          favouriteChampion: 'Teemo',
           rankInfo: { tier: 'Iron', rank: 'IV', wins: '5', losses: '500' },
         })
       )
@@ -111,6 +118,7 @@ export function UserProvider({ children }: Props) {
     biography: userDetails.biography,
     ign: userDetails.ign,
     rankInfo: userDetails.rankInfo,
+    favouriteChampion: userDetails.favouriteChampion,
     setUserDetails,
   }
 

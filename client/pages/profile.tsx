@@ -32,7 +32,7 @@ function Profile(props: Props) {
   // [favouriteChampion,autocomplete_suggestion] - schema
   const [favouriteChampion, setFavouriteChampion] = useState<Array<string>>([
     'Teemo',
-    '',
+    'Teemo',
   ])
 
   const handleUserDetailsFormSubmit = (
@@ -230,11 +230,11 @@ function Profile(props: Props) {
             displayName: 'displayName',
             biography: 'biography',
             ign: 'Tryndamere',
-            favouriteChampion: 'Tryndamere',
+            favouriteChampion: ['Tryndamere', ''],
           })
         } else {
           {
-            setUserDetails(name, bio, ig, { name: 'sus' })
+            setUserDetails(name, bio, ig, favouriteChampion[0], { name: 'sus' })
             localStorage.setItem(
               'userDetails',
               JSON.stringify({
@@ -274,7 +274,7 @@ function Profile(props: Props) {
       setName(details.displayName)
       setBio(details.biography)
       setIgn(details.ign)
-      setFavouriteChampion(details.favouriteChampion)
+      setFavouriteChampion([details.favouriteChampion, ''])
     }
   }, [])
 
@@ -469,14 +469,16 @@ function Profile(props: Props) {
           <label htmlFor="in-game_input">Favourite Champion</label>
           <div className="relative h-8">
             <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 capitalize text-gray-600 dark:text-white-600">
-              {favouriteChampion[1]}
+              {favouriteChampion == undefined ? '' : favouriteChampion[1]}
             </div>
             <input
               id="in-game_input"
               autoComplete="off"
               type="text"
               className="absolute top-0 left-0 rounded-md border-2 border-black-400 bg-transparent px-1 capitalize text-black-900 dark:text-white-100"
-              defaultValue={favouriteChampion[0]}
+              defaultValue={
+                favouriteChampion == undefined ? '' : favouriteChampion[0]
+              }
               onKeyUp={(e) => {
                 handleFavouriteChampionFormSubmit(e)
               }}

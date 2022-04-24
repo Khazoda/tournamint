@@ -117,6 +117,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           displayName: 'June',
           bio: 'Bio',
           ign: 'June',
+          favouriteChampion: 'Teemo',
         })
       )
     }
