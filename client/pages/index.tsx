@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Navbar from '../components/common/Navbar'
 import Button from '../components/common/Button'
+import { useUser } from '../context/UserContext'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -14,6 +15,7 @@ export interface Props {
 }
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
+  const { displayName, biography, ign, setUserDetails } = useUser()
 
   return (
     <div className=" min-h-screen py-24">
@@ -27,7 +29,9 @@ const Home: NextPage<Props> = (props) => {
           <Button text="Create Tournament"></Button>
           <Button text="Join Tournament"></Button>
         </div>
-        <div id="center">amogus</div>
+        <div id="center">
+          {displayName} {biography} {ign}
+        </div>
 
         <div id="right">among us</div>
       </main>
