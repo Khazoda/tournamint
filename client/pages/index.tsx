@@ -29,8 +29,9 @@ const Home: NextPage<Props> = (props) => {
           <Button text="Create Tournament"></Button>
           <Button text="Join Tournament"></Button>
         </div>
-        <div id="center">
+        <div id="center" className="flex flex-col items-center">
           {displayName} {biography} {ign}
+          <img src="https://cdn.dribbble.com/users/1192538/screenshots/4876120/2.png?compress=1&resize=400x300"></img>
         </div>
 
         <div id="right">among us</div>
