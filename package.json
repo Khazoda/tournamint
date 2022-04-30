@@ -1,0 +1,7 @@
+{
+  "scripts": {
+  "dev": "npm --prefix client/ run dev",
+  "build": "npm --prefix client/ run build",
+  "start": "npm --prefix client/ run start"
+}
+}
