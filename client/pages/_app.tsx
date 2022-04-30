@@ -123,7 +123,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }
   return (
-    <div className=" m-0 bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
+    <div className=" m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
       <UserProvider>
         <Navbar
           is_dark={is_dark}

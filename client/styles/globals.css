@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#__next {
+  height: 100%;
+}
 /* Scrollbar */
 body::-webkit-scrollbar {
   width: 15px;

@@ -224,8 +224,10 @@ function Profile(props: Props) {
   ]
   const handleFavouriteChampionFormSubmit = (e: any) => {
     let value = e.target.value
+    let key = e.key
+
     // Submit Form
-    switch (e.key) {
+    switch (key) {
       case 'Enter':
         e.preventDefault()
         saveUserDetails()
@@ -529,7 +531,7 @@ function Profile(props: Props) {
               id="in-game_input"
               autoComplete="off"
               type="text"
-              className="absolute top-0 left-0 rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
+              className="absolute top-0 left-0 w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
               defaultValue={
                 favouriteChampion == undefined ? '' : favouriteChampion[0]
               }
@@ -537,13 +539,14 @@ function Profile(props: Props) {
                 handleFavouriteChampionFormSubmit(e)
               }}
             />
+            {/* Autocomplete Button */}
             <div
               className={
                 `${favouriteChampion[1]?.length > 0 ? 'visible' : 'hidden'}` +
                 ' absolute right-[0.2rem] top-1/2 h-6 w-6 -translate-y-1/2 animate-pulse'
               }
             >
-              <CgArrowRightR className="absolute" size={24} />
+              <CgArrowRightR className="" size={24} />
             </div>
           </div>
         </li>
