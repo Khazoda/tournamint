@@ -339,11 +339,11 @@ function Profile(props: Props) {
     triggerSplashUpdate()
   }, 200)
   return (
-    <div className="flex min-h-screen flex-col justify-center py-24 px-12 sm:flex-row">
+    <div className="flex min-h-screen min-w-[320px] flex-col justify-center py-24 px-12 sm:flex-row">
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center">
         {/* IN GAME NAME */}
-        <div className=" min-w-[250px] max-w-[250px] overflow-x-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
+        <div className=" w-full min-w-[224px] overflow-x-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
           {ign}
         </div>
         {/* PROFILE PICTURE */}
@@ -379,6 +379,7 @@ function Profile(props: Props) {
           <div className="relative flex h-full w-full items-center justify-start rounded-md bg-gray-200 p-3 dark:bg-black-500">
             <div className="h-full w-full rounded-sm drop-shadow-sm">
               <Image
+                quality={100}
                 src={
                   userData.tier === undefined
                     ? '/images/spinner.svg'
@@ -469,7 +470,7 @@ function Profile(props: Props) {
       </div>
 
       {/* Right hand side */}
-      <div className=" mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[250px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
+      <div className=" mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[224px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
         <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
           {name?.length <= 16
             ? name
