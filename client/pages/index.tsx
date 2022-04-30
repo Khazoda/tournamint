@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Navbar from '../components/common/Navbar'
 import Button from '../components/common/Button'
 import { useUser } from '../context/UserContext'
+import TeamTidbit from '../components/common/Teamtidbit'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -24,20 +25,30 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid h-full w-full min-w-[320px] grid-rows-[200px_minmax(100px,_1fr)_200px] justify-center text-center sm:grid-cols-[200px_minmax(100px,_1fr)_200px] ">
+      <main className="grid h-full w-full min-w-[320px] grid-rows-[200px_minmax(100px,_1fr)_200px] justify-center text-center sm:grid-cols-[200px_minmax(100px,_1fr)_350px] ">
         <div
           id="left"
-          className="mx-2 flex h-min flex-col gap-3 rounded-md bg-emerald-900 p-2 sm:ml-4"
+          className="mx-2 flex h-min flex-col gap-3 rounded-md bg-emerald-500 p-2 dark:bg-emerald-900 sm:ml-4"
         >
           <Button
             text="Create Tournament"
             noMargin
             type="positive"
-            className="drop-shadow-sm"
+            className="text-white-500 drop-shadow-sm"
           ></Button>
-          <div className="flex flex-col gap-2 rounded-md bg-emerald-800 p-2 drop-shadow-sm">
-            <Button text="Join Tournament" noMargin type="neutral"></Button>
-            <Button text="Find Tournament" noMargin type="neutral"></Button>
+          <div className="flex flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800">
+            <Button
+              text="Join Tournament"
+              noMargin
+              type="neutral"
+              className="text-white-500"
+            ></Button>
+            <Button
+              text="Find Tournament"
+              noMargin
+              type="neutral"
+              className="text-white-500"
+            ></Button>
           </div>
         </div>
         <div id="center" className="flex flex-col items-center">
@@ -46,9 +57,22 @@ const Home: NextPage<Props> = (props) => {
         </div>
         <div
           id="right"
-          className="row-span-3 mx-2 flex h-full flex-col gap-3 rounded-md bg-emerald-900 px-2 py-2 sm:mr-4"
+          className="row-span-3 mx-2 flex h-full flex-col gap-3 rounded-md bg-white-500 px-2 py-2 dark:bg-white-900 sm:mr-4"
         >
           <h2>Upcoming Tournaments</h2>
+          <span className="mx-auto h-0.5 w-10 bg-emerald-300"></span>
+          <div className="border-l-2 border-blue-400 px-2">
+            <div className="flex h-11 flex-row gap-1">
+              <TeamTidbit side="left"></TeamTidbit>
+              <div className="relative h-full w-0.5 bg-transparent">
+                <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
+                  VS
+                </span>
+              </div>
+              <TeamTidbit side="right"></TeamTidbit>
+            </div>
+            <h4>July 15th 15:30 CEST</h4>
+          </div>
         </div>
       </main>
     </div>
