@@ -21,7 +21,7 @@ export default function Navbar(props: Props) {
   return (
     <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
       {/* Profile */}
-      <div className="inline-flex w-full place-content-end text-right ">
+      <div className="inline-flex min-w-[300px] place-content-end text-right ">
         <div className="flex flex-col items-end justify-between pr-3">
           <div className="flex content-center gap-2">
             <button title="Change Theme" onClick={() => setDark?.(!is_dark)}>
@@ -72,7 +72,7 @@ export default function Navbar(props: Props) {
         </Link>
       </div>
       {/* Navbar */}
-      <div className="hidden w-full justify-center gap-3 md:inline-flex">
+      <div className="hidden justify-center gap-3 lg:inline-flex">
         <Link href="/">
           <a href="" className="font-heading hover:font-bold">
             Home
@@ -95,11 +95,20 @@ export default function Navbar(props: Props) {
         </Link>
       </div>
       {/* Logo */}
-      <div
-        title="Home"
-        className="inline-block h-[60px] min-h-[60px] w-[60px] min-w-[60px] text-left hover:cursor-pointer md:w-full"
-      >
-        <Image src="/images/logo.png" height={60} width={60}></Image>
+      <div className="flex min-w-[300px] align-middle">
+        <Link href="/">
+          <a
+            title="Home"
+            className="inline-block h-[60px] min-h-[60px] w-[176px] min-w-[176px] text-left hover:cursor-pointer hover:drop-shadow-md "
+          >
+            <Image
+              src={is_dark ? '/images/logo_dark.svg' : '/images/logo.svg'}
+              height={60}
+              width={150}
+              quality={100}
+            ></Image>
+          </a>
+        </Link>
       </div>
     </div>
   )
