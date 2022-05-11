@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Navbar from '../components/common/Navbar'
 import axios from 'axios'
 import { UserProvider } from '../context/UserContext'
-const { Redis } = require('@upstash/redis')
+import { Redis } from '@upstash/redis'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -16,6 +16,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [name, setName] = useState<string>()
   const [bio, setBio] = useState<string>()
   const [ig, setIgn] = useState<string>()
+
+  const [cacheCount, setCacheCount] = useState(pageProps.count)
 
   // Light/Dark theme switching function
   const setDark = (val: boolean) => {
@@ -125,22 +127,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   // Redis Connection
-
-  const response = async (req: any, res: any) => {
-    const redis = Redis.fromEnv()
-    await redis.set('foo', 'bar')
-    const x = await redis.get('foo')
-
-    res.json({
-      body: JSON.stringify('foo ' + x),
-    })
-    return x
+  const incr = async () => {
+    const response = await fetch('/api/redisTest', { method: 'GET' })
+    const data = await response.json()
+    setCacheCount(data.count)
   }
-  const getResponse = async () => {
-    const x = await response('', '')
-    console.log(x)
-  }
-  getResponse()
 
   return (
     <div className=" m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
@@ -150,6 +141,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           setDark={setDark}
           userData={userData}
         ></Navbar>
+        <div className="absolute top-12 left-12 h-24 w-24">
+          {process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_URL},{cacheCount}
+          <button type="button" onClick={incr}>
+            increment
+          </button>
+        </div>
+
         <Component
           userData={userData}
           refreshUserInfo={refreshUserInfo}
@@ -158,6 +156,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       </UserProvider>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const redis = Redis.fromEnv()
+
+  const count = await redis.incr('nextjsCounter')
+
+  return { props: { count } }
 }
 
 export default MyApp
