@@ -26,14 +26,37 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className="grid h-full w-full min-w-[320px] grid-rows-[200px_minmax(100px,_1fr)_200px] justify-center text-center sm:grid-cols-[200px_minmax(100px,_1fr)_350px] ">
+        {/* Left Trident */}
         <div
           id="left"
           className="mx-2 flex h-min flex-col gap-3 rounded-md "
         ></div>
+        {/* Center Trident */}
         <div id="center" className="flex flex-col items-center">
+          <div className="flex flex-col">
+            <div className="flex flex-row gap-5">
+              <div className="flex h-36 w-36 flex-col justify-center rounded-md bg-emerald-700">
+                <span>Icon</span>
+                <span>Value</span>
+                <span>Statistic Name</span>
+              </div>
+              <div className="flex h-36 w-36 flex-col justify-center rounded-md bg-emerald-700">
+                <span>Icon</span>
+                <span>Value</span>
+                <span>Statistic Name</span>
+              </div>
+              <div className="flex h-36 w-36 flex-col justify-center rounded-md bg-emerald-700">
+                <span>Icon</span>
+                <span>Value</span>
+                <span>Statistic Name</span>
+              </div>
+            </div>
+            <div className=""> Tournament Bracket</div>
+          </div>
           {displayName} {biography} {ign}
           <img src="https://cdn.dribbble.com/users/1192538/screenshots/4876120/2.png?compress=1&resize=400x300"></img>
         </div>
+        {/* Right Trident */}
         <div
           id="right"
           className="col-start-3 col-end-3 mx-2  mb-2 flex h-min flex-col gap-3 rounded-md bg-white-600 px-2 py-2 dark:bg-white-900 sm:mr-4"

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Navbar from '../components/common/Navbar'
 import axios from 'axios'
 import { UserProvider } from '../context/UserContext'
+const { Redis } = require('@upstash/redis')
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -122,6 +123,25 @@ function MyApp({ Component, pageProps }: AppProps) {
       )
     }
   }
+
+  // Redis Connection
+
+  const response = async (req: any, res: any) => {
+    const redis = Redis.fromEnv()
+    await redis.set('foo', 'bar')
+    const x = await redis.get('foo')
+
+    res.json({
+      body: JSON.stringify('foo ' + x),
+    })
+    return x
+  }
+  const getResponse = async () => {
+    const x = await response('', '')
+    console.log(x)
+  }
+  getResponse()
+
   return (
     <div className=" m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
       <UserProvider>

@@ -463,9 +463,10 @@ function Profile(props: Props) {
                 {(
                   (userData.wins / (userData.losses + userData.wins)) *
                   100
-                ).toPrecision(3)}
+                ).toPrecision(2)}
+                %
               </span>
-              <span className="absolute right-0">Winrate</span>
+              <span className="absolute right-0"> Winrate</span>
             </div>
           </div>
         )}
