@@ -134,19 +134,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div className=" m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
+    <div className="m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
       <UserProvider>
         <Navbar
           is_dark={is_dark}
           setDark={setDark}
           userData={userData}
         ></Navbar>
-        <div className="absolute top-12 left-12 h-24 w-24">
+        {/* <div className="absolute top-12 left-12 h-24 w-24">
           {process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_URL},{cacheCount}
           <button type="button" onClick={incr}>
             increment
           </button>
-        </div>
+        </div> */}
 
         <Component
           userData={userData}

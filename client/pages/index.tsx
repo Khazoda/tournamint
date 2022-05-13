@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Navbar from '../components/common/Navbar'
@@ -18,48 +18,72 @@ const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
   const { displayName, biography, ign, setUserDetails } = useUser()
 
+  // SHAPES
+  interface ICardStatistics {
+    icon: string
+    type: string
+    value: number
+  }
+  // STATE
+  const [cardStatistics, setCardStatistics] = useState<Array<ICardStatistics>>([
+    {
+      icon: 'hi',
+      type: 'hey',
+      value: 5,
+    },
+  ])
+
+  useEffect(() => {
+    // Populate cardStatistics
+    for (let index = 0; index < 4; index++) {
+      if (cardStatistics.length < 5) {
+        setCardStatistics((statistics) => [
+          ...statistics,
+          {
+            icon: 'sus',
+            type: 'sus',
+            value: Math.round(Math.random() * 54),
+          },
+        ])
+      }
+    }
+  }, [])
+
   return (
-    <div className=" h-full min-h-screen py-24">
+    <div className=" h-full min-h-screen px-4 pt-24 pb-4">
       <Head>
         <title>Tournamint</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid h-full w-full min-w-[320px] grid-rows-[200px_minmax(100px,_1fr)_200px] justify-center text-center sm:grid-cols-[200px_minmax(100px,_1fr)_350px] ">
-        {/* Left Trident */}
+      <main className="grid h-full w-full grid-cols-1 items-center text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] ">
+        {/* Left Half */}
         <div
-          id="left"
-          className="mx-2 flex h-min flex-col gap-3 rounded-md "
-        ></div>
-        {/* Center Trident */}
-        <div id="center" className="flex flex-col items-center">
-          <div className="flex flex-col">
-            <div className="flex flex-row gap-5">
-              <div className="flex h-36 w-36 flex-col justify-center rounded-md bg-emerald-700">
-                <span>Icon</span>
-                <span>Value</span>
-                <span>Statistic Name</span>
+          id="top_left"
+          className=" mx-4 h-full w-full content-start justify-between overflow-scroll whitespace-nowrap scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 dark:scrollbar-track-gray-600 dark:scrollbar-thumb-emerald-300 dark:hover:scrollbar-thumb-emerald-100 md:mx-0"
+        >
+          {cardStatistics.map((card) => {
+            return (
+              <div className="inline-flex h-40 w-40 flex-col justify-center rounded-md bg-emerald-700 even:mx-2">
+                <span>{card.icon || '[Icon]'}</span>
+                <span>{card.value || '[Value]'}</span>
+                <span>{card.type || '[Statistic Name]'}</span>
               </div>
-              <div className="flex h-36 w-36 flex-col justify-center rounded-md bg-emerald-700">
-                <span>Icon</span>
-                <span>Value</span>
-                <span>Statistic Name</span>
-              </div>
-              <div className="flex h-36 w-36 flex-col justify-center rounded-md bg-emerald-700">
-                <span>Icon</span>
-                <span>Value</span>
-                <span>Statistic Name</span>
-              </div>
-            </div>
-            <div className=""> Tournament Bracket</div>
-          </div>
-          {displayName} {biography} {ign}
-          <img src="https://cdn.dribbble.com/users/1192538/screenshots/4876120/2.png?compress=1&resize=400x300"></img>
+            )
+          })}
         </div>
-        {/* Right Trident */}
+
         <div
-          id="right"
-          className="col-start-3 col-end-3 mx-2  mb-2 flex h-min flex-col gap-3 rounded-md bg-white-600 px-2 py-2 dark:bg-white-900 sm:mr-4"
+          id="bottom_left"
+          className="row-start-2 hidden h-0 w-0 bg-pink-800 md:block md:h-full md:w-full"
+        >
+          <div className=""> Tournament Bracket</div>
+          {displayName} {biography} {ign}
+        </div>
+        {/* Right Half */}
+        <div
+          id="top_right"
+          className=" md:cols-end-2 row-start-1 row-end-1 ml-4 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-white-600 px-2 py-2 dark:bg-white-900 md:col-start-2 "
         >
           <div className=" flex flex-col gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900">
             <Button
@@ -85,8 +109,8 @@ const Home: NextPage<Props> = (props) => {
           </div>
         </div>
         <div
-          id="right"
-          className="col-start-3 col-end-3 row-span-2 mx-2 flex h-full flex-col gap-3 rounded-md bg-white-500 px-2 py-2 dark:bg-white-900 sm:mr-4"
+          id="bottom_right"
+          className=" ml-4 flex h-full flex-col gap-3 rounded-md bg-white-500 px-2 py-2 dark:bg-white-900"
         >
           <h2 className="text-lg">Upcoming Tournaments</h2>
           <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
