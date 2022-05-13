@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+html {
+  height: 100vh;
+}
+body {
+  overflow-y: auto;
+}
 body,
 #__next {
   height: 100%;

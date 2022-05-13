@@ -341,7 +341,7 @@ function Profile(props: Props) {
     triggerSplashUpdate()
   }, 200)
   return (
-    <div className="flex min-h-screen min-w-[320px] flex-col justify-center py-24 px-12 sm:flex-row">
+    <div className="flex h-full min-w-[320px] flex-col justify-center overflow-y-auto py-24 px-12 sm:flex-row">
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center">
         {/* IN GAME NAME */}

@@ -50,21 +50,24 @@ const Home: NextPage<Props> = (props) => {
   }, [])
 
   return (
-    <div className=" h-full min-h-screen px-4 pt-24 pb-4">
+    <div
+      id="wrapper"
+      className=" grid h-full  min-h-screen overflow-y-auto px-4 pt-24 pb-4"
+    >
       <Head>
         <title>Tournamint</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid h-full w-full grid-cols-1 items-center text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] ">
+      <main className="grid h-full w-full  items-center text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] ">
         {/* Left Half */}
         <div
           id="top_left"
-          className="ml-4 flex justify-between overflow-x-auto md:ml-0"
+          className="row-start-2 row-end-2 ml-4 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1 md:ml-0"
         >
           {cardStatistics.map((card) => {
             return (
-              <div className="mr-4 flex h-40 w-40 min-w-[10rem] flex-col justify-center rounded-md bg-emerald-700 last:mr-0">
+              <div className="mr-4 flex h-[164px] w-[164px] min-w-[164px] flex-col justify-center rounded-md bg-emerald-700 last:mr-0">
                 <span>{card.icon || '[Icon]'}</span>
                 <span>{card.value || '[Value]'}</span>
                 <span>{card.type || '[Statistic Name]'}</span>
@@ -75,7 +78,7 @@ const Home: NextPage<Props> = (props) => {
 
         <div
           id="bottom_left"
-          className="row-start-2 hidden h-0 w-0 bg-pink-800 md:block md:h-full md:w-full"
+          className="row-start-2 hidden h-0 w-0 rounded-md bg-pink-800 md:block md:h-full md:w-full"
         >
           <div className=""> Tournament Bracket</div>
           {displayName} {biography} {ign}
