@@ -24,10 +24,10 @@ const TournamentDisplay = (props: {}) => {
       <>
         <div className=" grid grid-cols-3 p-5">
           <div className="mr-4 flex flex-col justify-between">
-            <div className="relative mb-2 after:absolute after:-right-6 after:top-6 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px]">
+            <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px]">
               <MatchTidbit></MatchTidbit>
             </div>
-            <div className="relative mt-2 after:absolute after:-right-6 after:bottom-4 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px]">
+            <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px]">
               <MatchTidbit></MatchTidbit>
             </div>
             <span className="bg-white-200"></span>
@@ -38,10 +38,10 @@ const TournamentDisplay = (props: {}) => {
             </div>
           </div>
           <div className="ml-4 flex flex-col justify-between ">
-            <div className="relative mb-2 after:absolute after:-left-6 after:top-6 after:h-full after:w-6 after:rounded-tl-[9.6px] after:border-l-[2px] after:border-t-[2px]">
+            <div className="relative mb-2 after:absolute after:-left-6 after:top-1/2 after:h-full after:w-6 after:rounded-tl-[9.6px] after:border-l-[2px] after:border-t-[2px]">
               <MatchTidbit></MatchTidbit>
             </div>
-            <div className="relative mt-2 after:absolute after:-left-6 after:bottom-4 after:h-full after:w-6 after:rounded-bl-[9.6px] after:border-l-[2px] after:border-b-[2px]">
+            <div className="relative mt-2 after:absolute after:-left-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-bl-[9.6px] after:border-l-[2px] after:border-b-[2px]">
               <MatchTidbit></MatchTidbit>
             </div>
           </div>
