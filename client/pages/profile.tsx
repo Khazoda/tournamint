@@ -345,7 +345,7 @@ function Profile(props: Props) {
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center">
         {/* IN GAME NAME */}
-        <div className=" w-full min-w-[224px] overflow-x-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
+        <div className=" w-full min-w-[224px] overflow-x-hidden overflow-y-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
           {ign}
         </div>
         {/* PROFILE PICTURE */}

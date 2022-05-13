@@ -37,6 +37,7 @@ const Button = (props: {
       disabled={disabled}
       style={{
         backgroundColor: typeColours[type],
+        color: 'white',
       }}
       className={`${
         (noMargin ? ' m-0 ' : ' m-1 ') +
