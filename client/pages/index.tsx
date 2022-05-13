@@ -8,6 +8,10 @@ import Button from '../components/common/Button'
 import { useUser } from '../context/UserContext'
 import TeamTidbit from '../components/common/TeamTidbit'
 
+import { default_card_statistics } from '../public/seed_data'
+import MatchTidbit from '../components/common/MatchTidbit'
+import TournamentDisplay from '../components/common/TournamentDisplay'
+
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
 export interface Props {
@@ -20,33 +24,19 @@ const Home: NextPage<Props> = (props) => {
 
   // SHAPES
   interface ICardStatistics {
-    icon: string
+    icon: React.ReactElement
+    title: string
     type: string
     value: number
   }
   // STATE
-  const [cardStatistics, setCardStatistics] = useState<Array<ICardStatistics>>([
-    {
-      icon: 'hi',
-      type: 'hey',
-      value: 5,
-    },
-  ])
+  const [cardStatistics, setCardStatistics] = useState<Array<ICardStatistics>>(
+    []
+  )
 
   useEffect(() => {
     // Populate cardStatistics
-    for (let index = 0; index < 4; index++) {
-      if (cardStatistics.length < 5) {
-        setCardStatistics((statistics) => [
-          ...statistics,
-          {
-            icon: 'sus',
-            type: 'sus',
-            value: Math.round(Math.random() * 54),
-          },
-        ])
-      }
-    }
+    setCardStatistics(default_card_statistics)
   }, [])
 
   return (
@@ -59,18 +49,27 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid h-full w-full  items-center text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] ">
+      <main className="mx-auto grid h-full w-full max-w-[1500px] items-center gap-4 text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] md:gap-2 ">
         {/* Left Half */}
         <div
           id="top_left"
-          className="row-start-2 row-end-2  ml-0 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1"
+          className="row-start-2 row-end-2 ml-0 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1"
         >
           {cardStatistics.map((card) => {
             return (
-              <div className="mr-4 flex h-[164px] w-[164px] min-w-[164px] flex-col justify-center rounded-md bg-emerald-700 last:mr-0">
-                <span>{card.icon || '[Icon]'}</span>
-                <span>{card.value || '[Value]'}</span>
-                <span>{card.type || '[Statistic Name]'}</span>
+              <div className="mr-4 flex h-[164px] w-[164px] min-w-[164px] flex-col justify-center rounded-md border-2 border-green-200 bg-green-100 last:mr-0 dark:border-black-500  dark:bg-black-600">
+                <span className="mx-auto mt-2 h-10 w-10">
+                  {card.icon || '[Icon]'}
+                </span>
+                <span className="mb-auto text-lg font-semibold">
+                  {card.title}
+                </span>
+                <span className="ml-2 self-start text-2xl">
+                  {card.value || '[Value]'}
+                </span>
+                <span className=" ml-2 mb-2 self-start">
+                  {card.type || '[Statistic Name]'}
+                </span>
               </div>
             )
           })}
@@ -78,15 +77,18 @@ const Home: NextPage<Props> = (props) => {
 
         <div
           id="bottom_left"
-          className="row-start-2 hidden h-0 w-0 rounded-md bg-pink-800 md:block md:h-full md:w-full"
+          className="relative row-start-2 hidden h-0 w-0 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
-          <div className=""> Tournament Bracket</div>
-          {displayName} {biography} {ign}
+          <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
+            ( Tournament Bracket Name)
+          </div>
+          <TournamentDisplay></TournamentDisplay>
+          {/* {displayName} {biography} {ign} */}
         </div>
         {/* Right Half */}
         <div
           id="top_right"
-          className=" md:cols-end-2 row-start-1 row-end-1 ml-0 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-white-600 px-2 py-2 dark:bg-white-900 md:col-start-2 md:ml-4 "
+          className=" md:cols-end-2 row-start-1 row-end-1 ml-0 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 dark:bg-black-600 md:col-start-2 md:ml-4 "
         >
           <div className=" flex flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:flex-col">
             <Button
@@ -113,20 +115,12 @@ const Home: NextPage<Props> = (props) => {
         </div>
         <div
           id="bottom_right"
-          className=" ml-0 flex h-full flex-col gap-3 rounded-md bg-white-500 px-2 py-2 dark:bg-white-900 md:ml-4"
+          className=" ml-0 flex h-full flex-col gap-3 rounded-md bg-green-100 px-2 py-2 dark:bg-black-600 md:ml-4"
         >
-          <h2 className="text-lg">Upcoming Tournaments</h2>
+          <h2 className="text-lg">Upcoming Matches</h2>
           <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
-          <div className="border-l-2 border-blue-400 px-2">
-            <div className="flex h-11 flex-row gap-1">
-              <TeamTidbit side="left"></TeamTidbit>
-              <div className="relative h-full w-0.5 bg-transparent">
-                <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
-                  VS
-                </span>
-              </div>
-              <TeamTidbit side="right"></TeamTidbit>
-            </div>
+          <div className="border-l-2 border-blue-400 px-2 ">
+            <MatchTidbit></MatchTidbit>
             <h4>July 15th 15:30 CEST</h4>
           </div>
           <div className="border-l-2 border-blue-400 px-2">
