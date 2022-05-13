@@ -63,7 +63,7 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="row-start-2 row-end-2 ml-4 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1 md:ml-0"
+          className="row-start-2 row-end-2  ml-0 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1"
         >
           {cardStatistics.map((card) => {
             return (
@@ -86,16 +86,16 @@ const Home: NextPage<Props> = (props) => {
         {/* Right Half */}
         <div
           id="top_right"
-          className=" md:cols-end-2 row-start-1 row-end-1 ml-4 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-white-600 px-2 py-2 dark:bg-white-900 md:col-start-2 "
+          className=" md:cols-end-2 row-start-1 row-end-1 ml-0 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-white-600 px-2 py-2 dark:bg-white-900 md:col-start-2 md:ml-4 "
         >
-          <div className=" flex flex-col gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900">
+          <div className=" flex flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:flex-col">
             <Button
               text="Create Tournament"
               noMargin
               type="positive"
               className="text-white-500 drop-shadow-sm"
             ></Button>
-            <div className="flex flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800">
+            <div className="flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
               <Button
                 text="Join Tournament"
                 noMargin
@@ -113,7 +113,7 @@ const Home: NextPage<Props> = (props) => {
         </div>
         <div
           id="bottom_right"
-          className=" ml-4 flex h-full flex-col gap-3 rounded-md bg-white-500 px-2 py-2 dark:bg-white-900"
+          className=" ml-0 flex h-full flex-col gap-3 rounded-md bg-white-500 px-2 py-2 dark:bg-white-900 md:ml-4"
         >
           <h2 className="text-lg">Upcoming Tournaments</h2>
           <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
