@@ -21,34 +21,38 @@ export default function Navbar(props: Props) {
   return (
     <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
       {/* Profile */}
-      <div className="inline-flex min-w-[300px] place-content-end text-right ">
-        <div className="flex flex-col items-end justify-between pr-3">
-          <div className="flex content-center gap-2">
-            <button title="Change Theme" onClick={() => setDark?.(!is_dark)}>
+      <div className="inline-flex place-content-end text-right ">
+        <div className="flex w-8 flex-col items-end justify-between pr-1 md:w-auto md:pr-3">
+          <div className="flex h-full flex-col content-center gap-1 md:h-auto md:flex-row ">
+            <button
+              title="Change Theme"
+              className=" h-8 w-8 rounded-sm border-2 border-gray-500 hover:border-cyan-400 dark:hover:border-cyan-700"
+              onClick={() => setDark?.(!is_dark)}
+            >
               {is_dark ? (
-                <IoSunnyOutline className="h-full w-full hover:text-green-500"></IoSunnyOutline>
+                <IoSunnyOutline className="h-full w-full hover:bg-cyan-900  "></IoSunnyOutline>
               ) : (
-                <IoMoonOutline className="h-full w-full hover:text-green-500"></IoMoonOutline>
+                <IoMoonOutline className="h-full w-full  hover:bg-cyan-200 "></IoMoonOutline>
               )}
             </button>
             <Link href="/settings">
-              <div className="hover:cursor-pointer">
+              <div className="h-8 w-8 rounded-sm border-2 border-gray-500 hover:cursor-pointer hover:border-cyan-400 hover:bg-cyan-200 dark:hover:border-cyan-700 dark:hover:bg-cyan-900">
                 <IoSettingsOutline
                   title="settings"
-                  className="h-full w-full hover:text-green-500"
+                  className="h-full w-full"
                 ></IoSettingsOutline>
               </div>
             </Link>
-            <button className="w-24 border-2 px-2 hover:border-green-500 hover:text-green-500">
+            <button className="hidden w-24 border-2 border-gray-500 px-2 hover:border-red-800 hover:bg-red-200 dark:hover:border-red-500 dark:hover:bg-red-900 md:block">
               Log Out
             </button>
           </div>
-          <span className="text-">{displayName}</span>
+          <span className="hidden md:block">{displayName}</span>
         </div>
         <Link href="/profile">
           <div
             title="View Profile"
-            className="group relative inline h-[60px] w-[60px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 "
+            className="group relative inline h-[68px] w-[68px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
           >
             <Image
               src={
@@ -95,7 +99,7 @@ export default function Navbar(props: Props) {
         </Link>
       </div>
       {/* Logo */}
-      <div className="flex min-w-[300px] align-middle">
+      <div className="flex align-middle">
         <Link href="/">
           <a
             title="Home"
