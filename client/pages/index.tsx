@@ -60,11 +60,11 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className=" mx-4 h-full w-full content-start justify-between overflow-scroll whitespace-nowrap scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 dark:scrollbar-track-gray-600 dark:scrollbar-thumb-emerald-300 dark:hover:scrollbar-thumb-emerald-100 md:mx-0"
+          className="ml-4 flex justify-between overflow-x-auto md:ml-0"
         >
           {cardStatistics.map((card) => {
             return (
-              <div className="inline-flex h-40 w-40 flex-col justify-center rounded-md bg-emerald-700 even:mx-2">
+              <div className="mr-4 flex h-40 w-40 min-w-[10rem] flex-col justify-center rounded-md bg-emerald-700 last:mr-0">
                 <span>{card.icon || '[Icon]'}</span>
                 <span>{card.value || '[Value]'}</span>
                 <span>{card.type || '[Statistic Name]'}</span>
