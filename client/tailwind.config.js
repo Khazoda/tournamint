@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'heading': ['Harmony'],
-        'body': ['Harmony']
+        'body': ['Harmony'],
+        'big': ['Righteous']
       },
       colors: {
         green: {
