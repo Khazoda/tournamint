@@ -77,24 +77,9 @@ export default function Navbar(props: Props) {
       </div>
       {/* Navbar */}
       <div className="hidden justify-center gap-3 lg:inline-flex">
-        <Link href="/">
+        <Link href="/my_teams">
           <a href="" className="font-heading hover:font-bold">
-            Home
-          </a>
-        </Link>
-        <Link href="/">
-          <a href="" className="font-heading hover:font-bold">
-            Ipsum
-          </a>
-        </Link>
-        <Link href="/">
-          <a href="" className="font-heading hover:font-bold">
-            Sit
-          </a>
-        </Link>
-        <Link href="/">
-          <a href="" className="font-heading hover:font-bold">
-            Dolor
+            My Teams
           </a>
         </Link>
       </div>
@@ -103,7 +88,7 @@ export default function Navbar(props: Props) {
         <Link href="/">
           <a
             title="Home"
-            className="inline-block h-[60px] min-h-[60px] w-[176px] min-w-[176px] text-left hover:cursor-pointer hover:drop-shadow-md "
+            className="inline-block h-[60px] min-h-[60px] w-[176px] min-w-[176px] text-left hover:translate-y-0.5 hover:cursor-pointer hover:drop-shadow-md "
           >
             <Image
               src={is_dark ? '/images/logo_dark.svg' : '/images/logo.svg'}
