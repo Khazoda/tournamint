@@ -6,41 +6,59 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { IRankInfo, IStatistics, ITeam } from '../globals/types'
 
+const defaultStatistics = {
+  tournaments_played: 5,
+  tournaments_won: 2,
+  matches_won: 40,
+  people_met: 162,
+}
 export type userContextType = {
   displayName: string
   biography: string
   ign: string
   favouriteChampion: string
-  rankInfo: Object
-  statistics: Object
+  rankInfo: IRankInfo
+  statistics: IStatistics
   tournamentsMade: number
   tournaments: any
-  team: any
+  team: ITeam
 
   setUserDetails?: (
     displayName: string,
     biography: string,
     ign: string,
     favouriteChampion: string,
-    rankInfo: Object,
-    statistics: Object,
+    rankInfo: IRankInfo,
+    statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: any
+    team: ITeam
   ) => void
 }
 
 const userContextDefaultValues: userContextType = {
-  displayName: 'Enrique',
+  displayName: 'Luke',
   biography: 'A simple biography',
   ign: 'DemolitionLuke',
-  favouriteChampion: 'Teemo',
-  rankInfo: {},
-  statistics: {},
+  favouriteChampion: 'Vi',
+  rankInfo: {
+    wins: 5,
+    losses: 5,
+    tier: 'Iron',
+    rank: 'II',
+  },
+  statistics: defaultStatistics,
   tournamentsMade: 0,
   tournaments: {},
-  team: 'ABC',
+  team: {
+    team_tag: 'ABC',
+    team_owner: 'Luke',
+    team_members: ['Luke'],
+    team_name: 'Amazing Blue Chickens',
+    team_statistics: defaultStatistics,
+  },
   setUserDetails: () => {},
 }
 const UserContext = createContext<userContextType>(userContextDefaultValues)
@@ -63,11 +81,11 @@ export function UserProvider({ children }: Props) {
     bio: string,
     ign: string,
     favouriteChampion: string,
-    rankInfo: Object,
-    statistics: Object,
+    rankInfo: IRankInfo,
+    statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: any
+    team: ITeam
   ) => {
     updateUserDetails({
       displayName: name,
@@ -91,16 +109,16 @@ export function UserProvider({ children }: Props) {
       const biography: any = userDetails.biography
       const ign: string = userDetails.ign
       const favouriteChampion: string = userDetails.favouriteChampion
-      const rankInfo: Object = [
-        userDetails.tier,
-        userDetails.rank,
-        userDetails.wins,
-        userDetails.losses,
-      ]
-      const statistics: Object = userDetails.statistics
+      const rankInfo: IRankInfo = {
+        tier: userDetails.tier,
+        rank: userDetails.rank,
+        wins: userDetails.wins,
+        losses: userDetails.losses,
+      }
+      const statistics: IStatistics = userDetails.statistics
       const tournamentsMade: number = userDetails.tournamentsMade
       const tournaments: any = userDetails.tournaments
-      const team: any = userDetails.team
+      const team: ITeam = userDetails.team
       setUserDetails(
         displayName,
         biography,

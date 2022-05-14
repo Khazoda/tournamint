@@ -8,7 +8,7 @@ import Button from '../components/common/Button'
 import { useUser } from '../context/UserContext'
 import TeamTidbit from '../components/common/TeamTidbit'
 
-import { default_card_statistics } from '../public/seed_data'
+import { default_card_statistics } from '../globals/seed_data'
 import MatchTidbit from '../components/common/MatchTidbit'
 import TournamentDisplay from '../components/common/TournamentDisplay'
 
