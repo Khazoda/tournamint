@@ -13,12 +13,21 @@ export type userContextType = {
   ign: string
   favouriteChampion: string
   rankInfo: Object
+  statistics: Object
+  tournamentsMade: number
+  tournaments: any
+  team: any
+
   setUserDetails?: (
     displayName: string,
     biography: string,
     ign: string,
     favouriteChampion: string,
-    rankInfo: Object
+    rankInfo: Object,
+    statistics: Object,
+    tournamentsMade: number,
+    tournaments: any,
+    team: any
   ) => void
 }
 
@@ -28,6 +37,10 @@ const userContextDefaultValues: userContextType = {
   ign: 'DemolitionLuke',
   favouriteChampion: 'Teemo',
   rankInfo: {},
+  statistics: {},
+  tournamentsMade: 0,
+  tournaments: {},
+  team: 'ABC',
   setUserDetails: () => {},
 }
 const UserContext = createContext<userContextType>(userContextDefaultValues)
@@ -50,7 +63,11 @@ export function UserProvider({ children }: Props) {
     bio: string,
     ign: string,
     favouriteChampion: string,
-    rankInfo: Object
+    rankInfo: Object,
+    statistics: Object,
+    tournamentsMade: number,
+    tournaments: any,
+    team: any
   ) => {
     updateUserDetails({
       displayName: name,
@@ -58,6 +75,10 @@ export function UserProvider({ children }: Props) {
       ign: ign,
       favouriteChampion: favouriteChampion,
       rankInfo: rankInfo,
+      statistics: statistics,
+      tournamentsMade: tournamentsMade,
+      tournaments: tournaments,
+      team: team,
     })
   }
 
@@ -76,7 +97,21 @@ export function UserProvider({ children }: Props) {
         userDetails.wins,
         userDetails.losses,
       ]
-      setUserDetails(displayName, biography, ign, favouriteChampion, rankInfo)
+      const statistics: Object = userDetails.statistics
+      const tournamentsMade: number = userDetails.tournamentsMade
+      const tournaments: any = userDetails.tournaments
+      const team: any = userDetails.team
+      setUserDetails(
+        displayName,
+        biography,
+        ign,
+        favouriteChampion,
+        rankInfo,
+        statistics,
+        tournamentsMade,
+        tournaments,
+        team
+      )
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
@@ -101,11 +136,20 @@ export function UserProvider({ children }: Props) {
       localStorage.setItem(
         'userDetails',
         JSON.stringify({
-          displayName: 'Enrique',
-          bio: "A term to describe a situation where one sneaks into the enemy's base and quickly destroys it.",
-          ign: 'Xpeke',
-          favouriteChampion: 'Teemo',
+          ign: 'DemolitionLuke',
+          displayName: 'Luke',
+          bio: 'Vi stands for violence.',
+          favouriteChampion: 'Vi',
+          tournamentsMade: 5,
+          tournaments: '[DEFAULTVALUE]',
+          team: 'ABC',
           rankInfo: { tier: 'Iron', rank: 'IV', wins: '5', losses: '500' },
+          statistics: {
+            tournaments_played: 5,
+            tournaments_won: 2,
+            matches_won: 6,
+            people_met: 40,
+          },
         })
       )
     }
@@ -118,6 +162,10 @@ export function UserProvider({ children }: Props) {
     biography: userDetails.biography,
     ign: userDetails.ign,
     rankInfo: userDetails.rankInfo,
+    statistics: userDetails.statistics,
+    tournamentsMade: userDetails.tournamentsMade,
+    tournaments: userDetails.tournaments,
+    team: userDetails.team,
     favouriteChampion: userDetails.favouriteChampion,
     setUserDetails,
   }

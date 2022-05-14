@@ -79,7 +79,7 @@ export default function Navbar(props: Props) {
       <div className="hidden justify-center gap-3 lg:inline-flex">
         <Link href="/my_teams">
           <a href="" className="font-heading hover:font-bold">
-            My Teams
+            My Team
           </a>
         </Link>
       </div>

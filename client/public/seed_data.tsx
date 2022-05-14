@@ -13,7 +13,7 @@ interface ICardStatistics {
   icon: React.ReactElement
   title: string
   type: string
-  value: number
+  value_key: string
 }
 export const default_card_statistics: Array<ICardStatistics> = [
   {
@@ -24,31 +24,25 @@ export const default_card_statistics: Array<ICardStatistics> = [
       ></FiAward>
     ),
     title: 'Triumphant',
-    value: Math.round(Math.random() * 54),
+    value_key: 'tournaments_won',
     type: 'tournaments won',
   },
   {
     icon: <FiStar className="h-full w-full" color="#ce7832"></FiStar>,
     title: 'Victor',
-    value: Math.round(Math.random() * 54),
+    value_key: 'matches_won',
     type: 'matches won',
-  },
-  {
-    icon: <FiHexagon className="h-full w-full" color="#ce4932"></FiHexagon>,
-    title: 'Underdog',
-    value: Math.round(Math.random() * 54),
-    type: 'loss bracket wins',
   },
   {
     icon: <FiHeart className="h-full w-full" color="#32ce3a"></FiHeart>,
     title: 'Explorer',
-    value: Math.round(Math.random() * 54),
+    value_key: 'people_met',
     type: 'unique people met',
   },
   {
     icon: <FiGrid className="h-full w-full" color="#ce326e"></FiGrid>,
-    title: 'Organizer',
-    value: Math.round(Math.random() * 54),
-    type: 'tournaments made',
+    title: 'Participant',
+    value_key: 'tournaments_played',
+    type: 'tournaments played',
   },
 ]

@@ -20,14 +20,14 @@ export interface Props {
 }
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
-  const { displayName, biography, ign, setUserDetails } = useUser()
+  const { displayName, biography, ign, setUserDetails, statistics } = useUser()
 
   // SHAPES
   interface ICardStatistics {
     icon: React.ReactElement
     title: string
     type: string
-    value: number
+    value_key: string
   }
   // STATE
   const [cardStatistics, setCardStatistics] = useState<Array<ICardStatistics>>(
@@ -56,6 +56,7 @@ const Home: NextPage<Props> = (props) => {
           className="row-start-2 row-end-2 ml-0 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1"
         >
           {cardStatistics.map((card) => {
+            const valuekey = card.value_key
             return (
               <div className="mr-4 flex h-[164px] w-[164px] min-w-[164px] flex-col justify-center rounded-md border-2 border-green-200 bg-green-100 last:mr-0 dark:border-black-500  dark:bg-black-600">
                 <span className="mx-auto mt-2 h-10 w-10">
@@ -65,7 +66,7 @@ const Home: NextPage<Props> = (props) => {
                   {card.title}
                 </span>
                 <span className="ml-2 self-start text-2xl">
-                  {card.value || '[Value]'}
+                  {(statistics as any)[valuekey] || '[Value]'}
                 </span>
                 <span className=" ml-2 mb-2 self-start">
                   {card.type || '[Statistic Name]'}

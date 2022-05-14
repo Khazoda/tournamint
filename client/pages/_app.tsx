@@ -117,10 +117,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       localStorage.setItem(
         'userDetails',
         JSON.stringify({
-          displayName: 'June',
-          bio: 'Bio',
-          ign: 'June',
-          favouriteChampion: 'Teemo',
+          displayName: 'Luke',
+          bio: 'Professional League of Legends Troll',
+          ign: 'DemolitionLuke',
+          favouriteChampion: 'Vi',
         })
       )
     }
