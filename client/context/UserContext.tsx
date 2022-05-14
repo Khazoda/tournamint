@@ -53,11 +53,13 @@ const userContextDefaultValues: userContextType = {
   tournamentsMade: 0,
   tournaments: {},
   team: {
+    team_icon_path: '/images/team_icons/logo_1.svg',
     team_tag: 'ABC',
     team_owner: 'Luke',
     team_members: ['Luke'],
     team_name: 'Amazing Blue Chickens',
     team_statistics: defaultStatistics,
+    team_join_key: '12345678',
   },
   setUserDetails: () => {},
 }
@@ -153,22 +155,7 @@ export function UserProvider({ children }: Props) {
     } else {
       localStorage.setItem(
         'userDetails',
-        JSON.stringify({
-          ign: 'DemolitionLuke',
-          displayName: 'Luke',
-          bio: 'Vi stands for violence.',
-          favouriteChampion: 'Vi',
-          tournamentsMade: 5,
-          tournaments: '[DEFAULTVALUE]',
-          team: 'ABC',
-          rankInfo: { tier: 'Iron', rank: 'IV', wins: '5', losses: '500' },
-          statistics: {
-            tournaments_played: 5,
-            tournaments_won: 2,
-            matches_won: 6,
-            people_met: 40,
-          },
-        })
+        JSON.stringify(userContextDefaultValues)
       )
     }
 
