@@ -107,10 +107,10 @@ const TournamentDisplay = (props: {}) => {
           </div>
           {/* Left 2 */}
           <div className="mr-4 flex flex-col justify-around">
-            <div className="relative mb-4  dark:before:border-white-300 dark:after:border-white-300 ">
+            <div className="relative mb-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600 dark:before:border-white-300 ">
               <MatchTidbit></MatchTidbit>
             </div>
-            <div className="relative mt-4   dark:before:border-white-300 dark:after:border-white-300">
+            <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600  dark:before:border-white-300 dark:after:border-white-300">
               <MatchTidbit></MatchTidbit>
             </div>
           </div>
@@ -128,10 +128,10 @@ const TournamentDisplay = (props: {}) => {
           </div>
           {/* Right 2 */}
           <div className="ml-4 flex flex-col justify-around">
-            <div className="relative mb-4  dark:before:border-white-300 dark:after:border-white-300 ">
+            <div className="relative mb-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
               <MatchTidbit></MatchTidbit>
             </div>
-            <div className="relative mt-4   dark:before:border-white-300 dark:after:border-white-300">
+            <div className="relative mt-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600  dark:before:border-white-300 dark:after:border-white-300">
               <MatchTidbit></MatchTidbit>
             </div>
           </div>
