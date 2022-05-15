@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-350,0)">
-        <rect id="Artboard1" x="350" y="0" width="300" height="300" style="fill:none;"/>
-        <g id="Artboard11" serif:id="Artboard1">
-            <g transform="matrix(1,0,0,1,350,0)">
+    <g transform="matrix(1,0,0,1,-700,0)">
+        <rect id="Artboard2" x="700" y="0" width="300" height="300" style="fill:none;"/>
+        <g id="Artboard21" serif:id="Artboard2">
+            <g transform="matrix(1,0,0,1,700,0)">
                 <path d="M280,111C280,60.776 239.224,20 189,20L111,20C60.776,20 20,60.776 20,111L20,189C20,239.224 60.776,280 111,280L189,280C239.224,280 280,239.224 280,189L280,111Z" style="fill:none;stroke:black;stroke-width:10px;"/>
             </g>
-            <g transform="matrix(0.664336,0,0,0.664336,126.643,12.6845)">
-                <path d="M596,89.703L664.001,139.108L630.001,185.905L685.014,203.78L659.04,283.72L604.027,265.845L604.027,323.689L519.973,323.689L519.973,265.845L464.96,283.72L438.986,203.78L493.999,185.905L459.999,139.108L528,89.703L562,136.5L596,89.703Z" style="fill:rgb(0,127,98);stroke:black;stroke-width:15.05px;"/>
+            <g transform="matrix(0.770095,0,0,0.770095,165.878,8.41146)">
+                <path d="M888.361,72.277L908.403,133.958L947.023,114.897L940.83,157.518L1005.69,157.518L953.216,195.639L983.278,226.479L940.83,233.759L960.871,295.44L908.403,257.319L888.361,295.44L868.32,257.319L815.851,295.44L835.893,233.759L793.445,226.479L823.506,195.639L771.038,157.518L835.893,157.518L829.7,114.897L868.32,133.958L888.361,72.277Z" style="fill:rgb(239,255,101);stroke:black;stroke-width:12.99px;"/>
             </g>
         </g>
     </g>

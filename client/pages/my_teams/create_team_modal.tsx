@@ -16,14 +16,23 @@ const CreateTeamModal = (props: Props) => {
         >
           <FiX size={24}></FiX>
         </button>
-        <h1 className="mt-5 text-2xl">Create Team</h1>
-        <div className="mt-12 flex flex-col text-lg">
-          <span className="mb-2">Team Tag (3 letters):</span>
-          <input
-            id="tag_input"
-            type="text"
-            className="rounded-md border-2 border-green-500 bg-green-600 px-1 dark:border-black-400 dark:bg-black-400"
-          />
+        <h1 className="mt-2 text-2xl">Create Team</h1>
+        <div className="mt-6 flex flex-col text-lg">
+          <span className="mb-2">Team Identity:</span>
+          <div className="flex flex-row gap-2">
+            <input
+              id="tag_input"
+              type="text"
+              placeholder="TAG"
+              className="w-20 rounded-md border-2 border-green-500 bg-green-600 px-1 text-center dark:border-black-400 dark:bg-black-400"
+            />
+            <input
+              id="tag_input"
+              placeholder="Team Name"
+              type="text"
+              className="rounded-md border-2 border-green-500 bg-green-600 px-1 dark:border-black-400 dark:bg-black-400"
+            />
+          </div>
         </div>
         <Button text="Create" type="positive" fixedWidth></Button>
       </div>

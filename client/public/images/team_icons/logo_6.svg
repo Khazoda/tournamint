@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-350,0)">
-        <rect id="Artboard1" x="350" y="0" width="300" height="300" style="fill:none;"/>
-        <g id="Artboard11" serif:id="Artboard1">
-            <g transform="matrix(1,0,0,1,350,0)">
+    <g transform="matrix(1,0,0,1,-350,-343)">
+        <g id="Artboard6" transform="matrix(1,0,0,1,-1750,342)">
+            <rect x="2100" y="0" width="300" height="300" style="fill:none;"/>
+            <g transform="matrix(1,0,0,1,2100,0)">
                 <path d="M280,111C280,60.776 239.224,20 189,20L111,20C60.776,20 20,60.776 20,111L20,189C20,239.224 60.776,280 111,280L189,280C239.224,280 280,239.224 280,189L280,111Z" style="fill:none;stroke:black;stroke-width:10px;"/>
             </g>
-            <g transform="matrix(0.664336,0,0,0.664336,126.643,12.6845)">
-                <path d="M596,89.703L664.001,139.108L630.001,185.905L685.014,203.78L659.04,283.72L604.027,265.845L604.027,323.689L519.973,323.689L519.973,265.845L464.96,283.72L438.986,203.78L493.999,185.905L459.999,139.108L528,89.703L562,136.5L596,89.703Z" style="fill:rgb(0,127,98);stroke:black;stroke-width:15.05px;"/>
+            <g transform="matrix(1.01604,0,0,1.01604,1685.59,-390.027)">
+                <path d="M555.5,438C607.104,438 649,479.896 649,531.5C649,583.104 607.104,625 555.5,625C503.896,625 462,583.104 462,531.5C462,479.896 503.896,438 555.5,438ZM555.5,484.75C581.302,484.75 602.25,505.698 602.25,531.5C602.25,557.302 581.302,578.25 555.5,578.25C529.698,578.25 508.75,557.302 508.75,531.5C508.75,505.698 529.698,484.75 555.5,484.75Z" style="fill:rgb(109,255,228);stroke:black;stroke-width:9.84px;"/>
             </g>
         </g>
     </g>
