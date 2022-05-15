@@ -7,10 +7,8 @@ import { CgArrowRightR } from 'react-icons/cg'
 import { useUser, userContextType } from '../context/UserContext'
 
 export interface Props {
-  localStorage: Storage
   userData: any
   refreshUserInfo: Function
-  store?: any
 }
 export interface UserDetails {
   displayName?: string
@@ -22,7 +20,17 @@ function Profile(props: Props) {
   const { userData = {}, refreshUserInfo = null, ...restProps } = props
 
   // User Details Properties
-  const { displayName, biography, ign, setUserDetails } = useUser()
+  const {
+    displayName,
+    biography,
+    ign,
+    setUserDetails,
+    rankInfo,
+    statistics,
+    team,
+    tournaments,
+    tournamentsMade,
+  } = useUser()
   const [name, setName] = useState<string>('Default')
   const [bio, setBio] = useState<string>('Default Biography')
   const [ig, setIgn] = useState<string>('Default')
@@ -286,7 +294,17 @@ function Profile(props: Props) {
           })
         } else {
           if (CHAMPIONS.includes(favouriteChampion[0])) {
-            setUserDetails(name, bio, ig, favouriteChampion[0], { name: 'sus' })
+            setUserDetails(
+              name,
+              bio,
+              ig,
+              favouriteChampion[0],
+              rankInfo,
+              statistics,
+              tournamentsMade,
+              tournaments,
+              team
+            )
             localStorage.setItem(
               'userDetails',
               JSON.stringify({
