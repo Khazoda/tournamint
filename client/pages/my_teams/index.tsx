@@ -99,6 +99,7 @@ const MyTeamsPage = (props: Props) => {
       {showCreateModal && (
         <CreateTeamModal
           onClick={() => setShowCreateModal(false)}
+          ign={ign}
         ></CreateTeamModal>
       )}
       {showJoinModal && (
