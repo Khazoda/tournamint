@@ -30,12 +30,21 @@ const MyTeamsPage = (props: Props) => {
 
   useEffect(() => {
     refreshTeamInfo()
+    getUserTeam()
   }, [])
 
   useEffect(() => {
     console.log('res', teamMembersData)
   }, [teamMembersData])
 
+  const getUserTeam = async () => {
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: 'TEAMS' })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    console.log('getUserTeam(): ', result)
+  }
   const refreshTeamInfo = () => {
     var tempTeamMembersData: Array<ITeamMemberData> = [
       { ign: 'Default', icon_id: '505', level: '120' },
@@ -44,19 +53,19 @@ const MyTeamsPage = (props: Props) => {
     if (team.team_members[0 && 1 && 2 && 3 && 4] != undefined) {
       axios
         .all([
-          axios.get('/api/teamData', {
+          axios.get('/api/teamDisplayData', {
             params: { ign: team.team_members[0] },
           }),
-          axios.get('/api/teamData', {
+          axios.get('/api/teamDisplayData', {
             params: { ign: team.team_members[1] },
           }),
-          axios.get('/api/teamData', {
+          axios.get('/api/teamDisplayData', {
             params: { ign: team.team_members[2] },
           }),
-          axios.get('/api/teamData', {
+          axios.get('/api/teamDisplayData', {
             params: { ign: team.team_members[3] },
           }),
-          axios.get('/api/teamData', {
+          axios.get('/api/teamDisplayData', {
             params: { ign: team.team_members[4] },
           }),
         ])
@@ -99,7 +108,6 @@ const MyTeamsPage = (props: Props) => {
       {showCreateModal && (
         <CreateTeamModal
           onClick={() => setShowCreateModal(false)}
-          ign={ign}
         ></CreateTeamModal>
       )}
       {showJoinModal && (
