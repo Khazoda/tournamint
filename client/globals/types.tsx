@@ -27,12 +27,29 @@ export interface IUser {
 export interface ITeam {
   team_icon_path: string
   team_tag: string
-  team_colour_hex: string
+  team_colour_hex: ITeamColour
   team_owner: string
   team_members: Array<string>
   team_name: string
   team_statistics: IStatistics
   team_join_key: string
+}
+
+export interface ITeamColour {
+  red: TEAM_COLOURS.RED
+  orange: TEAM_COLOURS.ORANGE
+  yellow: TEAM_COLOURS.YELLOW
+  lime: TEAM_COLOURS.LIME
+  green: TEAM_COLOURS.GREEN
+  blue: TEAM_COLOURS.BLUE
+}
+export enum TEAM_COLOURS {
+  RED = '#FF9AA2',
+  ORANGE = '#FFB7B2',
+  YELLOW = '#FFDAC1',
+  LIME = '#E2F0CB',
+  GREEN = '#B5EAD7',
+  BLUE = '#C7CEEA',
 }
 
 // One Tournament has multiple Rounds

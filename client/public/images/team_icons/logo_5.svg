@@ -4,8 +4,8 @@
     <g transform="matrix(1,0,0,1,0,-342)">
         <g id="Artboard5" transform="matrix(1,0,0,1,-1750,342)">
             <rect x="1750" y="0" width="300" height="300" style="fill:none;"/>
-            <g transform="matrix(1,0,0,1,1750,0)">
-                <path d="M280,111C280,60.776 239.224,20 189,20L111,20C60.776,20 20,60.776 20,111L20,189C20,239.224 60.776,280 111,280L189,280C239.224,280 280,239.224 280,189L280,111Z" style="fill:none;stroke:black;stroke-width:10px;"/>
+            <g transform="matrix(1.15385,0,0,1.15385,1726.92,-23.0769)">
+                <path d="M280,150C280,78.251 221.749,20 150,20C78.251,20 20,78.251 20,150C20,221.749 78.251,280 150,280C221.749,280 280,221.749 280,150Z" style="fill:none;"/>
             </g>
             <g transform="matrix(1.02703,0,0,1.02703,1729,-352.73)">
                 <path d="M259,582L74,582L120.25,397L212.75,397L259,582Z" style="fill:rgb(255,148,109);stroke:black;stroke-width:9.74px;"/>
