@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
-import Button from '../components/common/Button'
-import { useUser } from '../context/UserContext'
+import Button from '../../components/common/Button'
+import { useUser } from '../../context/UserContext'
 import Image from 'next/image'
+import CreateTeamModal from './create_team_modal'
+import JoinTeamModal from './join_team_modal'
 
 export interface Props {
   userData: any
@@ -23,7 +25,8 @@ const MyTeamsPage = (props: Props) => {
     Array<ITeamMemberData>
   >([])
 
-  console.log(team)
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
+  const [showJoinModal, setShowJoinModal] = useState<boolean>(false)
 
   useEffect(() => {
     refreshTeamInfo()
@@ -37,6 +40,7 @@ const MyTeamsPage = (props: Props) => {
     var tempTeamMembersData: Array<ITeamMemberData> = [
       { ign: 'Default', icon_id: '505', level: '120' },
     ]
+
     if (team.team_members[0 && 1 && 2 && 3 && 4] != undefined) {
       axios
         .all([
@@ -92,37 +96,46 @@ const MyTeamsPage = (props: Props) => {
   }
   return (
     <main className="flex flex-col items-center justify-center gap-5 py-24 px-4 md:flex-row">
-      <div className=" flex flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:absolute md:top-24 md:right-4 md:flex-col">
-        <Button
-          text="Create Team"
-          noMargin
-          type="positive"
-          className="text-white-500 drop-shadow-sm"
-        ></Button>
-        <Button
-          text="Join Team"
-          noMargin
-          type="neutral"
-          className="text-white-500"
-        ></Button>
-      </div>
+      {showCreateModal && <CreateTeamModal></CreateTeamModal>}
+      {showJoinModal && <JoinTeamModal></JoinTeamModal>}
       <div className="w-full md:w-[650px]">
         {/* Don't show team info if team defaults are set. //TODO INVERT OPERATOR FOR PRODUCTION */}
-        {team.team_tag != 'ABC' ? (
-          <></>
+        {team.team_tag == 'ABC' ? (
+          <div className=" my-[25vh] mx-12 flex flex-col gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 sm:mx-36">
+            <Button
+              text="Create Team"
+              noMargin
+              type="positive"
+              onClick={() => setShowCreateModal(true)}
+              className="text-white-500 drop-shadow-sm"
+            ></Button>
+            <Button
+              text="Join Team"
+              noMargin
+              type="neutral"
+              onClick={() => setShowJoinModal(true)}
+              className="text-white-500"
+            ></Button>
+          </div>
         ) : (
-          <div className="flex flex-col rounded-md bg-green-300 p-4 dark:bg-black-500">
-            <div className="flex flex-col border-b-2 md:flex-row ">
+          <div className="flex flex-col rounded-md bg-green-300 p-4  dark:bg-black-500">
+            <div className="flex flex-col border-b-2 md:flex-row  ">
               <img className="h-full w-16" src={team.team_icon_path} alt="" />
               <div className="mb-2 ml-4 flex w-full flex-row rounded-sm ">
                 <div className="flex flex-row">
-                  <div className="font-big text-6xl uppercase text-blue-700 dark:text-blue-400">
+                  <div
+                    className="font-big text-6xl uppercase text-blue-700 dark:text-blue-400"
+                    style={{ color: team.team_colour_hex }}
+                  >
                     {team.team_tag}
                   </div>
                   <div className="mx-4 min-h-full w-0.5 bg-white-100"></div>
                 </div>
                 <div className="text-lg">
-                  <span className="text-2xl uppercase text-blue-700 dark:text-blue-400">
+                  <span
+                    className="text-2xl uppercase text-blue-700 dark:text-blue-400"
+                    style={{ color: team.team_colour_hex }}
+                  >
                     {team.team_name}
                   </span>
                   <div>
@@ -137,7 +150,7 @@ const MyTeamsPage = (props: Props) => {
             {/* Team Members */}
             <div className="mt-2">
               {teamMembersData[0] != undefined && (
-                <div className=" mb-2 flex h-24 w-full flex-row rounded-md bg-black-800">
+                <div className=" mb-2 flex h-24 w-full flex-row rounded-md bg-green-500 dark:bg-black-800">
                   <div className="relative flex h-24 w-24 items-center justify-center">
                     <div
                       title="View Profile"
@@ -169,7 +182,7 @@ const MyTeamsPage = (props: Props) => {
                 </div>
               )}
               {teamMembersData[1] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-black-700">
+                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
                   <div className="relative flex h-20 w-20 items-center justify-center">
                     <div
                       title="View Profile"
@@ -201,7 +214,7 @@ const MyTeamsPage = (props: Props) => {
                 </div>
               )}
               {teamMembersData[2] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-black-700">
+                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
                   <div className="relative flex h-20 w-20 items-center justify-center">
                     <div
                       title="View Profile"
@@ -233,7 +246,7 @@ const MyTeamsPage = (props: Props) => {
                 </div>
               )}
               {teamMembersData[3] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-black-700">
+                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
                   <div className="relative flex h-20 w-20 items-center justify-center">
                     <div
                       title="View Profile"
@@ -265,7 +278,7 @@ const MyTeamsPage = (props: Props) => {
                 </div>
               )}
               {teamMembersData[4] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-black-700">
+                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
                   <div className="relative flex h-20 w-20 items-center justify-center">
                     <div
                       title="View Profile"

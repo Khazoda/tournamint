@@ -55,6 +55,7 @@ const userContextDefaultValues: userContextType = {
   team: {
     team_icon_path: '/images/team_icons/logo_1.svg',
     team_tag: 'ABC',
+    team_colour_hex: '#FF0000',
     team_owner: 'Luke',
     team_members: ['Luke', 'June', 'John', 'Jake', 'Jeremy'],
     team_name: 'Amazing Blue Chickens',
