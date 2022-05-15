@@ -125,14 +125,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       )
     }
   }
-
-  // Redis Connection
-  const incr = async () => {
-    const response = await fetch('/api/redisTest', { method: 'GET' })
-    const data = await response.json()
-    setCacheCount(data.count)
-  }
-
   return (
     <div className="m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
       <UserProvider>
