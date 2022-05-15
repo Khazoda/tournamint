@@ -96,8 +96,14 @@ const MyTeamsPage = (props: Props) => {
   }
   return (
     <main className="flex flex-col items-center justify-center gap-5 py-24 px-4 md:flex-row">
-      {showCreateModal && <CreateTeamModal></CreateTeamModal>}
-      {showJoinModal && <JoinTeamModal></JoinTeamModal>}
+      {showCreateModal && (
+        <CreateTeamModal
+          onClick={() => setShowCreateModal(false)}
+        ></CreateTeamModal>
+      )}
+      {showJoinModal && (
+        <JoinTeamModal onClick={() => setShowJoinModal(false)}></JoinTeamModal>
+      )}
       <div className="w-full md:w-[650px]">
         {/* Don't show team info if team defaults are set. //TODO INVERT OPERATOR FOR PRODUCTION */}
         {team.team_tag == 'ABC' ? (
