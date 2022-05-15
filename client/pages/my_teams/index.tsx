@@ -131,8 +131,14 @@ const MyTeamsPage = (props: Props) => {
               <div className="mb-2 ml-4 flex w-full flex-row rounded-sm ">
                 <div className="flex flex-row">
                   <div
-                    className="font-big text-6xl uppercase text-blue-700 dark:text-blue-400"
-                    style={{ color: team.team_colour_hex }}
+                    className={
+                      `${
+                        team.team_colour_hex != null
+                          ? 'text-[' + team.team_colour_hex + ']'
+                          : ''
+                      }` +
+                      ' font-big text-6xl uppercase text-blue-700 dark:text-blue-400'
+                    }
                   >
                     {team.team_tag}
                   </div>
@@ -140,8 +146,14 @@ const MyTeamsPage = (props: Props) => {
                 </div>
                 <div className="text-lg">
                   <span
-                    className="text-2xl uppercase text-blue-700 dark:text-blue-400"
-                    style={{ color: team.team_colour_hex }}
+                    className={
+                      `${
+                        team.team_colour_hex != null
+                          ? 'text-[' + team.team_colour_hex + ']'
+                          : ''
+                      }` +
+                      ' text-2xl uppercase text-blue-700 dark:text-blue-400'
+                    }
                   >
                     {team.team_name}
                   </span>

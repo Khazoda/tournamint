@@ -43,10 +43,28 @@ const CreateTeamModal = (props: Props) => {
       team_join_key: createID(6),
       //
     })
+    const saveTeamDetailsToCloud = async () => {
+      const response = await fetch('/api/teamData', {
+        body: JSON.stringify({ data: dataOut }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+      const { error } = await response.json()
+      if (error) {
+        console.log(error)
+      }
+      console.log(response)
+    }
+    saveTeamDetailsToCloud()
   }
 
   useEffect(() => {
-    console.log(dataOut)
+    // Redis Connection
+    // const saveTeamDetailsToCloud = async () => {
+    //   const response = await fetch('/api/teamData', { method: 'POST' })
+    //   const data = await response.json()
+    //   console.log(data)
+    // }
   }, [dataOut])
 
   return (
