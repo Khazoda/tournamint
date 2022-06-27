@@ -7,6 +7,8 @@ import {
   IoMoonOutline,
 } from 'react-icons/io5'
 import { useUser } from '../../../context/UserContext'
+import '/globals/riot_consts'
+import { DD_PREFIX } from '../../../globals/riot_consts'
 
 export interface Props {
   is_dark: boolean
@@ -58,7 +60,8 @@ export default function Navbar(props: Props) {
               src={
                 userData.profileIconId === undefined
                   ? '/images/spinner.svg'
-                  : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                  : DD_PREFIX +
+                    'img/profileicon/' +
                     userData.profileIconId +
                     '.png'
               }

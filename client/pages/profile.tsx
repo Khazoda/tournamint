@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { FiAward, FiCheckCircle } from 'react-icons/fi'
 import { CgArrowRightR } from 'react-icons/cg'
 import { useUser, userContextType } from '../context/UserContext'
+import { DD_PREFIX } from '../globals/riot_consts'
 
 export interface Props {
   userData: any
@@ -377,7 +378,8 @@ function Profile(props: Props) {
               src={
                 userData.profileIconId === undefined
                   ? '/images/spinner.svg'
-                  : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                  : DD_PREFIX +
+                    'img/profileicon/' +
                     userData.profileIconId +
                     '.png'
               }
