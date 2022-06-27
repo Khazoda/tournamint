@@ -8,9 +8,16 @@ function Settings({}: Props) {
       id="wrapper"
       className="container mx-auto h-full min-h-screen overflow-y-auto px-4 pt-24 pb-4"
     >
-      <article className="prose">
+      <article className="prose mx-auto">
         <h1>Settings</h1>
-        <p>This is the settings page.</p>
+        <div className="align-center flex flex-row items-center justify-between">
+          <label>Setting 1</label>
+          <input type="checkbox" className="toggle" />
+        </div>
+        <div className="align-center flex flex-row items-center justify-between">
+          <label>Setting 2</label>
+          <input type="checkbox" className="toggle" />
+        </div>
       </article>
     </div>
   )
