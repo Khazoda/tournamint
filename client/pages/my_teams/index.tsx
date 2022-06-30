@@ -16,6 +16,7 @@ interface ITeamMemberData {
   icon_id: string
   level: string
 }
+
 const MyTeamsPage = (props: Props) => {
   const { userData = {}, refreshUserInfo = null, ...restProps } = props
   const { displayName, biography, ign, setUserDetails, statistics, team } =
@@ -38,13 +39,14 @@ const MyTeamsPage = (props: Props) => {
   }, [teamMembersData])
 
   const getUserTeam = async () => {
-    const url = '/api/teamData?' + new URLSearchParams({ team_tag: 'TEAMS' })
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: 'ABC' })
     const result = await fetch(url)
       .then((res) => res.json())
       .catch((res) => console.log(res.error))
 
     console.log('getUserTeam(): ', result)
   }
+
   const refreshTeamInfo = () => {
     var tempTeamMembersData: Array<ITeamMemberData> = [
       { ign: 'Default', icon_id: '505', level: '120' },
@@ -103,6 +105,7 @@ const MyTeamsPage = (props: Props) => {
         )
     }
   }
+
   return (
     <main className="flex flex-col items-center justify-center gap-5 py-24 px-4 md:flex-row">
       {showCreateModal && (
