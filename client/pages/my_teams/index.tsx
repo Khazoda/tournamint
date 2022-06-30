@@ -19,8 +19,7 @@ interface ITeamMemberData {
 
 const MyTeamsPage = (props: Props) => {
   const { userData = {}, refreshUserInfo = null, ...restProps } = props
-  const { displayName, biography, ign, setUserDetails, statistics, team } =
-    useUser()
+  const { displayName, biography, ign, statistics, team } = useUser()
 
   const [teamMembersData, setTeamMembersData] = useState<
     Array<ITeamMemberData>

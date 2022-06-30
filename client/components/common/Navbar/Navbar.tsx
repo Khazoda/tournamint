@@ -18,7 +18,7 @@ export interface Props {
 
 export default function Navbar(props: Props) {
   const { is_dark = false, setDark = null, userData = {}, ...restProps } = props
-  const { displayName, biography, ign, setUserDetails } = useUser()
+  const { displayName, biography, ign } = useUser()
 
   return (
     <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">

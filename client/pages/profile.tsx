@@ -84,6 +84,7 @@ function Profile(props: Props) {
     'aurelionsol',
     'azir',
     'bard',
+    'belveth',
     'blitzcrank',
     'brand',
     'braum',
@@ -282,8 +283,6 @@ function Profile(props: Props) {
     }
   }
   const saveUserDetails = () => {
-    console.log('USER DETAILS SAVED')
-
     if (setUserDetails != null) {
       if (localStorage !== null) {
         if (localStorage.userDetails == null) {
@@ -306,6 +305,7 @@ function Profile(props: Props) {
               tournaments,
               team
             )
+
             localStorage.setItem(
               'userDetails',
               JSON.stringify({
@@ -343,6 +343,7 @@ function Profile(props: Props) {
         }
       }
     }
+    console.log('USER DETAILS SAVED')
   }
 
   useEffect(() => {

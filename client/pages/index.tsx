@@ -20,7 +20,7 @@ export interface Props {
 }
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
-  const { displayName, biography, ign, setUserDetails, statistics } = useUser()
+  const { displayName, biography, ign, statistics } = useUser()
 
   // SHAPES
   interface ICardStatistics {

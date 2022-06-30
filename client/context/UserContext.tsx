@@ -39,10 +39,10 @@ export type userContextType = {
 }
 
 const userContextDefaultValues: userContextType = {
-  displayName: 'Luke',
-  biography: 'A simple biography',
+  displayName: 'Default',
+  biography: 'A default biography',
   ign: 'DemolitionLuke',
-  favouriteChampion: 'Vi',
+  favouriteChampion: 'Warwick',
   rankInfo: {
     wins: 5,
     losses: 5,
@@ -56,8 +56,8 @@ const userContextDefaultValues: userContextType = {
     team_icon_path: '/images/team_icons/logo_1.svg',
     team_tag: 'ABC',
     team_colour_hex: '#FF0000',
-    team_owner: 'Luke',
-    team_members: ['Luke', 'June', 'John', 'Jake', 'Jeremy'],
+    team_owner: 'DemolitionLuke',
+    team_members: ['DemolitionLuke', 'June', 'John', 'Jake', 'Jeremy'],
     team_name: 'Amazing Blue Chickens',
     team_statistics: defaultStatistics,
     team_join_key: '12345678',
@@ -103,6 +103,7 @@ export function UserProvider({ children }: Props) {
     })
     if (localStorage?.userDetails != null) {
       localStorage.userDetails = JSON.stringify(userDetails)
+      console.log(userDetails)
     }
   }
 
@@ -111,6 +112,7 @@ export function UserProvider({ children }: Props) {
       const userDetails: any = JSON.parse(
         localStorage.getItem('userDetails') as string
       )
+
       const displayName: any = userDetails.displayName
       const biography: any = userDetails.biography
       const ign: string = userDetails.ign

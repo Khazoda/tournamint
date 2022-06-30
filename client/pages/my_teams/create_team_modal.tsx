@@ -56,7 +56,6 @@ const CreateTeamModal = (props: Props) => {
       team_join_key: createID(6),
       //
     })
-    console.log(dataOut)
 
     const saveTeamDetailsToCloud = async () => {
       const response = await fetch('/api/teamData', {
@@ -65,6 +64,8 @@ const CreateTeamModal = (props: Props) => {
         method: 'POST',
       })
       const { error } = await response.json()
+      console.log('error', error)
+
       if (error) {
         console.log(error)
       } else if (response.status == 200) {
@@ -81,6 +82,7 @@ const CreateTeamModal = (props: Props) => {
             dataOut
           )
         }
+
         onClick()
       }
     }
