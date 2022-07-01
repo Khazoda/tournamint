@@ -994,6 +994,21 @@ module.exports = {
     'active',
     'disabled',
   ],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#00ff88",
+          secondary: "#00a2ff",
+          accent: "#d2eb45",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+      "dark",
+      "cupcake",
+    ],
+  },
   plugins: [
     require('tailwind-scrollbar'),
     require('tailwind-scrollbar-hide'),

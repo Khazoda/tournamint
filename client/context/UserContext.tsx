@@ -101,10 +101,11 @@ export function UserProvider({ children }: Props) {
       tournaments: tournaments,
       team: team,
     })
-    if (localStorage?.userDetails != null) {
-      localStorage.userDetails = JSON.stringify(userDetails)
-      console.log(userDetails)
-    }
+    // !DISABLED TUD TO OVERWRITING LOCALSTORAGE
+    // if (localStorage?.userDetails != null) {
+    //   localStorage.userDetails = JSON.stringify(userDetails)
+    //   console.log('USERCONTEXT SET')
+    // }
   }
 
   useEffect(() => {

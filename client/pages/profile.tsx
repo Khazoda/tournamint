@@ -371,10 +371,10 @@ function Profile(props: Props) {
         {/* PROFILE PICTURE */}
         <div className="relative h-0 w-full  rounded-md bg-gray-200 pb-[100%] drop-shadow-lg dark:bg-black-500">
           {/* SPLASH ART BACKGROUND */}
-          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-gray-300 shadow-inner dark:bg-black-600">
+          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2">
             <Image src={splashURL} layout="fill" objectFit="cover"></Image>
           </div>
-          <div className="absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 bg-gray-200 dark:bg-black-500">
+          <div className=" absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 bg-gray-200 dark:bg-black-500">
             <Image
               src={
                 userData.profileIconId === undefined
@@ -506,7 +506,7 @@ function Profile(props: Props) {
       </div>
 
       {/* Input Fields */}
-      <ul className="items-between flex h-full flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
+      <ul className="items-between flex h-[335px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
         <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
           Edit Profile
         </h1>
