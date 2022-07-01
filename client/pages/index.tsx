@@ -1,8 +1,13 @@
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
-import { Props } from 'react'
+import { Props, useEffect, useState } from 'react'
 
+const populateUserData = (name_input: string) => {
+  alert('save' + name_input + "'s default data to locel storage")
+}
 const Home: NextPage = (props) => {
+  const [name_input, setName_input] = useState()
+
   return (
     <div className="hero absolute z-50 h-full min-h-screen w-full bg-base-200 bg-gradient-to-br from-[#009c53] to-[#005d92] font-heading">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -14,17 +19,26 @@ const Home: NextPage = (props) => {
           <h1 className="text-2xl font-bold">Welcome to </h1>
           <h1 className="text-5xl font-bold">Tournamint</h1>
           <br />
-          <p className="min-w-max py-6">
+          <p className="min-w-max py-6 text-lg">
             Please enter your in-game League of Legends® name to get started
           </p>
-          <div className="flex flex-row gap-4">
+          <form
+            action="/main"
+            className="flex w-full flex-row justify-between gap-4"
+          >
             <input
               type="text"
-              placeholder="Type here"
-              className="input input-bordered input-primary w-full max-w-xs text-black-600"
+              placeholder="Start typing..."
+              className="input input-bordered input-primary w-full max-w-md text-black-600"
+              onChange={(e: any) => setName_input(e.target.value)}
             />
-            <button className="btn btn-primary">Get Started</button>
-          </div>
+            <button
+              onClick={() => populateUserData(name_input)}
+              className="btn btn-primary"
+            >
+              Get Started
+            </button>
+          </form>
         </div>
       </div>
     </div>
