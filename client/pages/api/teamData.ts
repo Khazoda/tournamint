@@ -13,7 +13,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  console.log("[teamData] method:", req.method);
+  // console.log("[teamData] method:", req.method);
 
   if (req.method == 'POST') {
     const data = req.body.data
@@ -21,12 +21,12 @@ export default async function handler(
       res.status(400).json({ error: 'No team data being sent' })
     } else {
       const id_tag = data.team_tag
-      console.log("New team TAG:", id_tag);
+      // console.log("New team TAG:", id_tag);
 
       const team_data = data
       // const response = await redis.hset('teams', { [JSON.stringify(id_tag)]: JSON.stringify(team_data) });
       const response = await redis.hset("TEAMS", { [id_tag]: team_data });
-      console.log(response);
+      // console.log(response);
 
       res.json({ response });
     }
@@ -35,11 +35,11 @@ export default async function handler(
 
   if (req.method == 'GET') {
     const team_tag: any = req.query.team_tag
-    console.log('team_tag param:', team_tag);
+    // console.log('team_tag param:', team_tag);
 
     const response = await redis.hget("TEAMS", team_tag)
 
-    console.log(response);
+    // console.log(response);
 
     res.json({ response })
 

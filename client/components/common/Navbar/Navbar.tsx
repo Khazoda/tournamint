@@ -88,7 +88,7 @@ export default function Navbar(props: Props) {
       </div>
       {/* Logo */}
       <div className="flex align-middle">
-        <Link href="/">
+        <Link href="/main">
           <a
             title="Home"
             className="inline-block h-[60px] min-h-[60px] w-[176px] min-w-[176px] text-left hover:translate-y-0.5 hover:cursor-pointer hover:drop-shadow-md "

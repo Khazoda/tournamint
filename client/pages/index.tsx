@@ -1,12 +1,97 @@
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import { Props, useEffect, useState } from 'react'
+import { useUser } from '../context/UserContext'
 
-const populateUserData = (name_input: string) => {
-  alert('save' + name_input + "'s default data to locel storage")
-}
 const Home: NextPage = (props) => {
-  const [name_input, setName_input] = useState()
+  const {
+    displayName,
+    biography,
+    ign,
+    setUserDetails,
+    rankInfo,
+    statistics,
+    team,
+    tournaments,
+    tournamentsMade,
+  } = useUser()
+  const [name_input, setName_input] = useState<string>('')
+
+  var seed_data = {
+    displayName: name_input || 'default',
+    biography: 'This is a default biography',
+    ign: name_input || 'default',
+    favouriteChampion: 'Teemo',
+    rankInfo: {
+      tier: 'iron',
+      rank: 'IV',
+      wins: 0,
+      losses: 0,
+    },
+    statistics: {
+      tournaments_played: 0,
+      tournaments_won: 0,
+      matches_won: 0,
+      people_met: 0,
+    },
+    tournamentsMade: 0,
+    tournaments: null,
+    team: null,
+  }
+  const populateUserData = (name_input: string) => {
+    alert('save' + name_input + "'s default data to locel storage")
+
+    if (setUserDetails != null) {
+      if (localStorage !== null) {
+        setUserDetails(
+          seed_data.displayName,
+          seed_data.biography,
+          seed_data.ign,
+          seed_data.favouriteChampion,
+          {
+            wins: seed_data.rankInfo.wins,
+            losses: seed_data.rankInfo.losses,
+            tier: seed_data.rankInfo.tier,
+            rank: seed_data.rankInfo.rank,
+          },
+          {
+            tournaments_played: seed_data.statistics.tournaments_played,
+            tournaments_won: seed_data.statistics.tournaments_won,
+            matches_won: seed_data.statistics.matches_won,
+            people_met: seed_data.statistics.people_met,
+          },
+          seed_data.tournamentsMade,
+          seed_data.tournaments,
+          seed_data.team
+        )
+
+        localStorage.setItem(
+          'userDetails',
+          JSON.stringify({
+            displayName: seed_data.displayName,
+            biography: seed_data.biography,
+            ign: seed_data.ign,
+            favouriteChampion: seed_data.favouriteChampion,
+            rankInfo: {
+              tier: seed_data.rankInfo.tier,
+              rank: seed_data.rankInfo.rank,
+              wins: seed_data.rankInfo.wins,
+              losses: seed_data.rankInfo.losses,
+            },
+            statistics: {
+              tournaments_played: seed_data.statistics.tournaments_played,
+              tournaments_won: seed_data.statistics.tournaments_won,
+              matches_won: seed_data.statistics.matches_won,
+              people_met: seed_data.statistics.people_met,
+            },
+            tournamentsMade: seed_data.tournamentsMade,
+            tournaments: seed_data.tournaments,
+            team: seed_data.team,
+          })
+        )
+      }
+    }
+  }
 
   return (
     <div className="hero absolute z-50 h-full min-h-screen w-full bg-base-200 bg-gradient-to-br from-[#009c53] to-[#005d92] font-heading">

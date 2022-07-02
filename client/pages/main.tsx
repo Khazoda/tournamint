@@ -66,7 +66,7 @@ const Home: NextPage<Props> = (props) => {
                   {card.title}
                 </span>
                 <span className="ml-2 self-start text-2xl">
-                  {(statistics as any)[valuekey] || '[Value]'}
+                  {(statistics as any)[valuekey]}
                 </span>
                 <span className=" ml-2 mb-2 self-start">
                   {card.type || '[Statistic Name]'}

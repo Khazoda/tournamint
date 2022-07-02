@@ -64,10 +64,10 @@ const CreateTeamModal = (props: Props) => {
         method: 'POST',
       })
       const { error } = await response.json()
-      console.log('error', error)
+      // console.log('error', error)
 
       if (error) {
-        console.log(error)
+        // console.log(error)
       } else if (response.status == 200) {
         if (setUserDetails != undefined) {
           setUserDetails(

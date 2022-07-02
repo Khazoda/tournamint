@@ -286,12 +286,7 @@ function Profile(props: Props) {
     if (setUserDetails != null) {
       if (localStorage !== null) {
         if (localStorage.userDetails == null) {
-          localStorage.userDetails = JSON.stringify({
-            displayName: 'displayName',
-            biography: 'biography',
-            ign: 'Tryndamere',
-            favouriteChampion: ['Tryndamere', ''],
-          })
+          //  redirect to landing page
         } else {
           if (CHAMPIONS.includes(favouriteChampion[0])) {
             setUserDetails(
@@ -305,7 +300,6 @@ function Profile(props: Props) {
               tournaments,
               team
             )
-
             localStorage.setItem(
               'userDetails',
               JSON.stringify({
@@ -319,6 +313,15 @@ function Profile(props: Props) {
                   wins: userData.wins,
                   losses: userData.losses,
                 },
+                statistics: {
+                  tournaments_played: statistics.tournaments_played,
+                  tournaments_won: statistics.tournaments_won,
+                  matches_won: statistics.matches_won,
+                  people_met: statistics.people_met,
+                },
+                tournamentsMade: tournamentsMade,
+                tournaments: tournaments,
+                team: team,
               })
             )
             setText('Profile Saved')
@@ -336,12 +339,11 @@ function Profile(props: Props) {
               setButtonActive(false)
             }, 1500)
           }
-
-          if (refreshUserInfo !== null) {
-            refreshUserInfo()
-          }
         }
       }
+    }
+    if (refreshUserInfo !== null) {
+      refreshUserInfo()
     }
     console.log('USER DETAILS SAVED')
   }

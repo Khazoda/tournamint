@@ -19,7 +19,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log("/userRanking API Call Fired")
+  // console.log("/userRanking API Call Fired")
 
   const ign = req.query.ign
   const ID = await getPlayerID(ign)

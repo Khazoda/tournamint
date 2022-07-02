@@ -23,7 +23,7 @@ export type userContextType = {
   statistics: IStatistics
   tournamentsMade: number
   tournaments: any
-  team: ITeam
+  team: ITeam | null
 
   setUserDetails?: (
     displayName: string,
@@ -34,7 +34,7 @@ export type userContextType = {
     statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: ITeam
+    team: ITeam | null
   ) => void
 }
 
@@ -88,7 +88,7 @@ export function UserProvider({ children }: Props) {
     statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: ITeam
+    team: ITeam | null
   ) => {
     updateUserDetails({
       displayName: name,
@@ -110,24 +110,24 @@ export function UserProvider({ children }: Props) {
 
   useEffect(() => {
     if (localStorage?.userDetails != null) {
-      const userDetails: any = JSON.parse(
+      const LSuserDetails: any = JSON.parse(
         localStorage.getItem('userDetails') as string
       )
 
-      const displayName: any = userDetails.displayName
-      const biography: any = userDetails.biography
-      const ign: string = userDetails.ign
-      const favouriteChampion: string = userDetails.favouriteChampion
+      const displayName: string = LSuserDetails.displayName
+      const biography: string = LSuserDetails.biography
+      const ign: string = LSuserDetails.ign
+      const favouriteChampion: string = LSuserDetails.favouriteChampion
       const rankInfo: IRankInfo = {
-        tier: userDetails.tier,
-        rank: userDetails.rank,
-        wins: userDetails.wins,
-        losses: userDetails.losses,
+        tier: LSuserDetails.tier,
+        rank: LSuserDetails.rank,
+        wins: LSuserDetails.wins,
+        losses: LSuserDetails.losses,
       }
-      const statistics: IStatistics = userDetails.statistics
-      const tournamentsMade: number = userDetails.tournamentsMade
-      const tournaments: any = userDetails.tournaments
-      const team: ITeam = userDetails.team
+      const statistics: IStatistics = LSuserDetails.statistics
+      const tournamentsMade: number = LSuserDetails.tournamentsMade
+      const tournaments: any = LSuserDetails.tournaments
+      const team: ITeam | null = LSuserDetails.team
       setUserDetails(
         displayName,
         biography,
@@ -139,6 +139,7 @@ export function UserProvider({ children }: Props) {
         tournaments,
         team
       )
+      console.log(userDetails)
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
@@ -157,14 +158,13 @@ export function UserProvider({ children }: Props) {
           console.error(error)
         })
       //
-
-      // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
-    } else {
-      localStorage.setItem(
-        'userDetails',
-        JSON.stringify(userContextDefaultValues)
-      )
     }
+    //  else {
+    //   localStorage.setItem(
+    //     'userDetails',
+    //     JSON.stringify(userContextDefaultValues)
+    //   )
+    // }
 
     return
   }, [])

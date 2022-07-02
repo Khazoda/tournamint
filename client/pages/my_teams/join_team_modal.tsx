@@ -11,7 +11,7 @@ const TEST = async (tag: string) => {
     .then((res) => res.json())
     .catch((res) => console.log(res.error))
 
-  console.log('getUserTeam(): ', result)
+  // console.log('getUserTeam(): ', result)
 }
 const JoinTeamModal = (props: Props) => {
   const { onClick = null, ...restProps } = props

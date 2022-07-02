@@ -21,7 +21,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log("/teamDisplayData API Call Fired")
+  // console.log("/teamDisplayData API Call Fired")
 
   const ign = req.query.ign
   const PUUID = await getPlayerUUID(ign)

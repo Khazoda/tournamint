@@ -22,7 +22,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log("/userData API Call Fired")
+  // console.log("/userData API Call Fired")
 
   const ign = req.query.ign
   const PUUID = await getPlayerUUID(ign)
