@@ -6,6 +6,7 @@ import { FiAward, FiCheckCircle } from 'react-icons/fi'
 import { CgArrowRightR } from 'react-icons/cg'
 import { useUser, userContextType } from '../context/UserContext'
 import { DD_PREFIX } from '../globals/riot_consts'
+import { Capitalize } from '../globals/global_functions'
 
 export interface Props {
   userData: any
@@ -58,18 +59,6 @@ function Profile(props: Props) {
     }
   }
 
-  const Capitalize = (i: string) => {
-    let result: string = ''
-    if (i.length >= 2) {
-      result =
-        i.substring(0, 1).toUpperCase() + i.substring(1, i.length).toLowerCase()
-    } else if (i.length == 1) {
-      result = i.toUpperCase()
-    } else {
-      result = i
-    }
-    return result
-  }
   const CHAMPIONS = [
     'aatrox',
     'ahri',

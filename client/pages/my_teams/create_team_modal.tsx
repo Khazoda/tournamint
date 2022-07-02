@@ -64,7 +64,7 @@ const CreateTeamModal = (props: Props) => {
         method: 'POST',
       })
       const { error } = await response.json()
-      // console.log('error', error)
+      console.log('error:', error)
 
       if (error) {
         // console.log(error)
@@ -80,6 +80,30 @@ const CreateTeamModal = (props: Props) => {
             tournamentsMade,
             tournaments,
             dataOut
+          )
+          localStorage.setItem(
+            'userDetails',
+            JSON.stringify({
+              displayName: displayName,
+              biography: biography,
+              ign: ign,
+              favouriteChampion: favouriteChampion,
+              rankInfo: {
+                tier: rankInfo.tier,
+                rank: rankInfo.rank,
+                wins: rankInfo.wins,
+                losses: rankInfo.losses,
+              },
+              statistics: {
+                tournaments_played: statistics.tournaments_played,
+                tournaments_won: statistics.tournaments_won,
+                matches_won: statistics.matches_won,
+                people_met: statistics.people_met,
+              },
+              tournamentsMade: tournamentsMade,
+              tournaments: tournaments,
+              team: dataOut,
+            })
           )
         }
 

@@ -1,21 +1,56 @@
 import { useState } from 'react'
 import { FiX } from 'react-icons/fi'
 import Button from '../../components/common/Button'
+import { useUser } from '../../context/UserContext'
+import { Capitalize } from '../../globals/global_functions'
 
 interface Props {
   onClick: any
 }
-const TEST = async (tag: string) => {
-  const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag })
-  const result = await fetch(url)
-    .then((res) => res.json())
-    .catch((res) => console.log(res.error))
 
-  // console.log('getUserTeam(): ', result)
-}
 const JoinTeamModal = (props: Props) => {
   const { onClick = null, ...restProps } = props
   const [tag_out, setTag_out] = useState<string>('')
+  const {
+    displayName,
+    biography,
+    ign,
+    statistics,
+    team,
+    favouriteChampion,
+    rankInfo,
+    tournaments,
+    tournamentsMade,
+    setUserDetails,
+  } = useUser()
+
+  const TEST = async (tag: string) => {
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    console.log('getUserTeam(): ', result)
+  }
+  const joinTeam = async (tag: string) => {
+    tag = tag.toUpperCase()
+    console.log('TAG:', tag)
+
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    if (team != null) {
+      alert('You are already in a team.')
+    } else {
+      if (result.response == null) {
+        alert('Invalid Team Tag.')
+      } else {
+        alert(result.response.team_tag + ' joined.')
+      }
+    }
+  }
 
   return (
     <div className="absolute top-0 left-0  z-50 h-screen w-screen bg-transparent backdrop-blur-sm">
@@ -43,7 +78,12 @@ const JoinTeamModal = (props: Props) => {
           onClick={() => TEST(tag_out)}
           className="text-white-500"
         ></Button>
-        <Button text="Join" type="positive" fixedWidth></Button>
+        <Button
+          text="Join"
+          type="positive"
+          fixedWidth
+          onClick={() => joinTeam(tag_out)}
+        ></Button>
       </div>
     </div>
   )
