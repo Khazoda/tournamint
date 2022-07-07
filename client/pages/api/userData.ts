@@ -28,9 +28,12 @@ export default async function handler(
   const PUUID = await getPlayerUUID(ign)
   const API_CALL = encodeURI("https://euw1.api.riotgames.com/" + "lol/summoner/v4/summoners/by-puuid/" + PUUID + "?api_key=" + API_KEY)
 
+
+
   const userData = await axios.get(API_CALL)
     .then(response => response.data)
     .catch(err => err)
 
   res.status(200).json(userData)
+
 }

@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import { Props, useEffect, useState } from 'react'
@@ -38,7 +39,40 @@ const Home: NextPage = (props) => {
     tournaments: null,
     team: null,
   }
-  const populateUserData = (name_input: string) => {
+
+  const checkName = async () => {
+    let valid_lol_name: boolean = false
+    let db_name_exists: boolean = false
+    const url = '/api/login?' + new URLSearchParams({ ign: name_input })
+
+    const result: any = await fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('HTTP status ' + res.status)
+        }
+        return res.json()
+      })
+      .then((res) => {
+        console.log(res)
+        try {
+          if (res.status == 400) {
+            alert('TODO: tell user to enter valid name')
+          } else {
+            valid_lol_name = true
+            alert('valid :)')
+          }
+        } catch (error) {}
+      })
+      .catch((res) => console.log('Error:', res.error))
+
+    // TODO: check db for ign under accounts hash
+
+    // // // !Guard Clauses
+    if (!valid_lol_name) return false
+    if (!db_name_exists) return false
+    populateUserData()
+  }
+  const populateUserData = () => {
     if (setUserDetails != null) {
       if (localStorage !== null) {
         setUserDetails(
@@ -106,8 +140,11 @@ const Home: NextPage = (props) => {
             Please enter your in-game League of Legends® name to get started
           </p>
           <form
-            action="/main"
             className="flex w-full flex-row justify-between gap-4"
+            onSubmit={(e) => {
+              e.preventDefault()
+              return false
+            }}
           >
             <input
               type="text"
@@ -115,10 +152,7 @@ const Home: NextPage = (props) => {
               className="input input-bordered input-primary w-full max-w-md text-black-600"
               onChange={(e: any) => setName_input(e.target.value)}
             />
-            <button
-              onClick={() => populateUserData(name_input)}
-              className="btn btn-primary"
-            >
+            <button onClick={() => checkName()} className="btn btn-primary">
               Get Started
             </button>
           </form>

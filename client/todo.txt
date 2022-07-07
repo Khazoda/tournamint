@@ -1,0 +1,10 @@
+enter name:
+does name exist on riot servers?
+yes:
+	GET db for name comparison
+		name found?
+			yes: ask user for password
+				password matches db?
+					yes: log in, redirect to main page
+			no: ask user to make password, POST new account data to db
+no: tell user to enter another
