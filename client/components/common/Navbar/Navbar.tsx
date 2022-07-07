@@ -9,6 +9,7 @@ import {
 import { useUser } from '../../../context/UserContext'
 import '/globals/riot_consts'
 import { DD_PREFIX } from '../../../globals/riot_consts'
+import { useRouter } from 'next/router'
 
 export interface Props {
   is_dark: boolean
@@ -18,9 +19,49 @@ export interface Props {
 
 export default function Navbar(props: Props) {
   const { is_dark = false, setDark = null, userData = {}, ...restProps } = props
-  const { displayName, biography, ign } = useUser()
+  const {
+    displayName,
+    biography,
+    ign,
+    setUserDetails,
+    rankInfo,
+    statistics,
+    team,
+    tournaments,
+    tournamentsMade,
+  } = useUser()
+  const router = useRouter()
 
-  const handleLogOut = () => {}
+  const handleLogOut = () => {
+    if (setUserDetails != null) {
+      if (localStorage !== null) {
+        setUserDetails(
+          '',
+          '',
+          '',
+          '',
+          {
+            wins: 0,
+            losses: 0,
+            tier: '',
+            rank: '',
+          },
+          {
+            tournaments_played: 0,
+            tournaments_won: 0,
+            matches_won: 0,
+            people_met: 0,
+          },
+          0,
+          '',
+          null
+        )
+
+        localStorage.removeItem('userDetails')
+        router.push('/')
+      }
+    }
+  }
   return (
     <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
       {/* Profile */}
