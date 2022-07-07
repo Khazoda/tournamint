@@ -20,6 +20,7 @@ export default function Navbar(props: Props) {
   const { is_dark = false, setDark = null, userData = {}, ...restProps } = props
   const { displayName, biography, ign } = useUser()
 
+  const handleLogOut = () => {}
   return (
     <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
       {/* Profile */}
@@ -45,7 +46,10 @@ export default function Navbar(props: Props) {
                 ></IoSettingsOutline>
               </div>
             </Link>
-            <button className="hidden w-24 border-2 border-gray-500 px-2 hover:border-red-800 hover:bg-red-200 dark:hover:border-red-500 dark:hover:bg-red-900 md:block">
+            <button
+              onClick={() => handleLogOut()}
+              className="hidden w-24 border-2 border-gray-500 px-2 hover:border-red-800 hover:bg-red-200 dark:hover:border-red-500 dark:hover:bg-red-900 md:block"
+            >
               Log Out
             </button>
           </div>
