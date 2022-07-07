@@ -432,12 +432,15 @@ const MyTeamsPage = (props: Props) => {
                 </span>
                 <div className="flex flex-row gap-2">
                   <span>Reveal join code:</span>
-                  <div
-                    className="group relative rounded-sm bg-black-700 px-1 py-0.5 hover:cursor-pointer"
-                    onClick={() => alert('Todo: Implement code copy on click')}
-                  >
-                    <span className="opacity-0 transition-opacity group-hover:opacity-100 ">
-                      {+team.team_join_key}
+                  <div className=" group relative rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
+                    <span
+                      className="opacity-0 transition-opacity  group-hover:opacity-100"
+                      onClick={() =>
+                        navigator.clipboard.writeText(team.team_join_key)
+                      }
+                      title="Click to copy"
+                    >
+                      {team.team_join_key}
                     </span>
                     <span className="absolute top-0 left-0 w-full bg-white-100 group-hover:hidden"></span>
                   </div>

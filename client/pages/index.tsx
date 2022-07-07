@@ -39,8 +39,6 @@ const Home: NextPage = (props) => {
     team: null,
   }
   const populateUserData = (name_input: string) => {
-    alert('save' + name_input + "'s default data to locel storage")
-
     if (setUserDetails != null) {
       if (localStorage !== null) {
         setUserDetails(
