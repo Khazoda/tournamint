@@ -113,17 +113,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         })
 
       // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
-    } else {
-      localStorage.setItem(
-        'userDetails',
-        JSON.stringify({
-          displayName: 'Luke',
-          bio: 'Professional League of Legends Troll',
-          ign: 'DemolitionLuke',
-          favouriteChampion: 'Vi',
-        })
-      )
     }
+    // else {
+    //   localStorage.setItem(
+    //     'userDetails',
+    //     JSON.stringify({
+    //       displayName: 'Luke',
+    //       bio: 'Professional League of Legends Troll',
+    //       ign: 'DemolitionLuke',
+    //       favouriteChampion: 'Vi',
+    //     })
+    //   )
+    // }
   }
   return (
     <div

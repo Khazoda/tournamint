@@ -264,166 +264,65 @@ const MyTeamsPage = (props: Props) => {
             </div>
             {/* Team Members */}
             <div className="mt-2">
-              {teamMembersData[0] != undefined && (
-                <div className=" mb-2 flex h-24 w-full flex-row rounded-md bg-green-500 dark:bg-black-800">
-                  <div className="relative flex h-24 w-24 items-center justify-center">
+              {teamMembersData.map((e) => {
+                if (e.ign == undefined) return false
+                if (e.level == '76') return false
+                if (e.icon_id == '548') return false
+
+                return (
+                  <div
+                    className={`${
+                      teamMembersData[0].ign == e.ign
+                        ? 'h-24 bg-green-500 dark:bg-black-800'
+                        : 'h-20 bg-green-400 dark:bg-black-700'
+                    } mb-2 flex w-full flex-row rounded-md `}
+                  >
                     <div
-                      title="View Profile"
-                      className="group relative my-auto h-20 w-20 border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-20 md:w-20 "
+                      className={`${
+                        teamMembersData[0].ign == e.ign
+                          ? 'h-24 w-24'
+                          : 'h-20 w-20'
+                      } relative flex  items-center justify-center`}
                     >
-                      <Image
-                        src={
-                          teamMembersData[0] === undefined
-                            ? '/images/spinner.svg'
-                            : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                              teamMembersData[0].icon_id +
-                              '.png'
-                        }
-                        alt="Profile picture"
-                        layout="fill"
-                        objectFit="cover"
-                        className=""
-                      ></Image>
-                      <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
-                        {teamMembersData[0].level === undefined
-                          ? '666'
-                          : teamMembersData[0].level}
-                      </span>
+                      <div
+                        title="View Profile"
+                        className={`${
+                          teamMembersData[0].ign == e.ign
+                            ? 'h-[68px] w-[68px] md:h-20 md:w-20'
+                            : 'h-20 w-20  md:h-[60px] md:w-[60px]'
+                        } group relative my-auto border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800  `}
+                      >
+                        <Image
+                          src={
+                            'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                            e.icon_id +
+                            '.png'
+                          }
+                          alt="Profile picture"
+                          layout="fill"
+                          objectFit="cover"
+                          className=""
+                        ></Image>
+                        <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
+                          {e.level}
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      className={`${
+                        teamMembersData[0].ign == e.ign
+                          ? 'text-2xl font-semibold'
+                          : 'text-xl font-normal'
+                      } ml-8 flex items-center `}
+                    >
+                      {teamMembersData[0].ign == e.ign
+                        ? 'Team Leader ' + e.ign
+                        : e.ign}
                     </div>
                   </div>
-                  <div className="ml-8 flex items-center text-2xl font-semibold">
-                    Team Leader {teamMembersData[0].ign}
-                  </div>
-                </div>
-              )}
-              {teamMembersData[1] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
-                  <div className="relative flex h-20 w-20 items-center justify-center">
-                    <div
-                      title="View Profile"
-                      className="group relative my-auto h-[68px] w-[68px] border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
-                    >
-                      <Image
-                        src={
-                          teamMembersData[1] === undefined
-                            ? '/images/spinner.svg'
-                            : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                              teamMembersData[1].icon_id +
-                              '.png'
-                        }
-                        alt="Profile picture"
-                        layout="fill"
-                        objectFit="cover"
-                        className=""
-                      ></Image>
-                      <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
-                        {teamMembersData[1].level === undefined
-                          ? '666'
-                          : teamMembersData[1].level}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="ml-8 flex items-center text-xl">
-                    {teamMembersData[1].ign}
-                  </div>
-                </div>
-              )}
-              {teamMembersData[2] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
-                  <div className="relative flex h-20 w-20 items-center justify-center">
-                    <div
-                      title="View Profile"
-                      className="group relative my-auto h-[68px] w-[68px] border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
-                    >
-                      <Image
-                        src={
-                          teamMembersData[2] === undefined
-                            ? '/images/spinner.svg'
-                            : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                              teamMembersData[2].icon_id +
-                              '.png'
-                        }
-                        alt="Profile picture"
-                        layout="fill"
-                        objectFit="cover"
-                        className=""
-                      ></Image>
-                      <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
-                        {teamMembersData[2].level === undefined
-                          ? '666'
-                          : teamMembersData[2].level}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="ml-8 flex items-center text-xl">
-                    {teamMembersData[2].ign}
-                  </div>
-                </div>
-              )}
-              {teamMembersData[3] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
-                  <div className="relative flex h-20 w-20 items-center justify-center">
-                    <div
-                      title="View Profile"
-                      className="group relative my-auto h-[68px] w-[68px] border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
-                    >
-                      <Image
-                        src={
-                          teamMembersData[3] === undefined
-                            ? '/images/spinner.svg'
-                            : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                              teamMembersData[3].icon_id +
-                              '.png'
-                        }
-                        alt="Profile picture"
-                        layout="fill"
-                        objectFit="cover"
-                        className=""
-                      ></Image>
-                      <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
-                        {teamMembersData[3].level === undefined
-                          ? '666'
-                          : teamMembersData[3].level}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="ml-8 flex items-center text-xl">
-                    {teamMembersData[3].ign}
-                  </div>
-                </div>
-              )}
-              {teamMembersData[4] != undefined && (
-                <div className="mb-2 flex h-20 w-full flex-row rounded-md bg-green-400 dark:bg-black-700">
-                  <div className="relative flex h-20 w-20 items-center justify-center">
-                    <div
-                      title="View Profile"
-                      className="group relative my-auto h-[68px] w-[68px] border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
-                    >
-                      <Image
-                        src={
-                          teamMembersData[4] === undefined
-                            ? '/images/spinner.svg'
-                            : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                              teamMembersData[4].icon_id +
-                              '.png'
-                        }
-                        alt="Profile picture"
-                        layout="fill"
-                        objectFit="cover"
-                        className=""
-                      ></Image>
-                      <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
-                        {teamMembersData[4].level === undefined
-                          ? '666'
-                          : teamMembersData[4].level}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="ml-8 flex items-center text-xl">
-                    {teamMembersData[4].ign}
-                  </div>
-                </div>
-              )}
+                )
+              })}
+
               <span className="block h-0.5 w-full bg-white-200"></span>
               <div className="mt-2 flex flex-row justify-between">
                 <span>
