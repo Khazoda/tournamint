@@ -80,3 +80,12 @@ export interface IMatch {
   date_time_end: string
   match_winner: ITeam
 }
+
+// Account Data interface for client <-> redis server
+export interface IAccountData {
+  ign: string
+  username: string
+  bio: string
+  favourite_champion: string
+  passcode: string
+}

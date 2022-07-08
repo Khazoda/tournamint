@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { Props, useEffect, useRef, useState } from 'react'
 import { useUser } from '../context/UserContext'
+import { IAccountData } from '../globals/types'
 
 const Home: NextPage = (props) => {
   const {
@@ -115,13 +116,6 @@ const Home: NextPage = (props) => {
     }
   }
 
-  interface IAccountData {
-    ign: string
-    username: string
-    bio: string
-    favourite_champion: string
-    passcode: string
-  }
   async function createAccount(ign: string, pass: string) {
     const dataOut: IAccountData = {
       ign: ign,

@@ -7,6 +7,7 @@ import { CgArrowRightR } from 'react-icons/cg'
 import { useUser, userContextType } from '../context/UserContext'
 import { DD_PREFIX } from '../globals/riot_consts'
 import { Capitalize } from '../globals/global_functions'
+import { IAccountData } from '../globals/types'
 
 export interface Props {
   userData: any
@@ -271,7 +272,7 @@ function Profile(props: Props) {
       )
     }
   }
-  const saveUserDetails = () => {
+  const saveUserDetails = async () => {
     if (setUserDetails != null) {
       if (localStorage !== null) {
         if (localStorage.userDetails == null) {
@@ -313,6 +314,39 @@ function Profile(props: Props) {
                 team: team,
               })
             )
+
+            // Redis
+            let get_data: any = null
+            const account_api_url =
+              '/api/account?' + new URLSearchParams({ ign: ign })
+            const account_get_response = await fetch(account_api_url)
+              .then((res) => res.json())
+              .then(async (res) => {
+                if (res.status != 'Account does not yet exist') {
+                  get_data = res
+                }
+              })
+              .catch((res) => console.log(res.error))
+
+            try {
+              const dataOut: IAccountData = {
+                ign: ign,
+                username: name,
+                bio: bio,
+                favourite_champion: favouriteChampion[0],
+                passcode: get_data.passcode,
+              }
+              console.log('data_out', dataOut)
+
+              const account_post_response = await fetch('/api/account', {
+                body: JSON.stringify({ data: dataOut }),
+                headers: { 'Content-Type': 'application/json' },
+                method: 'PATCH',
+              })
+            } catch (error) {
+              console.log(error)
+            }
+
             setText('Profile Saved')
             setButtonActive(true)
 
@@ -504,6 +538,7 @@ function Profile(props: Props) {
         <li className="mb-2 flex flex-col">
           <label htmlFor="in-game_input">In-Game Name</label>
           <input
+            title="To use a different account, please log out"
             disabled
             id="in-game_input"
             type="text"
