@@ -129,10 +129,11 @@ const Home: NextPage = (props) => {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
     })
-    console.log('response', account_post_response)
     if (account_post_response.status == 200) {
       setAccount_data({ dataOut })
-      populateUserData()
+      console.log(account_post_response)
+
+      populateUserData(dataOut)
       window.location.href = '/profile'
     }
   }
@@ -149,15 +150,16 @@ const Home: NextPage = (props) => {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
         try {
           if (res.status == 400) {
             // Invalid name popup
             console.error('Invalid name entered')
           } else {
             if (pass_input == res.passcode) {
+              console.log(pass_input, res)
+
               setAccount_data(res)
-              populateUserData()
+              populateUserData(res)
               window.location.href = '/main'
             } else {
               setShake(true)
@@ -171,12 +173,12 @@ const Home: NextPage = (props) => {
       .catch((res) => console.log('Error:', res.error))
   }
 
-  const populateUserData = () => {
+  const populateUserData = (account_data: any) => {
     if (setUserDetails != null) {
       if (localStorage !== null) {
         setUserDetails(
           account_data.username,
-          account_data.biography,
+          account_data.bio,
           account_data.ign,
           account_data.favourite_champion,
           {
@@ -200,7 +202,7 @@ const Home: NextPage = (props) => {
           'userDetails',
           JSON.stringify({
             displayName: account_data.username,
-            biography: account_data.biography,
+            biography: account_data.bio,
             ign: account_data.ign,
             favouriteChampion: account_data.favourite_champion,
             rankInfo: {

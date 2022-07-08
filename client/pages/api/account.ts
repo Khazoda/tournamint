@@ -63,7 +63,6 @@ export default async function handler(
 
     try {
       response = await redis.hget("ACCOUNTS", ign).then(data => {
-        console.log(data);
         if (data == null) {
           res.status(200).json({ status: 'Account does not yet exist' })
         } else {
