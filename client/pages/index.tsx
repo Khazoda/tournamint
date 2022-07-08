@@ -124,6 +124,7 @@ const Home: NextPage = (props) => {
       bio: 'Default Biography',
       favourite_champion: 'aatrox',
       passcode: pass,
+      team_tag: 'ABC',
     }
     const account_post_response = await fetch('/api/account', {
       body: JSON.stringify({ data: dataOut }),
@@ -175,7 +176,16 @@ const Home: NextPage = (props) => {
       .catch((res) => console.log('Error:', res.error))
   }
 
-  const populateUserData = (account_data: any) => {
+  const populateUserData = async (account_data: any) => {
+    const url =
+      '/api/teamData?' +
+      new URLSearchParams({ team_tag: account_data.team_tag })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    let team_temp = result.response
+
     if (setUserDetails != null) {
       if (localStorage !== null) {
         setUserDetails(
@@ -197,7 +207,7 @@ const Home: NextPage = (props) => {
           },
           seed_data.tournamentsMade,
           seed_data.tournaments,
-          seed_data.team
+          team_temp
         )
 
         localStorage.setItem(
@@ -221,7 +231,7 @@ const Home: NextPage = (props) => {
             },
             tournamentsMade: seed_data.tournamentsMade,
             tournaments: seed_data.tournaments,
-            team: seed_data.team,
+            team: team_temp,
           })
         )
       }

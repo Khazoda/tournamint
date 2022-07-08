@@ -3,7 +3,12 @@ import { FiX } from 'react-icons/fi'
 import Image from 'next/image'
 import Button from '../../components/common/Button'
 import logos from '../../globals/team_logos'
-import { ITeam, ITeamColour, TEAM_COLOURS } from '../../globals/types'
+import {
+  IAccountData,
+  ITeam,
+  ITeamColour,
+  TEAM_COLOURS,
+} from '../../globals/types'
 import { createID } from '../../globals/global_functions'
 import { useUser } from '../../context/UserContext'
 interface Props {
@@ -56,63 +61,96 @@ const CreateTeamModal = (props: Props) => {
       team_join_key: createID(6),
       //
     })
-
-    const saveTeamDetailsToCloud = async () => {
-      const response = await fetch('/api/teamData', {
-        body: JSON.stringify({ data: dataOut }),
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-      })
-      const { error } = await response.json()
-      console.log('error:', error)
-
-      if (error) {
-        // console.log(error)
-      } else if (response.status == 200) {
-        if (setUserDetails != undefined) {
-          setUserDetails(
-            displayName,
-            biography,
-            ign,
-            favouriteChampion,
-            rankInfo,
-            statistics,
-            tournamentsMade,
-            tournaments,
-            dataOut
-          )
-          localStorage.setItem(
-            'userDetails',
-            JSON.stringify({
-              displayName: displayName,
-              biography: biography,
-              ign: ign,
-              favouriteChampion: favouriteChampion,
-              rankInfo: {
-                tier: rankInfo.tier,
-                rank: rankInfo.rank,
-                wins: rankInfo.wins,
-                losses: rankInfo.losses,
-              },
-              statistics: {
-                tournaments_played: statistics.tournaments_played,
-                tournaments_won: statistics.tournaments_won,
-                matches_won: statistics.matches_won,
-                people_met: statistics.people_met,
-              },
-              tournamentsMade: tournamentsMade,
-              tournaments: tournaments,
-              team: dataOut,
-            })
-          )
-        }
-
-        onClick()
-      }
-    }
-    saveTeamDetailsToCloud()
   }
 
+  useEffect(() => {
+    saveTeamDetailsToCloud()
+  }, [dataOut])
+
+  const saveTeamDetailsToCloud = async () => {
+    const response = await fetch('/api/teamData', {
+      body: JSON.stringify({ data: dataOut }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    })
+    const { error } = await response.json()
+    console.log('error:', error)
+
+    if (error) {
+      // console.log(error)
+    } else if (response.status == 200) {
+      if (setUserDetails != undefined) {
+        setUserDetails(
+          displayName,
+          biography,
+          ign,
+          favouriteChampion,
+          rankInfo,
+          statistics,
+          tournamentsMade,
+          tournaments,
+          dataOut
+        )
+        localStorage.setItem(
+          'userDetails',
+          JSON.stringify({
+            displayName: displayName,
+            biography: biography,
+            ign: ign,
+            favouriteChampion: favouriteChampion,
+            rankInfo: {
+              tier: rankInfo.tier,
+              rank: rankInfo.rank,
+              wins: rankInfo.wins,
+              losses: rankInfo.losses,
+            },
+            statistics: {
+              tournaments_played: statistics.tournaments_played,
+              tournaments_won: statistics.tournaments_won,
+              matches_won: statistics.matches_won,
+              people_met: statistics.people_met,
+            },
+            tournamentsMade: tournamentsMade,
+            tournaments: tournaments,
+            team: dataOut,
+          })
+        )
+        // Redis account team set
+        let get_data: any = null
+        const account_api_url =
+          '/api/account?' + new URLSearchParams({ ign: ign })
+        const account_get_response = await fetch(account_api_url)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('HTTP status ' + res.status)
+            }
+            return res.json()
+          })
+          .then(async (res) => {
+            if (res.status != 'Account does not yet exist') {
+              get_data = res
+            }
+          })
+          .catch((res) => console.log(res.error))
+        if (get_data != undefined) {
+          const dataOut: IAccountData = {
+            ign: get_data.username,
+            username: get_data.username,
+            bio: get_data.bio,
+            favourite_champion: get_data.favourite_champion,
+            passcode: get_data.passcode,
+            team_tag: tag_out.toUpperCase(),
+          }
+          const account_post_response = await fetch('/api/account', {
+            body: JSON.stringify({ data: dataOut }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'PATCH',
+          })
+        }
+      }
+      onClick()
+    }
+  }
   useEffect(() => {
     // Redis Connection
     // const saveTeamDetailsToCloud = async () => {

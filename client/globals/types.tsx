@@ -88,4 +88,5 @@ export interface IAccountData {
   bio: string
   favourite_champion: string
   passcode: string
+  team_tag: string
 }

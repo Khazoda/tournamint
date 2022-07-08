@@ -48,7 +48,7 @@ const MyTeamsPage = (props: Props) => {
         getUserTeam(team.team_tag)
       }
     }
-  }, [])
+  }, [team])
 
   useEffect(() => {
     console.log('res', teamMembersData)

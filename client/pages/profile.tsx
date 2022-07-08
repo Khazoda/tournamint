@@ -337,6 +337,7 @@ function Profile(props: Props) {
                 bio: bio,
                 favourite_champion: favouriteChampion[0],
                 passcode: get_data.passcode,
+                team_tag: get_data.team_tag,
               }
               console.log('data_out', dataOut)
 
