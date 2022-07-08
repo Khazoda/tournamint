@@ -497,11 +497,23 @@ function Profile(props: Props) {
       </div>
 
       {/* Input Fields */}
-      <ul className="items-between flex h-[335px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
+      <ul className="items-between flex h-[340px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
         <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
           Edit Profile
         </h1>
         <li className="mb-2 flex flex-col">
+          <label htmlFor="in-game_input">In-Game Name</label>
+          <input
+            disabled
+            id="in-game_input"
+            type="text"
+            className="input-disabled rounded-md border-2 border-black-400 bg-[#69696965] px-1"
+            defaultValue={ign}
+            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
+            onChange={(e) => setIgn(e.target.value)}
+          />
+        </li>
+        <li className="my-2 flex flex-col">
           <label htmlFor="username_input">Username</label>
           <input
             id="username_input"
@@ -523,17 +535,7 @@ function Profile(props: Props) {
             onChange={(e) => setBio(e.target.value)}
           />
         </li>
-        <li className="mb-2 flex flex-col">
-          <label htmlFor="in-game_input">In-Game Name</label>
-          <input
-            id="in-game_input"
-            type="text"
-            className="rounded-md border-2 border-black-400 bg-transparent px-1"
-            defaultValue={ign}
-            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
-            onChange={(e) => setIgn(e.target.value)}
-          />
-        </li>
+
         <li className="mb-4 flex flex-col">
           <label htmlFor="in-game_input">Favourite Champion</label>
           <div className="relative h-7 ">
@@ -563,6 +565,7 @@ function Profile(props: Props) {
             </div>
           </div>
         </li>
+
         <li>
           <Button
             type="positive"

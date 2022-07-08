@@ -60,6 +60,7 @@ export default async function handler(
     }
 
     if (req.method == 'GET') {
+
         const ign: any = req.query.ign
 
         // console.log('team_tag param:', team_tag);
@@ -73,6 +74,9 @@ export default async function handler(
             .catch(err => err)
 
         res.status(200).json(userData)
+
+
+
     }
 
 
