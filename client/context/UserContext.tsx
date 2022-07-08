@@ -23,7 +23,7 @@ export type userContextType = {
   statistics: IStatistics
   tournamentsMade: number
   tournaments: any
-  team: ITeam
+  team: ITeam | null
 
   setUserDetails?: (
     displayName: string,
@@ -34,15 +34,15 @@ export type userContextType = {
     statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: ITeam
+    team: ITeam | null
   ) => void
 }
 
 const userContextDefaultValues: userContextType = {
-  displayName: 'Luke',
-  biography: 'A simple biography',
+  displayName: 'Default',
+  biography: 'A default biography',
   ign: 'DemolitionLuke',
-  favouriteChampion: 'Vi',
+  favouriteChampion: 'Warwick',
   rankInfo: {
     wins: 5,
     losses: 5,
@@ -56,8 +56,8 @@ const userContextDefaultValues: userContextType = {
     team_icon_path: '/images/team_icons/logo_1.svg',
     team_tag: 'ABC',
     team_colour_hex: '#FF0000',
-    team_owner: 'Luke',
-    team_members: ['Luke', 'June', 'John', 'Jake', 'Jeremy'],
+    team_owner: 'DemolitionLuke',
+    team_members: ['DemolitionLuke', 'June', 'John', 'Jake', 'Jeremy'],
     team_name: 'Amazing Blue Chickens',
     team_statistics: defaultStatistics,
     team_join_key: '12345678',
@@ -88,7 +88,7 @@ export function UserProvider({ children }: Props) {
     statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: ITeam
+    team: ITeam | null
   ) => {
     updateUserDetails({
       displayName: name,
@@ -101,27 +101,33 @@ export function UserProvider({ children }: Props) {
       tournaments: tournaments,
       team: team,
     })
+    // !DISABLED TUD TO OVERWRITING LOCALSTORAGE
+    // if (localStorage?.userDetails != null) {
+    //   localStorage.userDetails = JSON.stringify(userDetails)
+    //   console.log('USERCONTEXT SET')
+    // }
   }
 
   useEffect(() => {
     if (localStorage?.userDetails != null) {
-      const userDetails: any = JSON.parse(
+      const LSuserDetails: any = JSON.parse(
         localStorage.getItem('userDetails') as string
       )
-      const displayName: any = userDetails.displayName
-      const biography: any = userDetails.biography
-      const ign: string = userDetails.ign
-      const favouriteChampion: string = userDetails.favouriteChampion
+
+      const displayName: string = LSuserDetails.displayName
+      const biography: string = LSuserDetails.biography
+      const ign: string = LSuserDetails.ign
+      const favouriteChampion: string = LSuserDetails.favouriteChampion
       const rankInfo: IRankInfo = {
-        tier: userDetails.tier,
-        rank: userDetails.rank,
-        wins: userDetails.wins,
-        losses: userDetails.losses,
+        tier: LSuserDetails.tier,
+        rank: LSuserDetails.rank,
+        wins: LSuserDetails.wins,
+        losses: LSuserDetails.losses,
       }
-      const statistics: IStatistics = userDetails.statistics
-      const tournamentsMade: number = userDetails.tournamentsMade
-      const tournaments: any = userDetails.tournaments
-      const team: ITeam = userDetails.team
+      const statistics: IStatistics = LSuserDetails.statistics
+      const tournamentsMade: number = LSuserDetails.tournamentsMade
+      const tournaments: any = LSuserDetails.tournaments
+      const team: ITeam | null = LSuserDetails.team
       setUserDetails(
         displayName,
         biography,
@@ -133,6 +139,7 @@ export function UserProvider({ children }: Props) {
         tournaments,
         team
       )
+      console.log(userDetails)
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
@@ -151,14 +158,13 @@ export function UserProvider({ children }: Props) {
           console.error(error)
         })
       //
-
-      // !IMPORTANT, REMOVE THIS ONCE ACCOUNT LOGIC IS SET UP. THIS SEEDS LOCAL STORAGE WITH A DEFAULT SET OF USER DETAILS
-    } else {
-      localStorage.setItem(
-        'userDetails',
-        JSON.stringify(userContextDefaultValues)
-      )
     }
+    //  else {
+    //   localStorage.setItem(
+    //     'userDetails',
+    //     JSON.stringify(userContextDefaultValues)
+    //   )
+    // }
 
     return
   }, [])

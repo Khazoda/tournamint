@@ -5,6 +5,9 @@ import Image from 'next/image'
 import { FiAward, FiCheckCircle } from 'react-icons/fi'
 import { CgArrowRightR } from 'react-icons/cg'
 import { useUser, userContextType } from '../context/UserContext'
+import { DD_PREFIX } from '../globals/riot_consts'
+import { Capitalize } from '../globals/global_functions'
+import { IAccountData } from '../globals/types'
 
 export interface Props {
   userData: any
@@ -57,18 +60,6 @@ function Profile(props: Props) {
     }
   }
 
-  const Capitalize = (i: string) => {
-    let result: string = ''
-    if (i.length >= 2) {
-      result =
-        i.substring(0, 1).toUpperCase() + i.substring(1, i.length).toLowerCase()
-    } else if (i.length == 1) {
-      result = i.toUpperCase()
-    } else {
-      result = i
-    }
-    return result
-  }
   const CHAMPIONS = [
     'aatrox',
     'ahri',
@@ -83,6 +74,7 @@ function Profile(props: Props) {
     'aurelionsol',
     'azir',
     'bard',
+    'belveth',
     'blitzcrank',
     'brand',
     'braum',
@@ -280,18 +272,11 @@ function Profile(props: Props) {
       )
     }
   }
-  const saveUserDetails = () => {
-    console.log('USER DETAILS SAVED')
-
+  const saveUserDetails = async () => {
     if (setUserDetails != null) {
       if (localStorage !== null) {
         if (localStorage.userDetails == null) {
-          localStorage.userDetails = JSON.stringify({
-            displayName: 'displayName',
-            biography: 'biography',
-            ign: 'Tryndamere',
-            favouriteChampion: ['Tryndamere', ''],
-          })
+          //  redirect to landing page
         } else {
           if (CHAMPIONS.includes(favouriteChampion[0])) {
             setUserDetails(
@@ -318,8 +303,50 @@ function Profile(props: Props) {
                   wins: userData.wins,
                   losses: userData.losses,
                 },
+                statistics: {
+                  tournaments_played: statistics.tournaments_played,
+                  tournaments_won: statistics.tournaments_won,
+                  matches_won: statistics.matches_won,
+                  people_met: statistics.people_met,
+                },
+                tournamentsMade: tournamentsMade,
+                tournaments: tournaments,
+                team: team,
               })
             )
+
+            // Redis
+            let get_data: any = null
+            const account_api_url =
+              '/api/account?' + new URLSearchParams({ ign: ign })
+            const account_get_response = await fetch(account_api_url)
+              .then((res) => res.json())
+              .then(async (res) => {
+                if (res.status != 'Account does not yet exist') {
+                  get_data = res
+                }
+              })
+              .catch((res) => console.log(res.error))
+
+            try {
+              const dataOut: IAccountData = {
+                ign: ign,
+                username: name,
+                bio: bio,
+                favourite_champion: favouriteChampion[0],
+                passcode: get_data.passcode,
+              }
+              console.log('data_out', dataOut)
+
+              const account_post_response = await fetch('/api/account', {
+                body: JSON.stringify({ data: dataOut }),
+                headers: { 'Content-Type': 'application/json' },
+                method: 'PATCH',
+              })
+            } catch (error) {
+              console.log(error)
+            }
+
             setText('Profile Saved')
             setButtonActive(true)
 
@@ -335,13 +362,13 @@ function Profile(props: Props) {
               setButtonActive(false)
             }, 1500)
           }
-
-          if (refreshUserInfo !== null) {
-            refreshUserInfo()
-          }
         }
       }
     }
+    if (refreshUserInfo !== null) {
+      refreshUserInfo()
+    }
+    console.log('USER DETAILS SAVED')
   }
 
   useEffect(() => {
@@ -369,15 +396,16 @@ function Profile(props: Props) {
         {/* PROFILE PICTURE */}
         <div className="relative h-0 w-full  rounded-md bg-gray-200 pb-[100%] drop-shadow-lg dark:bg-black-500">
           {/* SPLASH ART BACKGROUND */}
-          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-gray-300 shadow-inner dark:bg-black-600">
+          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2">
             <Image src={splashURL} layout="fill" objectFit="cover"></Image>
           </div>
-          <div className="absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 bg-gray-200 dark:bg-black-500">
+          <div className=" absolute left-1/2 top-1/2 h-[120px] w-[120px] -translate-y-1/2 -translate-x-1/2 border-2 border-green-500 bg-gray-200 dark:bg-black-500">
             <Image
               src={
                 userData.profileIconId === undefined
                   ? '/images/spinner.svg'
-                  : 'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
+                  : DD_PREFIX +
+                    'img/profileicon/' +
                     userData.profileIconId +
                     '.png'
               }
@@ -503,11 +531,24 @@ function Profile(props: Props) {
       </div>
 
       {/* Input Fields */}
-      <ul className="items-between flex h-full flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
+      <ul className="items-between flex h-[340px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
         <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
           Edit Profile
         </h1>
         <li className="mb-2 flex flex-col">
+          <label htmlFor="in-game_input">In-Game Name</label>
+          <input
+            title="To use a different account, please log out"
+            disabled
+            id="in-game_input"
+            type="text"
+            className="input-disabled rounded-md border-2 border-black-400 bg-[#69696965] px-1"
+            defaultValue={ign}
+            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
+            onChange={(e) => setIgn(e.target.value)}
+          />
+        </li>
+        <li className="my-2 flex flex-col">
           <label htmlFor="username_input">Username</label>
           <input
             id="username_input"
@@ -529,17 +570,7 @@ function Profile(props: Props) {
             onChange={(e) => setBio(e.target.value)}
           />
         </li>
-        <li className="mb-2 flex flex-col">
-          <label htmlFor="in-game_input">In-Game Name</label>
-          <input
-            id="in-game_input"
-            type="text"
-            className="rounded-md border-2 border-black-400 bg-transparent px-1"
-            defaultValue={ign}
-            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
-            onChange={(e) => setIgn(e.target.value)}
-          />
-        </li>
+
         <li className="mb-4 flex flex-col">
           <label htmlFor="in-game_input">Favourite Champion</label>
           <div className="relative h-7 ">
@@ -569,6 +600,7 @@ function Profile(props: Props) {
             </div>
           </div>
         </li>
+
         <li>
           <Button
             type="positive"

@@ -27,7 +27,7 @@ export interface IUser {
 export interface ITeam {
   team_icon_path: string
   team_tag: string
-  team_colour_hex: ITeamColour
+  team_colour_hex: string
   team_owner: string
   team_members: Array<string>
   team_name: string
@@ -79,4 +79,13 @@ export interface IMatch {
   date_time_start: string
   date_time_end: string
   match_winner: ITeam
+}
+
+// Account Data interface for client <-> redis server
+export interface IAccountData {
+  ign: string
+  username: string
+  bio: string
+  favourite_champion: string
+  passcode: string
 }

@@ -3,11 +3,11 @@ import { FiX } from 'react-icons/fi'
 import Image from 'next/image'
 import Button from '../../components/common/Button'
 import logos from '../../globals/team_logos'
-import { ITeamColour, TEAM_COLOURS } from '../../globals/types'
+import { ITeam, ITeamColour, TEAM_COLOURS } from '../../globals/types'
 import { createID } from '../../globals/global_functions'
+import { useUser } from '../../context/UserContext'
 interface Props {
   onClick: any
-  ign: string
 }
 
 const colours: Array<string> = [
@@ -20,8 +20,21 @@ const colours: Array<string> = [
 ]
 
 const CreateTeamModal = (props: Props) => {
-  const { onClick = null, ign = null, ...restProps } = props
+  const { onClick = null, ...restProps } = props
+  const {
+    displayName,
+    biography,
+    ign,
+    favouriteChampion,
+    rankInfo,
+    setUserDetails,
+    statistics,
+    tournamentsMade,
+    tournaments,
+    team,
+  } = useUser()
 
+  const TEAM = team
   const [selectedColour, setSelectedColour] = useState('')
 
   const [tag_out, setTag_out] = useState<string>('')
@@ -29,7 +42,7 @@ const CreateTeamModal = (props: Props) => {
   const [icon_out, setIcon_out] = useState<string>('')
   const [colour_out, setColour_out] = useState<string>('')
 
-  const [dataOut, setDataOut] = useState<Object>({})
+  const [dataOut, setDataOut] = useState<any>()
 
   const createTeam = () => {
     setDataOut({
@@ -39,10 +52,11 @@ const CreateTeamModal = (props: Props) => {
       team_owner: ign,
       team_members: [ign],
       team_name: name_out,
-      team_statistics: {},
+      team_statistics: statistics,
       team_join_key: createID(6),
       //
     })
+
     const saveTeamDetailsToCloud = async () => {
       const response = await fetch('/api/teamData', {
         body: JSON.stringify({ data: dataOut }),
@@ -50,10 +64,51 @@ const CreateTeamModal = (props: Props) => {
         method: 'POST',
       })
       const { error } = await response.json()
+      console.log('error:', error)
+
       if (error) {
-        console.log(error)
+        // console.log(error)
+      } else if (response.status == 200) {
+        if (setUserDetails != undefined) {
+          setUserDetails(
+            displayName,
+            biography,
+            ign,
+            favouriteChampion,
+            rankInfo,
+            statistics,
+            tournamentsMade,
+            tournaments,
+            dataOut
+          )
+          localStorage.setItem(
+            'userDetails',
+            JSON.stringify({
+              displayName: displayName,
+              biography: biography,
+              ign: ign,
+              favouriteChampion: favouriteChampion,
+              rankInfo: {
+                tier: rankInfo.tier,
+                rank: rankInfo.rank,
+                wins: rankInfo.wins,
+                losses: rankInfo.losses,
+              },
+              statistics: {
+                tournaments_played: statistics.tournaments_played,
+                tournaments_won: statistics.tournaments_won,
+                matches_won: statistics.matches_won,
+                people_met: statistics.people_met,
+              },
+              tournamentsMade: tournamentsMade,
+              tournaments: tournaments,
+              team: dataOut,
+            })
+          )
+        }
+
+        onClick()
       }
-      console.log(response)
     }
     saveTeamDetailsToCloud()
   }

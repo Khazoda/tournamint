@@ -6,6 +6,7 @@ import { useUser } from '../../context/UserContext'
 import Image from 'next/image'
 import CreateTeamModal from './create_team_modal'
 import JoinTeamModal from './join_team_modal'
+import { useRouter } from 'next/router'
 
 export interface Props {
   userData: any
@@ -16,10 +17,22 @@ interface ITeamMemberData {
   icon_id: string
   level: string
 }
+
 const MyTeamsPage = (props: Props) => {
   const { userData = {}, refreshUserInfo = null, ...restProps } = props
-  const { displayName, biography, ign, setUserDetails, statistics, team } =
-    useUser()
+  const {
+    displayName,
+    biography,
+    ign,
+    statistics,
+    team,
+    favouriteChampion,
+    rankInfo,
+    tournaments,
+    tournamentsMade,
+    setUserDetails,
+  } = useUser()
+  const router = useRouter()
 
   const [teamMembersData, setTeamMembersData] = useState<
     Array<ITeamMemberData>
@@ -30,84 +43,157 @@ const MyTeamsPage = (props: Props) => {
 
   useEffect(() => {
     refreshTeamInfo()
+    if (team != null) {
+      if (team.team_tag != undefined && team.team_tag != 'ABC') {
+        getUserTeam(team.team_tag)
+      }
+    }
   }, [])
 
   useEffect(() => {
     console.log('res', teamMembersData)
   }, [teamMembersData])
 
+  const getUserTeam = async (tag: string) => {
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    console.log('getUserTeam(): ', result)
+    return result.response
+  }
+
   const refreshTeamInfo = () => {
     var tempTeamMembersData: Array<ITeamMemberData> = [
       { ign: 'Default', icon_id: '505', level: '120' },
     ]
 
-    if (team.team_members[0 && 1 && 2 && 3 && 4] != undefined) {
-      axios
-        .all([
-          axios.get('/api/teamData', {
-            params: { ign: team.team_members[0] },
-          }),
-          axios.get('/api/teamData', {
-            params: { ign: team.team_members[1] },
-          }),
-          axios.get('/api/teamData', {
-            params: { ign: team.team_members[2] },
-          }),
-          axios.get('/api/teamData', {
-            params: { ign: team.team_members[3] },
-          }),
-          axios.get('/api/teamData', {
-            params: { ign: team.team_members[4] },
-          }),
-        ])
-        .then(
-          axios.spread((m1, m2, m3, m4, m5) => {
-            tempTeamMembersData = [
-              {
-                ign: team.team_members[0],
-                level: m1.data.summonerLevel,
-                icon_id: m1.data.profileIconId,
-              },
-              {
-                ign: team.team_members[1],
-                level: m2.data.summonerLevel,
-                icon_id: m2.data.profileIconId,
-              },
-              {
-                ign: team.team_members[2],
-                level: m3.data.summonerLevel,
-                icon_id: m3.data.profileIconId,
-              },
-              {
-                ign: team.team_members[3],
-                level: m4.data.summonerLevel,
-                icon_id: m4.data.profileIconId,
-              },
-              {
-                ign: team.team_members[4],
-                level: m5.data.summonerLevel,
-                icon_id: m5.data.profileIconId,
-              },
-            ]
-            setTeamMembersData(tempTeamMembersData)
-          })
-        )
+    if (team != null) {
+      if (team.team_members[0 && 1 && 2 && 3 && 4] != undefined) {
+        axios
+          .all([
+            axios.get('/api/teamDisplayData', {
+              params: { ign: team.team_members[0] },
+            }),
+            axios.get('/api/teamDisplayData', {
+              params: { ign: team.team_members[1] },
+            }),
+            axios.get('/api/teamDisplayData', {
+              params: { ign: team.team_members[2] },
+            }),
+            axios.get('/api/teamDisplayData', {
+              params: { ign: team.team_members[3] },
+            }),
+            axios.get('/api/teamDisplayData', {
+              params: { ign: team.team_members[4] },
+            }),
+          ])
+          .then(
+            axios.spread((m1, m2, m3, m4, m5) => {
+              tempTeamMembersData = [
+                {
+                  ign: team.team_members[0],
+                  level: m1.data.summonerLevel,
+                  icon_id: m1.data.profileIconId,
+                },
+                {
+                  ign: team.team_members[1],
+                  level: m2.data.summonerLevel,
+                  icon_id: m2.data.profileIconId,
+                },
+                {
+                  ign: team.team_members[2],
+                  level: m3.data.summonerLevel,
+                  icon_id: m3.data.profileIconId,
+                },
+                {
+                  ign: team.team_members[3],
+                  level: m4.data.summonerLevel,
+                  icon_id: m4.data.profileIconId,
+                },
+                {
+                  ign: team.team_members[4],
+                  level: m5.data.summonerLevel,
+                  icon_id: m5.data.profileIconId,
+                },
+              ]
+              setTeamMembersData(tempTeamMembersData)
+            })
+          )
+      }
     }
   }
+
+  const leaveTeam = async () => {
+    if (team != null) {
+      if (team.team_tag != undefined && team.team_tag != 'ABC') {
+        let temp_team = await getUserTeam(team.team_tag)
+        let temp_all_teams = await getUserTeam('')
+        if (temp_team.team_owner == ign) {
+          alert(
+            'you are the team owner, are you sure you want to delete your team?'
+          )
+        } else {
+          if (temp_team.team_members.includes(ign)) {
+            temp_team.team_members[temp_team.team_members.indexOf(ign)] = null
+          }
+        }
+
+        const response = await fetch('/api/teamData', {
+          body: JSON.stringify({ data: temp_team }),
+          headers: { 'Content-Type': 'application/json' },
+          method: 'PATCH',
+        })
+        const { error } = await response.json()
+        console.log('error:', error)
+
+        if (error) {
+          // console.log(error)
+        } else if (response.status == 200) {
+        }
+      }
+    }
+    localStorage.setItem(
+      'userDetails',
+      JSON.stringify({
+        displayName: displayName,
+        biography: biography,
+        ign: ign,
+        favouriteChampion: favouriteChampion,
+        rankInfo: {
+          tier: rankInfo.tier,
+          rank: rankInfo.rank,
+          wins: rankInfo.wins,
+          losses: rankInfo.losses,
+        },
+        statistics: {
+          tournaments_played: statistics.tournaments_played,
+          tournaments_won: statistics.tournaments_won,
+          matches_won: statistics.matches_won,
+          people_met: statistics.people_met,
+        },
+        tournamentsMade: tournamentsMade,
+        tournaments: tournaments,
+        team: null,
+      })
+    )
+    // router.reload()
+  }
+
   return (
     <main className="flex flex-col items-center justify-center gap-5 py-24 px-4 md:flex-row">
       {showCreateModal && (
         <CreateTeamModal
           onClick={() => setShowCreateModal(false)}
-          ign={ign}
         ></CreateTeamModal>
       )}
       {showJoinModal && (
         <JoinTeamModal onClick={() => setShowJoinModal(false)}></JoinTeamModal>
       )}
       <div className="w-full md:w-[650px]">
-        {/* Don't show team info if team defaults are set. //TODO INVERT OPERATOR FOR PRODUCTION */}
-        {team.team_tag == 'ABC' ? (
+        {/* Don't show team info if user isn't in a team //TODO INVERT OPERATOR FOR PRODUCTION */}
+        {team == null ? (
           <div className=" my-[25vh] mx-12 flex flex-col gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 sm:mx-36">
             <Button
               text="Create Team"
@@ -126,45 +212,55 @@ const MyTeamsPage = (props: Props) => {
           </div>
         ) : (
           <div className="flex flex-col rounded-md bg-green-300 p-4  dark:bg-black-500">
-            <div className="flex flex-col border-b-2 md:flex-row  ">
-              <img className="h-full w-16" src={team.team_icon_path} alt="" />
-              <div className="mb-2 ml-4 flex w-full flex-row rounded-sm ">
-                <div className="flex flex-row">
-                  <div
-                    className={
-                      `${
-                        team.team_colour_hex != null
-                          ? 'text-[' + team.team_colour_hex + ']'
-                          : ''
-                      }` +
-                      ' font-big text-6xl uppercase text-blue-700 dark:text-blue-400'
-                    }
-                  >
-                    {team.team_tag}
+            <div className="flex flex-col justify-between border-b-2 md:flex-row ">
+              <div className="flex flex-row">
+                <img className="h-full w-16" src={team.team_icon_path} alt="" />
+                <div className="mb-2 ml-4 flex flex-row rounded-sm ">
+                  <div className="flex flex-row">
+                    <div
+                      className={
+                        `${
+                          team.team_colour_hex != null
+                            ? 'text-[' + team.team_colour_hex + ']'
+                            : ''
+                        }` +
+                        ' font-big text-6xl uppercase text-blue-700 dark:text-blue-400'
+                      }
+                    >
+                      {team.team_tag}
+                    </div>
+                    <div className="mx-4 min-h-full w-0.5 bg-white-100"></div>
                   </div>
-                  <div className="mx-4 min-h-full w-0.5 bg-white-100"></div>
-                </div>
-                <div className="text-lg">
-                  <span
-                    className={
-                      `${
-                        team.team_colour_hex != null
-                          ? 'text-[' + team.team_colour_hex + ']'
-                          : ''
-                      }` +
-                      ' text-2xl uppercase text-blue-700 dark:text-blue-400'
-                    }
-                  >
-                    {team.team_name}
-                  </span>
-                  <div>
-                    <span className="mr-2">
-                      {'Tournaments won: ' +
-                        team.team_statistics.tournaments_won}
+                  <div className="text-lg">
+                    <span
+                      className={
+                        `${
+                          team.team_colour_hex != null
+                            ? 'text-[' + team.team_colour_hex + ']'
+                            : ''
+                        }` +
+                        ' text-2xl uppercase text-blue-700 dark:text-blue-400'
+                      }
+                    >
+                      {team.team_name}
                     </span>
+                    <div>
+                      <span className="mr-2">
+                        {'Tournaments won: ' +
+                          team.team_statistics.tournaments_won}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <Button
+                className="h-8 w-full text-white-500 drop-shadow-sm"
+                type="negative"
+                text="Leave Team"
+                fixedWidth
+                onClick={() => leaveTeam()}
+              ></Button>
             </div>
             {/* Team Members */}
             <div className="mt-2">
@@ -336,12 +432,15 @@ const MyTeamsPage = (props: Props) => {
                 </span>
                 <div className="flex flex-row gap-2">
                   <span>Reveal join code:</span>
-                  <div
-                    className="group relative rounded-sm bg-black-700 px-1 py-0.5 hover:cursor-pointer"
-                    onClick={() => alert('Todo: Implement code copy on click')}
-                  >
-                    <span className="opacity-0 transition-opacity group-hover:opacity-100 ">
-                      {+team.team_join_key}
+                  <div className=" group relative rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
+                    <span
+                      className="opacity-0 transition-opacity  group-hover:opacity-100"
+                      onClick={() =>
+                        navigator.clipboard.writeText(team.team_join_key)
+                      }
+                      title="Click to copy"
+                    >
+                      {team.team_join_key}
                     </span>
                     <span className="absolute top-0 left-0 w-full bg-white-100 group-hover:hidden"></span>
                   </div>

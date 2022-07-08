@@ -125,28 +125,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       )
     }
   }
-
-  // Redis Connection
-  const incr = async () => {
-    const response = await fetch('/api/redisTest', { method: 'GET' })
-    const data = await response.json()
-    setCacheCount(data.count)
-  }
-
   return (
-    <div className="m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200">
+    <div
+      data-theme="mytheme"
+      className="m-0 h-full bg-white-100 font-body text-black-800 dark:bg-black-700 dark:text-white-200"
+    >
       <UserProvider>
         <Navbar
           is_dark={is_dark}
           setDark={setDark}
           userData={userData}
         ></Navbar>
-        {/* <div className="absolute top-12 left-12 h-24 w-24">
-          {process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_URL},{cacheCount}
-          <button type="button" onClick={incr}>
-            increment
-          </button>
-        </div> */}
 
         <Component
           userData={userData}
@@ -156,14 +145,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </UserProvider>
     </div>
   )
-}
-
-export async function getStaticProps() {
-  const redis = Redis.fromEnv()
-
-  const count = await redis.incr('nextjsCounter')
-
-  return { props: { count } }
 }
 
 export default MyApp
