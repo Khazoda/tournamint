@@ -247,7 +247,7 @@ function Profile(props: Props) {
             let match = CHAMPIONS.filter((event) =>
               event.startsWith(e.target.value.toLowerCase())
             )[0]
-            setFavouriteChampion([Capitalize(value), match])
+            setFavouriteChampion([value, match])
             if (value?.toLowerCase() == match?.toLowerCase()) {
               triggerSplashUpdate(match)
             }
@@ -278,6 +278,8 @@ function Profile(props: Props) {
         if (localStorage.userDetails == null) {
           //  redirect to landing page
         } else {
+          console.log('fav champ:', favouriteChampion[0])
+
           if (CHAMPIONS.includes(favouriteChampion[0])) {
             setUserDetails(
               name,
@@ -296,7 +298,7 @@ function Profile(props: Props) {
                 displayName: name,
                 biography: bio,
                 ign: ig,
-                favouriteChampion: Capitalize(favouriteChampion[0]),
+                favouriteChampion: favouriteChampion[0],
                 rankInfo: {
                   tier: userData.tier,
                   rank: userData.rank,
@@ -575,7 +577,9 @@ function Profile(props: Props) {
           <label htmlFor="in-game_input">Favourite Champion</label>
           <div className="relative h-7 ">
             <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 lowercase text-gray-600 first-letter:capitalize dark:text-white-600">
-              {favouriteChampion == undefined ? '' : favouriteChampion[1]}
+              {favouriteChampion == undefined
+                ? ''
+                : Capitalize(favouriteChampion[1])}
             </div>
             <input
               id="in-game_input"
@@ -583,7 +587,9 @@ function Profile(props: Props) {
               type="text"
               className="absolute top-0 left-0 w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
               defaultValue={
-                favouriteChampion == undefined ? '' : favouriteChampion[0]
+                favouriteChampion == undefined
+                  ? ''
+                  : Capitalize(favouriteChampion[0])
               }
               onKeyUp={(e) => {
                 handleFavouriteChampionFormSubmit(e)
