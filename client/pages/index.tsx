@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { Props, useEffect, useRef, useState } from 'react'
 import { useUser } from '../context/UserContext'
+import { Capitalize } from '../globals/global_functions'
 import { IAccountData } from '../globals/types'
 
 const Home: NextPage = (props) => {
@@ -94,7 +95,7 @@ const Home: NextPage = (props) => {
     if (valid_lol_name) {
       // Does account exist already?
       const account_api_url =
-        '/api/account?' + new URLSearchParams({ ign: name_input })
+        '/api/account?' + new URLSearchParams({ ign: Capitalize(name_input) })
       const account_get_response = await fetch(account_api_url)
         .then((res) => res.json())
         .then(async (res) => {
@@ -118,10 +119,10 @@ const Home: NextPage = (props) => {
 
   async function createAccount(ign: string, pass: string) {
     const dataOut: IAccountData = {
-      ign: ign,
-      username: ign,
+      ign: Capitalize(ign),
+      username: Capitalize(ign),
       bio: 'Default Biography',
-      favourite_champion: 'Aatrox',
+      favourite_champion: 'aatrox',
       passcode: pass,
     }
     const account_post_response = await fetch('/api/account', {
@@ -139,7 +140,8 @@ const Home: NextPage = (props) => {
   }
 
   async function loginAccount(ign: string, pass: string) {
-    const url = '/api/account?' + new URLSearchParams({ ign: name_input })
+    const url =
+      '/api/account?' + new URLSearchParams({ ign: Capitalize(name_input) })
 
     // Check if name entered exists on Riot's EUW servers
     await fetch(url)
