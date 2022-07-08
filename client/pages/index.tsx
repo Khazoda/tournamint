@@ -77,7 +77,7 @@ const Home: NextPage = (props) => {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         try {
           if (res.status == 400) {
             // Invalid name popup
@@ -133,10 +133,12 @@ const Home: NextPage = (props) => {
     })
     if (account_post_response.status == 200) {
       setAccount_data({ dataOut })
-      console.log(account_post_response)
+      // console.log(account_post_response)
 
       populateUserData(dataOut)
-      window.location.href = '/profile'
+      setTimeout(() => {
+        window.location.href = '/profile'
+      }, 500)
     }
   }
 
@@ -159,11 +161,13 @@ const Home: NextPage = (props) => {
             console.error('Invalid name entered')
           } else {
             if (pass_input == res.passcode) {
-              console.log(pass_input, res)
+              // console.log(pass_input, res)
 
               setAccount_data(res)
               populateUserData(res)
-              window.location.href = '/main'
+              setTimeout(() => {
+                window.location.href = '/main'
+              }, 500)
             } else {
               setShake(true)
               setTimeout(() => {

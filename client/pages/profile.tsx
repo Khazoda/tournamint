@@ -278,7 +278,7 @@ function Profile(props: Props) {
         if (localStorage.userDetails == null) {
           //  redirect to landing page
         } else {
-          console.log('fav champ:', favouriteChampion[0])
+          // console.log('fav champ:', favouriteChampion[0])
 
           if (CHAMPIONS.includes(favouriteChampion[0])) {
             setUserDetails(
@@ -339,7 +339,7 @@ function Profile(props: Props) {
                 passcode: get_data.passcode,
                 team_tag: get_data.team_tag,
               }
-              console.log('data_out', dataOut)
+              // console.log('data_out', dataOut)
 
               const account_post_response = await fetch('/api/account', {
                 body: JSON.stringify({ data: dataOut }),

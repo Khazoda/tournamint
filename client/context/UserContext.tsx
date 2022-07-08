@@ -139,7 +139,7 @@ export function UserProvider({ children }: Props) {
         tournaments,
         team
       )
-      console.log(userDetails)
+      // console.log(userDetails)
 
       // THIS CODE BLOCK IS ESSENTIAL 💀💀💀
       axios
@@ -148,7 +148,7 @@ export function UserProvider({ children }: Props) {
         })
         .then(function (response) {
           // Return promise
-          console.log(response)
+          // console.log(response)
 
           return new Promise((resolve) => {
             resolve('resolved')

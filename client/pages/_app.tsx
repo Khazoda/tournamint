@@ -81,7 +81,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               })
               .then(function (response) {
                 // If user is not ranked
-                console.log(response)
+                // console.log(response)
 
                 if (response.data[0] != undefined) {
                   // Includes account info as well as rank info

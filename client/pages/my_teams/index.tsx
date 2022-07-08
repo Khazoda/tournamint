@@ -118,6 +118,8 @@ const MyTeamsPage = (props: Props) => {
                   icon_id: m5.data.profileIconId,
                 },
               ]
+              console.log('team', tempTeamMembersData)
+
               setTeamMembersData(tempTeamMembersData)
             })
           )
@@ -271,6 +273,7 @@ const MyTeamsPage = (props: Props) => {
 
                 return (
                   <div
+                    key={e.ign}
                     className={`${
                       teamMembersData[0].ign == e.ign
                         ? 'h-24 bg-green-500 dark:bg-black-800'
