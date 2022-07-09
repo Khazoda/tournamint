@@ -70,7 +70,12 @@ const MyTeamsPage = (props: Props) => {
     ]
 
     if (team != null) {
-      if (team.team_members[0 && 1 && 2 && 3 && 4] != undefined) {
+      console.log(team.team_members[0 && 1 && 2 && 3 && 4])
+
+      if (
+        team.team_members[0 && 1 && 2 && 3 && 4] != undefined &&
+        team.team_members[0] != 'Madlife'
+      ) {
         axios
           .all([
             axios.get('/api/teamDisplayData', {
