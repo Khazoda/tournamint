@@ -25,6 +25,15 @@ const JoinTeamModal = (props: Props) => {
     setUserDetails,
   } = useUser()
 
+  const handleUserDetailsFormSubmit = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key == 'Enter') {
+      e.preventDefault()
+      joinTeam(tag_out)
+    }
+  }
+
   const TEST = async (tag: string) => {
     tag = tag.toUpperCase()
     const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag })
@@ -61,6 +70,19 @@ const JoinTeamModal = (props: Props) => {
               headers: { 'Content-Type': 'application/json' },
               method: 'PATCH',
             })
+            if (setUserDetails != undefined) {
+              setUserDetails(
+                displayName,
+                biography,
+                ign,
+                favouriteChampion,
+                rankInfo,
+                statistics,
+                tournamentsMade,
+                tournaments,
+                team_temp
+              )
+            }
             localStorage.setItem(
               'userDetails',
               JSON.stringify({
@@ -115,7 +137,7 @@ const JoinTeamModal = (props: Props) => {
                 body: JSON.stringify({ data: dataOut }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'PATCH',
-              })
+              }).then(() => onClick())
             }
             console.log('Team Join Status:', response.status)
           }
@@ -135,26 +157,37 @@ const JoinTeamModal = (props: Props) => {
         </button>
         <h1 className="mt-5 text-2xl">Join Team</h1>
         <div className="mt-12 flex flex-col text-lg">
-          <span className="mb-2">Enter Team Code:</span>
-          <input
-            id="username_input"
-            type="text"
-            className="rounded-md border-2 border-green-500 bg-green-600 px-1 dark:border-black-400 dark:bg-black-400"
-            onChange={(e) => setTag_out(e.target.value)}
-          />
+          <form
+            className="flex flex-col items-center"
+            onSubmit={(e) => {
+              e.preventDefault()
+              return false
+            }}
+          >
+            <span className="mb-2">Enter Secret Team Code:</span>
+            <input
+              id="username_input"
+              type="text"
+              className="rounded-md border-2 border-green-500 bg-green-600 px-1 dark:border-black-400 dark:bg-black-400"
+              onChange={(e) => setTag_out(e.target.value)}
+              onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
+            />
+
+            <Button
+              text="Join"
+              type="positive"
+              fixedWidth
+              onClick={() => joinTeam(tag_out)}
+            ></Button>
+          </form>
         </div>
+
         <Button
           text="TEST Get Team Data"
           noMargin
           type="neutral"
           onClick={() => TEST(tag_out)}
           className="text-white-500"
-        ></Button>
-        <Button
-          text="Join"
-          type="positive"
-          fixedWidth
-          onClick={() => joinTeam(tag_out)}
         ></Button>
       </div>
     </div>

@@ -218,7 +218,7 @@ const MyTeamsPage = (props: Props) => {
             ></Button>
           </div>
         ) : (
-          <div className="flex flex-col rounded-md bg-green-300 p-4  dark:bg-black-500">
+          <div className="flex flex-col  rounded-md bg-green-300  p-4  dark:bg-black-500 ">
             <div className="flex flex-col justify-between border-b-2 md:flex-row ">
               <div className="flex flex-row">
                 <img className="h-full w-16" src={team.team_icon_path} alt="" />
@@ -262,7 +262,7 @@ const MyTeamsPage = (props: Props) => {
               </div>
 
               <Button
-                className="h-8 w-full text-white-500 drop-shadow-sm"
+                className="h-2 w-full text-white-500 drop-shadow-sm"
                 type="negative"
                 text="Leave Team"
                 fixedWidth
