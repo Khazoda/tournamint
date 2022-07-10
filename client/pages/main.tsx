@@ -121,46 +121,10 @@ const Home: NextPage<Props> = (props) => {
           id="bottom_right"
           className=" ml-0 flex h-full flex-col gap-3 rounded-md bg-green-100 px-2 py-2 dark:bg-black-600 md:ml-4"
         >
-          <h2 className="text-lg">Upcoming Matches</h2>
+          <h2 className="text-lg">Upcoming Match</h2>
           <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
           <div className="border-l-2 border-blue-400 px-2 ">
             <MatchTidbit></MatchTidbit>
-            <h4>July 15th 15:30 CEST</h4>
-          </div>
-          <div className="border-l-2 border-blue-400 px-2">
-            <div className="flex h-11 flex-row gap-1">
-              <TeamTidbit side="left"></TeamTidbit>
-              <div className="relative h-full w-0.5 bg-transparent">
-                <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
-                  VS
-                </span>
-              </div>
-              <TeamTidbit side="right"></TeamTidbit>
-            </div>
-            <h4>July 15th 15:30 CEST</h4>
-          </div>
-          <div className="border-l-2 border-blue-400 px-2">
-            <div className="flex h-11 flex-row gap-1">
-              <TeamTidbit side="left"></TeamTidbit>
-              <div className="relative h-full w-0.5 bg-transparent">
-                <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
-                  VS
-                </span>
-              </div>
-              <TeamTidbit side="right"></TeamTidbit>
-            </div>
-            <h4>July 15th 15:30 CEST</h4>
-          </div>
-          <div className="border-l-2 border-blue-400 px-2">
-            <div className="flex h-11 flex-row gap-1">
-              <TeamTidbit side="left"></TeamTidbit>
-              <div className="relative h-full w-0.5 bg-transparent">
-                <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
-                  VS
-                </span>
-              </div>
-              <TeamTidbit side="right"></TeamTidbit>
-            </div>
             <h4>July 15th 15:30 CEST</h4>
           </div>
         </div>
