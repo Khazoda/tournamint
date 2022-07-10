@@ -21,7 +21,7 @@ export interface Props {
 }
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
-  const { displayName, biography, ign, statistics } = useUser()
+  const { displayName, biography, ign, statistics, team } = useUser()
 
   // SHAPES
   interface ICardStatistics {
@@ -119,12 +119,16 @@ const Home: NextPage<Props> = (props) => {
         </div>
         <div
           id="bottom_right"
-          className=" ml-0 flex h-full flex-col gap-3 rounded-md bg-green-100 px-2 py-2 dark:bg-black-600 md:ml-4"
+          className=" ml-0 flex h-auto flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 pb-4 dark:bg-black-600 md:ml-4"
         >
           <h2 className="text-lg">Upcoming Match</h2>
           <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
           <div className="border-l-2 border-blue-400 px-2 ">
-            <MatchTidbit></MatchTidbit>
+            {team ? (
+              <MatchTidbit team_tag={team?.team_tag}></MatchTidbit>
+            ) : (
+              <></>
+            )}
             <h4>July 15th 15:30 CEST</h4>
           </div>
         </div>
