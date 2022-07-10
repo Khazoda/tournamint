@@ -55,6 +55,7 @@ export enum TEAM_COLOURS {
 // One Tournament has multiple Rounds
 export interface ITournament {
   tournament_id: string
+  name: string
   organized_by: IUser
   type: 4 | 8 | 16
   rounds: Array<IRound>

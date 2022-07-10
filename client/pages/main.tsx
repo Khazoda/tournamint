@@ -11,6 +11,7 @@ import TeamTidbit from '../components/common/TeamTidbit'
 import { default_card_statistics } from '../globals/seed_data'
 import MatchTidbit from '../components/common/MatchTidbit'
 import TournamentDisplay from '../components/common/TournamentDisplay'
+import Link from 'next/link'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -92,12 +93,14 @@ const Home: NextPage<Props> = (props) => {
           className=" md:cols-end-2 row-start-1 row-end-1 ml-0 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 dark:bg-black-600 md:col-start-2 md:ml-4 "
         >
           <div className=" flex flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:flex-col">
-            <Button
-              text="Create Tournament"
-              noMargin
-              type="positive"
-              className="text-white-500 drop-shadow-sm"
-            ></Button>
+            <Link href="tournaments/create_tournament">
+              <Button
+                text="Create Tournament"
+                noMargin
+                type="positive"
+                className="text-white-500 drop-shadow-sm"
+              ></Button>
+            </Link>
             <div className="flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
               <Button
                 text="Join Tournament"

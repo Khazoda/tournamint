@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "daisyui": "^2.17.0",
     "express": "^4.17.3",
+    "flowbite-datepicker": "^1.2.1",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
