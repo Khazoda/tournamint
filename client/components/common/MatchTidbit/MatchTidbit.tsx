@@ -8,20 +8,31 @@ const typeColours = {
   negative: '#BC203F',
   neutral: '#3F67AB',
 }
-const MatchTidbit = (props: { team_tag: string }) => {
+const MatchTidbit = (props: {
+  team_1_tag: string
+  team_1_icon_path: string
+}) => {
   // Default prop values
-  const { team_tag = 'ABC', ...restProps } = props
+  const { team_1_tag = 'ABC', team_1_icon_path = '', ...restProps } = props
 
   return (
     <>
       <div className="flex h-11 flex-row gap-1">
-        <TeamTidbit side="left" team_tag={team_tag}></TeamTidbit>
+        <TeamTidbit
+          side="left"
+          team_tag={team_1_tag}
+          team_icon_path={team_1_icon_path}
+        ></TeamTidbit>
         <div className="relative h-full w-0.5 bg-transparent">
           <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
             VS
           </span>
         </div>
-        <TeamTidbit side="right" team_tag={'OPP'}></TeamTidbit>
+        <TeamTidbit
+          side="right"
+          team_tag={'OPP'}
+          team_icon_path={team_1_icon_path}
+        ></TeamTidbit>
       </div>
     </>
   )

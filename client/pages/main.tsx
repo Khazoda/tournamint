@@ -12,6 +12,7 @@ import { default_card_statistics } from '../globals/seed_data'
 import MatchTidbit from '../components/common/MatchTidbit'
 import TournamentDisplay from '../components/common/TournamentDisplay'
 import Link from 'next/link'
+import { Countdown } from 'react-daisyui'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -22,6 +23,7 @@ export interface Props {
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
   const { displayName, biography, ign, statistics, team } = useUser()
+  const [countdownValue, setCountdownValue] = useState<number>(100)
 
   // SHAPES
   interface ICardStatistics {
@@ -39,6 +41,16 @@ const Home: NextPage<Props> = (props) => {
     // Populate cardStatistics
     setCardStatistics(default_card_statistics)
   }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCountdownValue((v) => (v <= 0 ? 100 : v - 1))
+    }, 1000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [countdownValue])
 
   return (
     <div
@@ -123,13 +135,37 @@ const Home: NextPage<Props> = (props) => {
         >
           <h2 className="text-lg">Upcoming Match</h2>
           <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
-          <div className="border-l-2 border-blue-400 px-2 ">
+          <div className="px-2 ">
             {team ? (
-              <MatchTidbit team_tag={team?.team_tag}></MatchTidbit>
+              <MatchTidbit
+                team_1_tag={team?.team_tag}
+                team_1_icon_path={team?.team_icon_path}
+              ></MatchTidbit>
             ) : (
               <></>
             )}
-            <h4>July 15th 15:30 CEST</h4>
+            <div className="grid auto-cols-max grid-flow-col gap-5 text-center">
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-5xl" value={15} />
+                days
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-5xl" value={10} />
+                hours
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-5xl" value={24} />
+                min
+              </div>
+              <div className="flex flex-col">
+                <Countdown
+                  className="font-mono text-5xl"
+                  value={countdownValue}
+                />
+                sec
+              </div>
+            </div>{' '}
+            <h4 className="mt-2">July 15th 15:30 CEST</h4>
           </div>
         </div>
       </main>
