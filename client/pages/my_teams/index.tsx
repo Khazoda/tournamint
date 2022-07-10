@@ -262,7 +262,7 @@ const MyTeamsPage = (props: Props) => {
               </div>
 
               <Button
-                className="h-2 w-full text-white-500 drop-shadow-sm"
+                className="h-4 max-h-4 w-full text-white-500 drop-shadow-sm"
                 type="negative"
                 text="Leave Team"
                 fixedWidth
