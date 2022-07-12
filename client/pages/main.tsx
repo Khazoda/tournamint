@@ -96,7 +96,7 @@ const Home: NextPage<Props> = (props) => {
           <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
             ( Tournament Bracket Name)
           </div>
-          <TournamentDisplay></TournamentDisplay>
+          <TournamentDisplay team={team}></TournamentDisplay>
           {/* {displayName} {biography} {ign} */}
         </div>
         {/* Right Half */}

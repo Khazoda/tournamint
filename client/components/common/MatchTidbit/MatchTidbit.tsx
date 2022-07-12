@@ -9,8 +9,8 @@ const typeColours = {
   neutral: '#3F67AB',
 }
 const MatchTidbit = (props: {
-  team_1_tag: string
-  team_1_icon_path: string
+  team_1_tag?: string
+  team_1_icon_path?: string
 }) => {
   // Default prop values
   const { team_1_tag = 'ABC', team_1_icon_path = '', ...restProps } = props

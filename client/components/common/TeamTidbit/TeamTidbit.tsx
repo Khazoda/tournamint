@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Image from 'next/image'
 import styles from './teamtidbit.module.scss'
 
 const typeColours = {
@@ -17,8 +18,11 @@ const TeamTidbit = (props: {
 
   return side == 'left' ? (
     <div className="flex h-full w-full flex-row bg-blue-600 ">
-      <div className="h-full w-1/2 ">
-        <img src={team_icon_path}></img>
+      <div className="relative h-full w-1/2 ">
+        <Image
+          src={team_icon_path || '/images/spinner.svg'}
+          layout="fill"
+        ></Image>
       </div>
       <h2 className="w-3/4 self-center pr-6 text-right text-2xl font-bold text-white-100">
         {team_tag}
@@ -29,8 +33,11 @@ const TeamTidbit = (props: {
       <h2 className="w-3/4 self-center pl-6 text-left text-2xl font-bold text-white-100">
         {team_tag}
       </h2>
-      <div className="h-full w-1/2">
-        <img src={team_icon_path}></img>
+      <div className="relative h-full w-1/2">
+        <Image
+          src={team_icon_path || '/images/spinner.svg'}
+          layout="fill"
+        ></Image>
       </div>
     </div>
   )
