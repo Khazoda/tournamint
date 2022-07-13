@@ -147,20 +147,62 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row items-start justify-between overflow-x-auto scrollbar-hide"
+          className="col-start-1 col-end-2 row-start-1 row-end-2 ml-0 h-full justify-between border-2 border-red-400 scrollbar-hide"
         >
-          <h2 className="text-lg">Upcoming Match</h2>
-          <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
-          <div className="px-2 ">
+          <div className="relative ml-auto flex h-full w-full justify-center p-2">
             {team ? (
-              <MatchTidbit
-                team_1_tag={team?.team_tag}
-                team_1_icon_path={team?.team_icon_path}
-              ></MatchTidbit>
+              <div className="relative flex h-full w-3/5 flex-row gap-4 self-center">
+                {/* Skewed backgrounds */}
+                <div className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-[#00FF88]"></div>
+                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-[#00A2FF]"></span>
+                {/* Left Team Container */}
+                <div className="absolute left-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center text-5xl">
+                  <span className="absolute max-h-16 w-16 rounded-md ">
+                    <Image
+                      src={team.team_icon_path}
+                      width={100}
+                      height={100}
+                    ></Image>
+                  </span>
+                  <span className="absolute left-1/2 z-50 -translate-x-1/2 font-semibold text-black-800">
+                    {team.team_tag}
+                  </span>
+                </div>
+                {/* VS */}
+                <span className="absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 text-8xl">
+                  <span className=" absolute top-3 right-2 font-extrabold  text-primary drop-shadow-lg">
+                    V
+                  </span>
+                  <div>
+                    <span className="absolute bottom-6 left-3 h-32 w-1 rotate-[30deg]  bg-primary drop-shadow-md"></span>
+                    <span className="absolute bottom-3 right-0 h-32 w-1 rotate-[30deg]  bg-white-300 drop-shadow-md"></span>
+                    <span className="absolute bottom-0 right-4 h-32 w-1 rotate-[30deg]  bg-secondary drop-shadow-md"></span>
+                  </div>
+
+                  <span className="absolute bottom-3 left-4 font-extrabold text-secondary drop-shadow-lg">
+                    S
+                  </span>
+                </span>
+                {/* Right Team Container */}
+                <div className="absolute right-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center justify-end  text-5xl">
+                  <span className="absolute right-1/2 z-50 translate-x-1/2 font-semibold text-black-800">
+                    {team.team_tag}
+                  </span>
+                  <span className="absolute max-h-16 w-16 rounded-md ">
+                    <Image
+                      src={team.team_icon_path}
+                      width={100}
+                      height={100}
+                    ></Image>
+                  </span>
+                </div>
+              </div>
             ) : (
               <></>
             )}
-            <div className="my-5 grid w-full auto-cols-max grid-flow-col items-center justify-center gap-5 text-center ">
+          </div>
+          <div>
+            {/* <div className="my-5 grid w-full auto-cols-max grid-flow-col items-center justify-center gap-5 text-center ">
               <div className="flex flex-col ">
                 <Countdown className="font-mono text-4xl" value={countdown_d} />
                 days
@@ -181,7 +223,7 @@ const Home: NextPage<Props> = (props) => {
             <h4 className="mt-2 flex flex-col">
               <span>{humanReadableDate.toDateString()}</span>
               <span>{humanReadableDate.toLocaleTimeString()}</span>
-            </h4>
+            </h4> */}
           </div>
         </div>
 
