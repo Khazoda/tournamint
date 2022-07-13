@@ -31,8 +31,8 @@ const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
   const { displayName, biography, ign, statistics, team } = useUser()
   const [countdown_s, setCountdown_s] = useState<number>(3)
-  const [countdown_m, setCountdown_m] = useState<number>(1)
-  const [countdown_h, setCountdown_h] = useState<number>(1)
+  const [countdown_m, setCountdown_m] = useState<number>(0)
+  const [countdown_h, setCountdown_h] = useState<number>(0)
   const [countdown_d, setCountdown_d] = useState<number>(1)
 
   const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
@@ -52,75 +52,86 @@ const Home: NextPage<Props> = (props) => {
   useEffect(() => {
     // Populate cardStatistics
     setCardStatistics(default_card_statistics)
-
-    setSecondsToNextMatch(1569)
-    setTimeout(() => {
-      carry_flag.days = false
-      carry_flag.hours = false
-      carry_flag.minutes = false
-    }, 1000)
   }, [])
 
-  // WHEN SECONDS VALUE CHANGES
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (countdown_s == 0) {
-        setCountdown_m((m) => m - 1)
-      }
-      setCountdown_s((s) => (s <= 0 ? 0 : s - 1))
-      console.log(carry_flag)
-    }, 1000)
+  // Countdown logic
+  const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
+  const countDownDate = humanReadableDate
+  const countDownTime = countDownDate.getTime()
 
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [countdown_s])
+  var myfunc = setInterval(function () {
+    var now = new Date().getTime()
+    var left = countDownTime - now
 
-  // WHEN MINUTES VALUE CHANGES
-  useEffect(() => {
-    if (countdown_m <= 0) {
-      if (carry_flag.minutes) {
-        setCountdown_h((h) => h - 1)
-        carry_flag.minutes = false
-      }
-      carry_flag.minutes = true
-      // setCountdown_m(59)
-    }
-    if (countdown_s == 0) {
-      setCountdown_s((s) => 59)
-    }
-  }, [countdown_m])
+    setCountdown_d(Math.floor(left / (1000 * 60 * 60 * 24)))
+    setCountdown_h(
+      Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    )
+    setCountdown_m(Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)))
+    setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
+  }, 1000)
 
-  // WHEN HOURS VALUE CHANGES
-  useEffect(() => {
-    if (countdown_h <= 0) {
-      if (carry_flag.hours) {
-        setCountdown_d((d) => d - 1)
-        carry_flag.hours = false
-        setCountdown_m((m) => 59)
-      }
-      carry_flag.hours = true
+  // !Deprecated, concurrency unsafe countdown logic implementation
+  // // WHEN SECONDS VALUE CHANGES
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (countdown_s == 0) {
+  //       setCountdown_m((m) => m - 1)
+  //     }
+  //     setCountdown_s((s) => (s <= 0 ? 0 : s - 1))
+  //     console.log(carry_flag)
+  //   }, 1000)
 
-      // setCountdown_h(23)
-      if (countdown_m <= 0) {
-        setCountdown_m((m) => 59)
-      }
-    }
-  }, [countdown_h])
+  //   return () => {
+  //     clearTimeout(timer)
+  //   }
+  // }, [countdown_s])
 
-  // WHEN DAYS VALUE CHANGES
-  useEffect(() => {
-    if (countdown_d <= 0) {
-      if (carry_flag.days) {
-        carry_flag.days = false
-        setCountdown_h((h) => 23)
-      }
-      carry_flag.days = true
-      if (countdown_h == 0) {
-        setCountdown_h((h) => 23)
-      }
-    }
-  }, [countdown_d])
+  // // WHEN MINUTES VALUE CHANGES
+  // useEffect(() => {
+  //   if (countdown_m <= 0) {
+  //     if (carry_flag.minutes) {
+  //       setCountdown_h((h) => h - 1)
+  //       carry_flag.minutes = false
+  //     }
+  //     carry_flag.minutes = true
+  //     // setCountdown_m(59)
+  //   }
+  //   if (countdown_s == 0) {
+  //     setCountdown_s((s) => 59)
+  //   }
+  // }, [countdown_m])
+
+  // // WHEN HOURS VALUE CHANGES
+  // useEffect(() => {
+  //   if (countdown_h <= 0) {
+  //     if (carry_flag.hours) {
+  //       setCountdown_d((d) => d - 1)
+  //       carry_flag.hours = false
+  //       setCountdown_m((m) => 59)
+  //     }
+  //     carry_flag.hours = true
+
+  //     // setCountdown_h(23)
+  //     if (countdown_m <= 0) {
+  //       setCountdown_m((m) => 59)
+  //     }
+  //   }
+  // }, [countdown_h])
+
+  // // WHEN DAYS VALUE CHANGES
+  // useEffect(() => {
+  //   if (countdown_d <= 0) {
+  //     if (carry_flag.days) {
+  //       carry_flag.days = false
+  //       setCountdown_h((h) => 23)
+  //     }
+  //     carry_flag.days = true
+  //     if (countdown_h == 0) {
+  //       setCountdown_h((h) => 23)
+  //     }
+  //   }
+  // }, [countdown_d])
   return (
     <div
       id="wrapper"
@@ -213,25 +224,28 @@ const Home: NextPage<Props> = (props) => {
             ) : (
               <></>
             )}
-            <div className="grid auto-cols-max grid-flow-col gap-5 text-center">
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={countdown_d} />
+            <div className="my-5 grid w-full auto-cols-max grid-flow-col items-center justify-center gap-5 text-center">
+              <div className="flex flex-col ">
+                <Countdown className="font-mono text-4xl" value={countdown_d} />
                 days
               </div>
               <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={countdown_h} />
+                <Countdown className="font-mono text-4xl" value={countdown_h} />
                 hours
               </div>
               <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={countdown_m} />
+                <Countdown className="font-mono text-4xl" value={countdown_m} />
                 min
               </div>
               <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={countdown_s} />
+                <Countdown className="font-mono text-4xl" value={countdown_s} />
                 sec
               </div>
             </div>{' '}
-            <h4 className="mt-2">July 15th 15:30 CEST</h4>
+            <h4 className="mt-2 flex flex-col">
+              <span>{humanReadableDate.toDateString()}</span>
+              <span>{humanReadableDate.toLocaleTimeString()}</span>
+            </h4>
           </div>
         </div>
       </main>
