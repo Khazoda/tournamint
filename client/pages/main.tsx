@@ -152,31 +152,32 @@ const Home: NextPage<Props> = (props) => {
           id="top_left"
           className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-black-600 scrollbar-hide"
         >
-          <div className="relative my-2 mx-2 flex w-auto flex-col justify-evenly rounded-md bg-black-500 ">
-            <div className="grid  w-auto auto-cols-max grid-flow-col items-center justify-center gap-5 p-2 text-center">
-              <div className="flex flex-col ">
-                <Countdown className="font-mono text-3xl" value={countdown_d} />
+          <div className="relative my-2 mx-2 flex w-48 flex-row justify-between rounded-md bg-black-500 p-2">
+            <div className="flex h-full w-1/2 flex-col justify-between">
+              <div className="flex flex-col items-center pb-2 ">
+                <Countdown
+                  className=" font-mono text-6xl"
+                  value={countdown_d}
+                />
                 days
               </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-3xl" value={countdown_h} />
+              <h4 className="text-md flex flex-col text-white-600">
+                <span>{humanReadableDate.toLocaleString()}</span>
+              </h4>
+            </div>
+            <div className="grid w-auto grid-flow-row auto-rows-max items-center justify-center gap-1 text-center">
+              <div className="flex flex-col items-center">
+                <Countdown className="font-mono text-2xl" value={countdown_h} />
                 hours
               </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-3xl" value={countdown_m} />
+              <div className="flex flex-col items-center">
+                <Countdown className="font-mono text-2xl" value={countdown_m} />
                 min
               </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-3xl" value={countdown_s} />
-                sec
+              <div className="flex flex-col items-center">
+                <Countdown className="font-mono text-2xl" value={countdown_s} />
+                secs
               </div>
-            </div>
-
-            <div>
-              <h4 className="mt-2 flex  w-48 flex-col text-xl">
-                <span>{humanReadableDate.toDateString()}</span>
-                <span>{humanReadableDate.toLocaleTimeString()}</span>
-              </h4>
             </div>
           </div>
           <span className="relative top-1/4 my-2 h-3/4 w-1 -translate-y-1/4 bg-black-500"></span>
@@ -188,14 +189,14 @@ const Home: NextPage<Props> = (props) => {
                 <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#00A2FF] to-[#003a5c]"></span>
                 {/* Left Team Container */}
                 <div className="absolute left-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center text-5xl">
-                  <span className="absolute max-h-16 w-16 rounded-md ">
+                  <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <Image
                       src={team.team_icon_path}
                       width={100}
                       height={100}
                     ></Image>
                   </span>
-                  <span className="absolute left-3/4 z-50 -translate-x-full font-semibold text-white-200">
+                  <span className="absolute left-2/3 z-50 -translate-x-full font-semibold text-white-200 drop-shadow-lg">
                     {team.team_tag}
                   </span>
                 </div>
@@ -216,10 +217,10 @@ const Home: NextPage<Props> = (props) => {
                 </span>
                 {/* Right Team Container */}
                 <div className="absolute right-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center justify-end  text-5xl">
-                  <span className="absolute right-3/4 z-50 translate-x-full font-semibold text-white-200">
+                  <span className="absolute right-2/3 z-50 translate-x-full font-semibold text-white-200 drop-shadow-lg">
                     {team.team_tag}
                   </span>
-                  <span className="absolute max-h-16 w-16 rounded-md ">
+                  <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <Image
                       src={team.team_icon_path}
                       width={100}
