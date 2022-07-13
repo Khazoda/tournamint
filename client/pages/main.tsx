@@ -20,10 +20,22 @@ export interface Props {
   is_dark: boolean
   setDark: Function
 }
+
+let carry_flag = {
+  minutes: true,
+  hours: true,
+  days: true,
+}
+
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
   const { displayName, biography, ign, statistics, team } = useUser()
-  const [countdownValue, setCountdownValue] = useState<number>(100)
+  const [countdown_s, setCountdown_s] = useState<number>(3)
+  const [countdown_m, setCountdown_m] = useState<number>(1)
+  const [countdown_h, setCountdown_h] = useState<number>(1)
+  const [countdown_d, setCountdown_d] = useState<number>(1)
+
+  const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
 
   // SHAPES
   interface ICardStatistics {
@@ -40,18 +52,75 @@ const Home: NextPage<Props> = (props) => {
   useEffect(() => {
     // Populate cardStatistics
     setCardStatistics(default_card_statistics)
+
+    setSecondsToNextMatch(1569)
+    setTimeout(() => {
+      carry_flag.days = false
+      carry_flag.hours = false
+      carry_flag.minutes = false
+    }, 1000)
   }, [])
 
+  // WHEN SECONDS VALUE CHANGES
   useEffect(() => {
     const timer = setTimeout(() => {
-      setCountdownValue((v) => (v <= 0 ? 100 : v - 1))
+      if (countdown_s == 0) {
+        setCountdown_m((m) => m - 1)
+      }
+      setCountdown_s((s) => (s <= 0 ? 0 : s - 1))
+      console.log(carry_flag)
     }, 1000)
 
     return () => {
       clearTimeout(timer)
     }
-  }, [countdownValue])
+  }, [countdown_s])
 
+  // WHEN MINUTES VALUE CHANGES
+  useEffect(() => {
+    if (countdown_m <= 0) {
+      if (carry_flag.minutes) {
+        setCountdown_h((h) => h - 1)
+        carry_flag.minutes = false
+      }
+      carry_flag.minutes = true
+      // setCountdown_m(59)
+    }
+    if (countdown_s == 0) {
+      setCountdown_s((s) => 59)
+    }
+  }, [countdown_m])
+
+  // WHEN HOURS VALUE CHANGES
+  useEffect(() => {
+    if (countdown_h <= 0) {
+      if (carry_flag.hours) {
+        setCountdown_d((d) => d - 1)
+        carry_flag.hours = false
+        setCountdown_m((m) => 59)
+      }
+      carry_flag.hours = true
+
+      // setCountdown_h(23)
+      if (countdown_m <= 0) {
+        setCountdown_m((m) => 59)
+      }
+    }
+  }, [countdown_h])
+
+  // WHEN DAYS VALUE CHANGES
+  useEffect(() => {
+    if (countdown_d <= 0) {
+      if (carry_flag.days) {
+        carry_flag.days = false
+        setCountdown_h((h) => 23)
+      }
+      carry_flag.days = true
+      if (countdown_h == 0) {
+        setCountdown_h((h) => 23)
+      }
+    }
+  }, [countdown_d])
   return (
     <div
       id="wrapper"
@@ -146,22 +215,19 @@ const Home: NextPage<Props> = (props) => {
             )}
             <div className="grid auto-cols-max grid-flow-col gap-5 text-center">
               <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={15} />
+                <Countdown className="font-mono text-5xl" value={countdown_d} />
                 days
               </div>
               <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={10} />
+                <Countdown className="font-mono text-5xl" value={countdown_h} />
                 hours
               </div>
               <div className="flex flex-col">
-                <Countdown className="font-mono text-5xl" value={24} />
+                <Countdown className="font-mono text-5xl" value={countdown_m} />
                 min
               </div>
               <div className="flex flex-col">
-                <Countdown
-                  className="font-mono text-5xl"
-                  value={countdownValue}
-                />
+                <Countdown className="font-mono text-5xl" value={countdown_s} />
                 sec
               </div>
             </div>{' '}

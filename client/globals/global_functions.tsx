@@ -27,3 +27,34 @@ export function Capitalize(i: string) {
 
   return result
 }
+
+// ***********************
+// *** Time Conversion ***
+// ***********************
+interface ICountDownTime {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+}
+export function convertToCountDown(totalSeconds: number): ICountDownTime {
+  let seconds = totalSeconds % 60
+  let minutes = (totalSeconds % 3600) / 60
+  let hours = (totalSeconds % 86400) / 3600
+  let days = (totalSeconds % (86400 * 30)) / 86400
+
+  return { seconds, minutes, days, hours }
+}
+export function convertToSeconds(
+  days: number,
+  hours: number,
+  minutes: number,
+  seconds: number
+): number {
+  let adder = 0
+  adder += days * 24 * 60 * 60
+  adder += hours * 60 * 60
+  adder += minutes * 60
+  adder += seconds
+  return adder
+}
