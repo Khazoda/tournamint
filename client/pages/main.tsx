@@ -150,11 +150,39 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 h-full justify-between rounded-md bg-black-600  scrollbar-hide"
+          className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-black-600 scrollbar-hide"
         >
+          <div className="relative my-2 mx-2 flex w-auto flex-col justify-evenly rounded-md bg-black-500 ">
+            <div className="grid  w-auto auto-cols-max grid-flow-col items-center justify-center gap-5 p-2 text-center">
+              <div className="flex flex-col ">
+                <Countdown className="font-mono text-3xl" value={countdown_d} />
+                days
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-3xl" value={countdown_h} />
+                hours
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-3xl" value={countdown_m} />
+                min
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-3xl" value={countdown_s} />
+                sec
+              </div>
+            </div>
+
+            <div>
+              <h4 className="mt-2 flex  w-48 flex-col text-xl">
+                <span>{humanReadableDate.toDateString()}</span>
+                <span>{humanReadableDate.toLocaleTimeString()}</span>
+              </h4>
+            </div>
+          </div>
+          <span className="relative top-1/4 my-2 h-3/4 w-1 -translate-y-1/4 bg-black-500"></span>
           <div className="relative ml-auto flex h-full w-full justify-center p-2">
             {team ? (
-              <div className="relative -top-5 flex h-full w-3/5 flex-row gap-4 self-center">
+              <div className="relative  flex h-full w-11/12 flex-row gap-4 self-center">
                 {/* Skewed backgrounds */}
                 <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00552d]"></span>
                 <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#00A2FF] to-[#003a5c]"></span>
@@ -167,7 +195,7 @@ const Home: NextPage<Props> = (props) => {
                       height={100}
                     ></Image>
                   </span>
-                  <span className="absolute left-1/2 z-50 -translate-x-full font-semibold text-black-800">
+                  <span className="absolute left-3/4 z-50 -translate-x-full font-semibold text-white-200">
                     {team.team_tag}
                   </span>
                 </div>
@@ -177,9 +205,9 @@ const Home: NextPage<Props> = (props) => {
                     V
                   </span>
                   <div>
-                    <span className="absolute bottom-6 left-3 h-32 w-1 rotate-[30deg]  bg-primary drop-shadow-md"></span>
-                    <span className="absolute bottom-3 right-0 h-32 w-1 rotate-[30deg]  bg-white-300 drop-shadow-md"></span>
-                    <span className="absolute bottom-0 right-4 h-32 w-1 rotate-[30deg]  bg-secondary drop-shadow-md"></span>
+                    <span className="absolute bottom-6 left-3 h-32 w-1 rotate-[30deg]  bg-[#00552d] drop-shadow-md"></span>
+                    <span className="absolute bottom-3 right-0 h-32 w-1 rotate-[30deg]  bg-white-800 drop-shadow-md"></span>
+                    <span className="absolute bottom-0 right-4 h-32 w-1 rotate-[30deg]  bg-[#003a5c] drop-shadow-md"></span>
                   </div>
 
                   <span className="absolute bottom-3 left-0 font-extrabold text-secondary drop-shadow-lg">
@@ -188,7 +216,7 @@ const Home: NextPage<Props> = (props) => {
                 </span>
                 {/* Right Team Container */}
                 <div className="absolute right-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center justify-end  text-5xl">
-                  <span className="absolute right-1/2 z-50 translate-x-full font-semibold text-black-800">
+                  <span className="absolute right-3/4 z-50 translate-x-full font-semibold text-white-200">
                     {team.team_tag}
                   </span>
                   <span className="absolute max-h-16 w-16 rounded-md ">
@@ -203,33 +231,6 @@ const Home: NextPage<Props> = (props) => {
             ) : (
               <></>
             )}
-          </div>
-          <div className="absolute bottom-2 flex w-full flex-row justify-evenly">
-            <div className="grid  w-48 auto-cols-max grid-flow-col items-center justify-center gap-5 text-center">
-              <div className="flex flex-col ">
-                <Countdown className="font-mono text-4xl" value={countdown_d} />
-                days
-              </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-4xl" value={countdown_h} />
-                hours
-              </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-4xl" value={countdown_m} />
-                min
-              </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-4xl" value={countdown_s} />
-                sec
-              </div>
-            </div>
-
-            <div>
-              <h4 className="mt-2 flex  w-48 flex-col text-xl">
-                <span>{humanReadableDate.toDateString()}</span>
-                <span>{humanReadableDate.toLocaleTimeString()}</span>
-              </h4>
-            </div>
           </div>
         </div>
 
