@@ -12,7 +12,8 @@ import { default_card_statistics } from '../globals/seed_data'
 import MatchTidbit from '../components/common/MatchTidbit'
 import TournamentDisplay from '../components/common/TournamentDisplay'
 import Link from 'next/link'
-import { Countdown } from 'react-daisyui'
+import { Countdown, Stats } from 'react-daisyui'
+import { Capitalize } from '../globals/global_functions'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -146,32 +147,47 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="row-start-2 row-end-2 ml-0 flex h-full items-start justify-between overflow-x-auto scrollbar-hide md:row-start-1 md:row-end-1"
+          className="col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row items-start justify-between overflow-x-auto scrollbar-hide"
         >
-          {cardStatistics.map((card) => {
-            const valuekey = card.value_key
-            return (
-              <div className="mr-4 flex h-[164px] w-[164px] min-w-[164px] flex-col justify-center rounded-md border-2 border-green-200 bg-green-100 last:mr-0 dark:border-black-500  dark:bg-black-600">
-                <span className="mx-auto mt-2 h-10 w-10">
-                  {card.icon || '[Icon]'}
-                </span>
-                <span className="mb-auto text-lg font-semibold">
-                  {card.title}
-                </span>
-                <span className="ml-2 self-start text-2xl">
-                  {(statistics as any)[valuekey]}
-                </span>
-                <span className=" ml-2 mb-2 self-start">
-                  {card.type || '[Statistic Name]'}
-                </span>
+          <h2 className="text-lg">Upcoming Match</h2>
+          <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
+          <div className="px-2 ">
+            {team ? (
+              <MatchTidbit
+                team_1_tag={team?.team_tag}
+                team_1_icon_path={team?.team_icon_path}
+              ></MatchTidbit>
+            ) : (
+              <></>
+            )}
+            <div className="my-5 grid w-full auto-cols-max grid-flow-col items-center justify-center gap-5 text-center ">
+              <div className="flex flex-col ">
+                <Countdown className="font-mono text-4xl" value={countdown_d} />
+                days
               </div>
-            )
-          })}
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-4xl" value={countdown_h} />
+                hours
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-4xl" value={countdown_m} />
+                min
+              </div>
+              <div className="flex flex-col">
+                <Countdown className="font-mono text-4xl" value={countdown_s} />
+                sec
+              </div>
+            </div>{' '}
+            <h4 className="mt-2 flex flex-col">
+              <span>{humanReadableDate.toDateString()}</span>
+              <span>{humanReadableDate.toLocaleTimeString()}</span>
+            </h4>
+          </div>
         </div>
 
         <div
           id="bottom_left"
-          className="relative row-start-2 hidden h-0 w-0 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
+          className="relative row-start-2 row-end-3 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
             ( Tournament Bracket Name)
@@ -209,43 +225,53 @@ const Home: NextPage<Props> = (props) => {
             </div>
           </div>
         </div>
+
         <div
-          id="bottom_right"
-          className=" ml-0 flex h-auto flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 pb-4 dark:bg-black-600 md:ml-4"
+          id="stats_wrapper"
+          className="col-start-2 col-end-3 row-start-2 row-end-3 ml-0 flex h-auto  flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 pb-4 dark:bg-black-600 md:ml-4"
         >
-          <h2 className="text-lg">Upcoming Match</h2>
-          <span className="mx-auto h-0.5 w-10 rounded-md bg-emerald-400"></span>
-          <div className="px-2 ">
-            {team ? (
-              <MatchTidbit
-                team_1_tag={team?.team_tag}
-                team_1_icon_path={team?.team_icon_path}
-              ></MatchTidbit>
-            ) : (
-              <></>
-            )}
-            <div className="my-5 grid w-full auto-cols-max grid-flow-col items-center justify-center gap-5 text-center">
-              <div className="flex flex-col ">
-                <Countdown className="font-mono text-4xl" value={countdown_d} />
-                days
-              </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-4xl" value={countdown_h} />
-                hours
-              </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-4xl" value={countdown_m} />
-                min
-              </div>
-              <div className="flex flex-col">
-                <Countdown className="font-mono text-4xl" value={countdown_s} />
-                sec
-              </div>
-            </div>{' '}
-            <h4 className="mt-2 flex flex-col">
-              <span>{humanReadableDate.toDateString()}</span>
-              <span>{humanReadableDate.toLocaleTimeString()}</span>
-            </h4>
+          <div
+            id="statistics_wrapper"
+            className="flex w-full min-w-full flex-col items-center self-center"
+          >
+            {/* {cardStatistics.map((card) => {
+              const valuekey = card.value_key
+              return (
+                <div className="mr-4 flex h-[200px] w-[200px] min-w-[200px] flex-col justify-center rounded-md border-2 border-green-200 bg-green-100 last:mr-0 dark:border-black-500  dark:bg-black-600">
+                  <span className="mx-auto mt-2 h-10 w-10">
+                    {card.icon || '[Icon]'}
+                  </span>
+                  <span className="mb-auto text-lg font-semibold">
+                    {card.title}
+                  </span>
+                  <span className="ml-2 self-start text-2xl">
+                    {(statistics as any)[valuekey]}
+                  </span>
+                  <span className=" ml-2 mb-2 self-start">
+                    {card.type || '[Statistic Name]'}
+                  </span>
+                </div>
+              ) */}
+            <div className=" shadow">
+              {cardStatistics.map((card) => {
+                const valuekey = card.value_key
+                return (
+                  <div className="stat border-green-200 bg-green-100  odd:text-primary even:text-secondary dark:border-black-500 dark:bg-black-600">
+                    <div className="stat-figure text-primary">
+                      <span className="inline-block h-8 w-8 stroke-current">
+                        {card.icon || '[Icon]'}
+                      </span>
+                    </div>
+                    <div className="stat-title text-black-800 dark:text-white-100 ">
+                      {Capitalize(card.type) || '[Statistic Name]'}
+                    </div>
+                    <span className="stat-value ml-2 ">
+                      {(statistics as any)[valuekey]}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </main>
