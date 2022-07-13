@@ -31,10 +31,10 @@ let carry_flag = {
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
   const { displayName, biography, ign, statistics, team } = useUser()
-  const [countdown_s, setCountdown_s] = useState<number>(3)
+  const [countdown_s, setCountdown_s] = useState<number>(0)
   const [countdown_m, setCountdown_m] = useState<number>(0)
   const [countdown_h, setCountdown_h] = useState<number>(0)
-  const [countdown_d, setCountdown_d] = useState<number>(1)
+  const [countdown_d, setCountdown_d] = useState<number>(0)
 
   const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
 
@@ -53,14 +53,12 @@ const Home: NextPage<Props> = (props) => {
   useEffect(() => {
     // Populate cardStatistics
     setCardStatistics(default_card_statistics)
+    if (countdownInterval) {
+      clearInterval(countdownInterval)
+    }
   }, [])
 
-  // Countdown logic
-  const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
-  const countDownDate = humanReadableDate
-  const countDownTime = countDownDate.getTime()
-
-  var myfunc = setInterval(function () {
+  var countdownInterval = setInterval(function () {
     var now = new Date().getTime()
     var left = countDownTime - now
 
@@ -71,6 +69,11 @@ const Home: NextPage<Props> = (props) => {
     setCountdown_m(Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)))
     setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
   }, 1000)
+
+  // Countdown logic
+  const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
+  const countDownDate = humanReadableDate
+  const countDownTime = countDownDate.getTime()
 
   // !Deprecated, concurrency unsafe countdown logic implementation
   // // WHEN SECONDS VALUE CHANGES
@@ -147,14 +150,14 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="col-start-1 col-end-2 row-start-1 row-end-2 ml-0 h-full justify-between border-2 border-red-400 scrollbar-hide"
+          className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 h-full justify-between rounded-md bg-black-600  scrollbar-hide"
         >
           <div className="relative ml-auto flex h-full w-full justify-center p-2">
             {team ? (
-              <div className="relative flex h-full w-3/5 flex-row gap-4 self-center">
+              <div className="relative -top-5 flex h-full w-3/5 flex-row gap-4 self-center">
                 {/* Skewed backgrounds */}
-                <div className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-[#00FF88]"></div>
-                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-[#00A2FF]"></span>
+                <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00552d]"></span>
+                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#00A2FF] to-[#003a5c]"></span>
                 {/* Left Team Container */}
                 <div className="absolute left-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center text-5xl">
                   <span className="absolute max-h-16 w-16 rounded-md ">
@@ -164,13 +167,13 @@ const Home: NextPage<Props> = (props) => {
                       height={100}
                     ></Image>
                   </span>
-                  <span className="absolute left-1/2 z-50 -translate-x-1/2 font-semibold text-black-800">
+                  <span className="absolute left-1/2 z-50 -translate-x-full font-semibold text-black-800">
                     {team.team_tag}
                   </span>
                 </div>
                 {/* VS */}
                 <span className="absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 text-8xl">
-                  <span className=" absolute top-3 right-2 font-extrabold  text-primary drop-shadow-lg">
+                  <span className=" absolute top-3 -left-14 z-50 font-extrabold  text-primary drop-shadow-lg">
                     V
                   </span>
                   <div>
@@ -179,13 +182,13 @@ const Home: NextPage<Props> = (props) => {
                     <span className="absolute bottom-0 right-4 h-32 w-1 rotate-[30deg]  bg-secondary drop-shadow-md"></span>
                   </div>
 
-                  <span className="absolute bottom-3 left-4 font-extrabold text-secondary drop-shadow-lg">
+                  <span className="absolute bottom-3 left-0 font-extrabold text-secondary drop-shadow-lg">
                     S
                   </span>
                 </span>
                 {/* Right Team Container */}
                 <div className="absolute right-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center justify-end  text-5xl">
-                  <span className="absolute right-1/2 z-50 translate-x-1/2 font-semibold text-black-800">
+                  <span className="absolute right-1/2 z-50 translate-x-full font-semibold text-black-800">
                     {team.team_tag}
                   </span>
                   <span className="absolute max-h-16 w-16 rounded-md ">
@@ -201,8 +204,8 @@ const Home: NextPage<Props> = (props) => {
               <></>
             )}
           </div>
-          <div>
-            {/* <div className="my-5 grid w-full auto-cols-max grid-flow-col items-center justify-center gap-5 text-center ">
+          <div className="absolute bottom-2 flex w-full flex-row justify-evenly">
+            <div className="grid  w-48 auto-cols-max grid-flow-col items-center justify-center gap-5 text-center">
               <div className="flex flex-col ">
                 <Countdown className="font-mono text-4xl" value={countdown_d} />
                 days
@@ -219,11 +222,14 @@ const Home: NextPage<Props> = (props) => {
                 <Countdown className="font-mono text-4xl" value={countdown_s} />
                 sec
               </div>
-            </div>{' '}
-            <h4 className="mt-2 flex flex-col">
-              <span>{humanReadableDate.toDateString()}</span>
-              <span>{humanReadableDate.toLocaleTimeString()}</span>
-            </h4> */}
+            </div>
+
+            <div>
+              <h4 className="mt-2 flex  w-48 flex-col text-xl">
+                <span>{humanReadableDate.toDateString()}</span>
+                <span>{humanReadableDate.toLocaleTimeString()}</span>
+              </h4>
+            </div>
           </div>
         </div>
 
