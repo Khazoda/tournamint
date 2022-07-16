@@ -150,9 +150,9 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-black-600 scrollbar-hide"
+          className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600"
         >
-          <div className="relative my-2 mx-2 flex w-48 flex-row justify-between rounded-md bg-black-500 p-2">
+          <div className="relative my-2 mx-2 flex w-48 flex-row justify-between rounded-md bg-green-200 p-2 dark:bg-black-500 dark:text-white-200">
             <div className="flex h-full w-1/2 flex-col justify-between">
               <div className="flex flex-col items-center pb-2 ">
                 <Countdown
@@ -161,11 +161,11 @@ const Home: NextPage<Props> = (props) => {
                 />
                 days
               </div>
-              <h4 className="text-md flex flex-col text-white-600">
+              <h4 className="text-md flex flex-col text-black-600 dark:text-white-600 ">
                 <span>{humanReadableDate.toLocaleString()}</span>
               </h4>
             </div>
-            <div className="grid w-auto grid-flow-row auto-rows-max items-center justify-center gap-1 text-center">
+            <div className="grid w-auto grid-flow-row auto-rows-max items-center justify-center gap-1 ">
               <div className="flex flex-col items-center">
                 <Countdown className="font-mono text-2xl" value={countdown_h} />
                 hours

@@ -7,6 +7,7 @@ import Image from 'next/image'
 import CreateTeamModal from './create_team_modal'
 import JoinTeamModal from './join_team_modal'
 import { useRouter } from 'next/router'
+import { DD_PREFIX } from '../../globals/riot_consts'
 
 export interface Props {
   userData: any
@@ -302,9 +303,12 @@ const MyTeamsPage = (props: Props) => {
                       >
                         <Image
                           src={
-                            'http://ddragon.leagueoflegends.com/cdn/12.6.1/img/profileicon/' +
-                            e.icon_id +
-                            '.png'
+                            userData.profileIconId === undefined
+                              ? '/images/spinner.svg'
+                              : DD_PREFIX +
+                                'img/profileicon/' +
+                                e.icon_id +
+                                '.png'
                           }
                           alt="Profile picture"
                           layout="fill"
