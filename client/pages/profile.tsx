@@ -8,6 +8,7 @@ import { useUser, userContextType } from '../context/UserContext'
 import { DD_PREFIX } from '../globals/riot_consts'
 import { Capitalize } from '../globals/global_functions'
 import { IAccountData } from '../globals/types'
+import { default_card_statistics } from '../globals/seed_data'
 
 export interface Props {
   userData: any
@@ -17,6 +18,14 @@ export interface UserDetails {
   displayName?: string
   biography?: string
   ign?: string
+}
+
+// SHAPES
+interface ICardStatistics {
+  icon: React.ReactElement
+  title: string
+  type: string
+  value_key: string
 }
 
 function Profile(props: Props) {
@@ -50,6 +59,15 @@ function Profile(props: Props) {
     'Teemo',
     'Teemo',
   ])
+  // STATE
+  const [cardStatistics, setCardStatistics] = useState<Array<ICardStatistics>>(
+    []
+  )
+
+  useEffect(() => {
+    // Populate cardStatistics
+    setCardStatistics(default_card_statistics)
+  }, [])
 
   const handleUserDetailsFormSubmit = (
     e: React.KeyboardEvent<HTMLInputElement>
@@ -521,113 +539,142 @@ function Profile(props: Props) {
           </div>
         )}
       </div>
+      {/* Center */}
 
-      {/* Right hand side */}
-      <div className=" mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[224px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
-        <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
-          {name?.length <= 16
-            ? name
-            : 'Too long! Try shortening your display name.'}
-        </p>
-        <p className="">
-          {bio?.length <= 160 ? bio : 'Too long! Try shortening your bio.'}
-        </p>
+      <div
+        id="statistics_wrapper"
+        className="mx-0 my-3 flex max-h-[396px] min-h-[120px] w-full min-w-[224px] flex-col overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]"
+      >
+        <div className="shadow">
+          {cardStatistics.map((card) => {
+            const valuekey = card.value_key
+            return (
+              <div className="stat border-green-200 bg-green-100  odd:text-primary even:text-secondary dark:border-black-500 dark:bg-black-600">
+                <div className="stat-figure text-primary">
+                  <span className="inline-block h-8 w-8 stroke-current">
+                    {card.icon || '[Icon]'}
+                  </span>
+                </div>
+                <div className="stat-title text-black-800 dark:text-white-100 ">
+                  {Capitalize(card.type) || '[Statistic Name]'}
+                </div>
+                <span className="stat-value ml-2 ">
+                  {(statistics as any)[valuekey]}
+                </span>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
-      {/* Input Fields */}
-      <ul className="items-between flex h-[340px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
-        <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
-          Edit Profile
-        </h1>
-        <li className="mb-2 flex flex-col">
-          <label htmlFor="in-game_input">In-Game Name</label>
-          <input
-            title="To use a different account, please log out"
-            disabled
-            id="in-game_input"
-            type="text"
-            className="input-disabled rounded-md border-2 border-black-400 bg-[#69696965] px-1"
-            defaultValue={ign}
-            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
-            onChange={(e) => setIgn(e.target.value)}
-          />
-        </li>
-        <li className="my-2 flex flex-col">
-          <label htmlFor="username_input">Username</label>
-          <input
-            id="username_input"
-            type="text"
-            className="rounded-md border-2 border-black-400 bg-transparent px-1"
-            defaultValue={displayName}
-            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </li>
-        <li className="mb-2 flex flex-col">
-          <label htmlFor="biography_input">Biography</label>
-          <input
-            id="biography_input"
-            type="text"
-            className="rounded-md border-2 border-black-400 bg-transparent px-1"
-            defaultValue={biography}
-            onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
-            onChange={(e) => setBio(e.target.value)}
-          />
-        </li>
+      {/* Right hand side */}
+      <div>
+        <div className="mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[224px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
+          <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
+            {name?.length <= 16
+              ? name
+              : 'Too long! Try shortening your display name.'}
+          </p>
+          <p className="">
+            {bio?.length <= 160 ? bio : 'Too long! Try shortening your bio.'}
+          </p>
+        </div>
 
-        <li className="mb-4 flex flex-col">
-          <label htmlFor="in-game_input">Favourite Champion</label>
-          <div className="relative h-7 ">
-            <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 lowercase text-gray-600 first-letter:capitalize dark:text-white-600">
-              {favouriteChampion == undefined
-                ? ''
-                : Capitalize(favouriteChampion[1])}
-            </div>
+        {/* Input Fields */}
+        <ul className="items-between flex h-[340px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
+          <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
+            Edit Profile
+          </h1>
+          <li className="mb-2 flex flex-col">
+            <label htmlFor="in-game_input">In-Game Name</label>
             <input
+              title="To use a different account, please log out"
+              disabled
               id="in-game_input"
-              autoComplete="off"
               type="text"
-              className="absolute top-0 left-0 w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
-              defaultValue={
-                favouriteChampion == undefined
-                  ? ''
-                  : Capitalize(favouriteChampion[0])
-              }
-              onKeyUp={(e) => {
-                handleFavouriteChampionFormSubmit(e)
-              }}
+              className="input-disabled rounded-md border-2 border-black-400 bg-[#69696965] px-1"
+              defaultValue={ign}
+              onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
+              onChange={(e) => setIgn(e.target.value)}
             />
-            {/* Autocomplete Button */}
-            <div
-              className={
-                `${favouriteChampion[1]?.length > 0 ? 'visible' : 'hidden'}` +
-                ' absolute right-[0.2rem] top-1/2 h-6 w-6 -translate-y-1/2 animate-pulse'
-              }
-            >
-              <CgArrowRightR className="" size={24} />
-            </div>
-          </div>
-        </li>
+          </li>
+          <li className="my-2 flex flex-col">
+            <label htmlFor="username_input">Username</label>
+            <input
+              id="username_input"
+              type="text"
+              className="rounded-md border-2 border-black-400 bg-transparent px-1"
+              defaultValue={displayName}
+              onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </li>
+          <li className="mb-2 flex flex-col">
+            <label htmlFor="biography_input">Biography</label>
+            <input
+              id="biography_input"
+              type="text"
+              className="rounded-md border-2 border-black-400 bg-transparent px-1"
+              defaultValue={biography}
+              onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
+              onChange={(e) => setBio(e.target.value)}
+            />
+          </li>
 
-        <li>
-          <Button
-            type="positive"
-            text={text}
-            noMargin
-            acceptCharset
-            className="relative"
-            icon={
-              <FiCheckCircle
-                className={
-                  `${buttonActive ? ' visible ' : ' invisible '}` +
-                  'absolute left-6 top-1/2 -translate-y-1/2 animate-pulse self-center'
+          <li className="mb-4 flex flex-col">
+            <label htmlFor="in-game_input">Favourite Champion</label>
+            <div className="relative h-7 ">
+              <div className="pointer-events-none absolute top-0 left-0 rounded-md border-2 border-transparent bg-transparent px-1 lowercase text-gray-600 first-letter:capitalize dark:text-white-600">
+                {favouriteChampion == undefined
+                  ? ''
+                  : Capitalize(favouriteChampion[1])}
+              </div>
+              <input
+                id="in-game_input"
+                autoComplete="off"
+                type="text"
+                className="absolute top-0 left-0 w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
+                defaultValue={
+                  favouriteChampion == undefined
+                    ? ''
+                    : Capitalize(favouriteChampion[0])
                 }
-              ></FiCheckCircle>
-            }
-            onClick={() => saveUserDetails()}
-          ></Button>
-        </li>
-      </ul>
+                onKeyUp={(e) => {
+                  handleFavouriteChampionFormSubmit(e)
+                }}
+              />
+              {/* Autocomplete Button */}
+              <div
+                className={
+                  `${favouriteChampion[1]?.length > 0 ? 'visible' : 'hidden'}` +
+                  ' absolute right-[0.2rem] top-1/2 h-6 w-6 -translate-y-1/2 animate-pulse'
+                }
+              >
+                <CgArrowRightR className="" size={24} />
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <Button
+              type="positive"
+              text={text}
+              noMargin
+              acceptCharset
+              className="relative"
+              icon={
+                <FiCheckCircle
+                  className={
+                    `${buttonActive ? ' visible ' : ' invisible '}` +
+                    'absolute left-6 top-1/2 -translate-y-1/2 animate-pulse self-center'
+                  }
+                ></FiCheckCircle>
+              }
+              onClick={() => saveUserDetails()}
+            ></Button>
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }

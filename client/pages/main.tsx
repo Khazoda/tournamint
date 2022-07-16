@@ -38,21 +38,7 @@ const Home: NextPage<Props> = (props) => {
 
   const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
 
-  // SHAPES
-  interface ICardStatistics {
-    icon: React.ReactElement
-    title: string
-    type: string
-    value_key: string
-  }
-  // STATE
-  const [cardStatistics, setCardStatistics] = useState<Array<ICardStatistics>>(
-    []
-  )
-
   useEffect(() => {
-    // Populate cardStatistics
-    setCardStatistics(default_card_statistics)
     if (countdownInterval) {
       clearInterval(countdownInterval)
     }
@@ -272,55 +258,6 @@ const Home: NextPage<Props> = (props) => {
                 type="neutral"
                 className="text-white-500"
               ></Button>
-            </div>
-          </div>
-        </div>
-
-        <div
-          id="stats_wrapper"
-          className="col-start-2 col-end-3 row-start-2 row-end-3 ml-0 flex h-auto  flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 pb-4 dark:bg-black-600 md:ml-4"
-        >
-          <div
-            id="statistics_wrapper"
-            className="flex w-full min-w-full flex-col items-center self-center"
-          >
-            {/* {cardStatistics.map((card) => {
-              const valuekey = card.value_key
-              return (
-                <div className="mr-4 flex h-[200px] w-[200px] min-w-[200px] flex-col justify-center rounded-md border-2 border-green-200 bg-green-100 last:mr-0 dark:border-black-500  dark:bg-black-600">
-                  <span className="mx-auto mt-2 h-10 w-10">
-                    {card.icon || '[Icon]'}
-                  </span>
-                  <span className="mb-auto text-lg font-semibold">
-                    {card.title}
-                  </span>
-                  <span className="ml-2 self-start text-2xl">
-                    {(statistics as any)[valuekey]}
-                  </span>
-                  <span className=" ml-2 mb-2 self-start">
-                    {card.type || '[Statistic Name]'}
-                  </span>
-                </div>
-              ) */}
-            <div className=" shadow">
-              {cardStatistics.map((card) => {
-                const valuekey = card.value_key
-                return (
-                  <div className="stat border-green-200 bg-green-100  odd:text-primary even:text-secondary dark:border-black-500 dark:bg-black-600">
-                    <div className="stat-figure text-primary">
-                      <span className="inline-block h-8 w-8 stroke-current">
-                        {card.icon || '[Icon]'}
-                      </span>
-                    </div>
-                    <div className="stat-title text-black-800 dark:text-white-100 ">
-                      {Capitalize(card.type) || '[Statistic Name]'}
-                    </div>
-                    <span className="stat-value ml-2 ">
-                      {(statistics as any)[valuekey]}
-                    </span>
-                  </div>
-                )
-              })}
             </div>
           </div>
         </div>
