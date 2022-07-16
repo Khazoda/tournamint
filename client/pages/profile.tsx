@@ -146,6 +146,7 @@ function Profile(props: Props) {
     'nautilus',
     'neeko',
     'nidalee',
+    'nilah',
     'nocturne',
     'nunu',
     'olaf',
