@@ -28,6 +28,7 @@ const Button = (props: {
     onClick = null,
     noMargin = false,
     fixedWidth = false,
+    fixedHeight = false,
     iconOnly = false,
     ...restProps
   } = props
@@ -42,11 +43,12 @@ const Button = (props: {
       className={`${
         (noMargin ? ' m-0 ' : ' m-1 ') +
         (fixedWidth ? ' w-28 ' : ' w-[100%] ') +
+        (fixedHeight ? ' h-[2rem] ' : ' h-[100%] ') +
         (iconOnly ? ' w-8 ' : ' ') +
         className +
         ' ' +
         styles.btn +
-        ' text-white h-auto min-h-[2rem] px-2 py-0 font-body font-medium shadow-md hover:scale-95 hover:shadow-none '
+        ' text-white min-h-[2rem] px-2 py-0 font-body font-medium shadow-md hover:scale-95 hover:shadow-none '
       }`}
       onClick={onClick}
     >

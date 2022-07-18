@@ -225,7 +225,7 @@ const Home: NextPage<Props> = (props) => {
 
         <div
           id="bottom_left"
-          className="relative row-start-2 row-end-3 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
+          className="relative col-start-1 col-end-3 row-start-2 row-end-3 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
             ( Tournament Bracket Name)
@@ -236,18 +236,18 @@ const Home: NextPage<Props> = (props) => {
         {/* Right Half */}
         <div
           id="top_right"
-          className=" md:cols-end-2 row-start-1 row-end-1 ml-0 mb-2 flex h-min flex-col gap-3 self-start rounded-md bg-green-100 px-2 py-2 dark:bg-black-600 md:col-start-2 md:ml-4 "
+          className=" md:cols-end-2 row-start-1 row-end-1 flex  h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600 md:col-start-2"
         >
-          <div className=" flex flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:flex-col">
+          <div className=" flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:flex-col">
             <Link href="tournaments/create_tournament">
               <Button
                 text="Create Tournament"
                 noMargin
                 type="positive"
-                className="text-white-500 drop-shadow-sm"
+                className=" text-white-500 drop-shadow-sm"
               ></Button>
             </Link>
-            <div className="flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
+            <div className="mt-auto flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
               <Button
                 text="Join Tournament"
                 noMargin
