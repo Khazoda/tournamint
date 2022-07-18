@@ -134,7 +134,7 @@ const CreateTeamModal = (props: Props) => {
           .catch((res) => console.log(res.error))
         if (get_data != undefined) {
           const dataOut: IAccountData = {
-            ign: get_data.username,
+            ign: get_data.ign,
             username: get_data.username,
             bio: get_data.bio,
             favourite_champion: get_data.favourite_champion,
