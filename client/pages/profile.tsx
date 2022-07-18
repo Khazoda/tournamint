@@ -408,11 +408,11 @@ function Profile(props: Props) {
     triggerSplashUpdate()
   }, 200)
   return (
-    <div className="flex h-full min-w-[320px] flex-col justify-start overflow-y-auto py-24 px-12 sm:flex-row md:justify-center">
+    <div className="flex h-full  min-w-[320px] flex-col justify-start gap-3 overflow-y-auto py-24 px-12 sm:flex-row md:justify-center">
       {/* Profile Showcase */}
-      <div className="flex flex-col items-center gap-3 text-center">
+      <div className="flex flex-col items-center gap-3 text-center sm:h-[550px]">
         {/* IN GAME NAME */}
-        <div className=" w-full min-w-[224px] overflow-x-hidden overflow-y-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
+        <div className="  w-full min-w-[224px] overflow-x-hidden overflow-y-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
           {ign}
         </div>
         {/* PROFILE PICTURE */}
@@ -445,7 +445,7 @@ function Profile(props: Props) {
           </div>
         </div>
         {/* TROPHIES & RANK */}
-        <div className="relative flex h-[250px] w-full flex-row gap-2 drop-shadow-lg">
+        <div className="relative flex  h-[350px] w-full flex-row gap-2 drop-shadow-lg sm:h-full">
           <div className="relative flex h-full w-full items-center justify-start rounded-md bg-gray-200 p-3 dark:bg-black-500">
             <div className="h-full w-full rounded-sm drop-shadow-sm">
               <Image
@@ -540,25 +540,24 @@ function Profile(props: Props) {
         )}
       </div>
       {/* Center */}
-
       <div
         id="statistics_wrapper"
-        className="mx-0 my-3 flex max-h-[396px] min-h-[120px] w-full min-w-[224px] flex-col overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]"
+        className="flex flex-col items-center gap-3 sm:h-[550px]  "
       >
-        <div className="shadow">
+        <div className="flex h-full w-full flex-col gap-1 rounded-md bg-gray-200 p-4 text-center shadow dark:bg-black-500 sm:w-[300px] ">
           {cardStatistics.map((card) => {
             const valuekey = card.value_key
             return (
-              <div className="stat border-green-200 bg-green-100  odd:text-primary even:text-secondary dark:border-black-500 dark:bg-black-600">
+              <div className="stat my-2 rounded-md bg-gray-200 px-3 drop-shadow-lg odd:text-primary even:text-secondary dark:bg-black-600">
                 <div className="stat-figure text-primary">
                   <span className="inline-block h-8 w-8 stroke-current">
                     {card.icon || '[Icon]'}
                   </span>
                 </div>
-                <div className="stat-title text-black-800 dark:text-white-100 ">
+                <div className=" text-black-800 dark:text-white-100 ">
                   {Capitalize(card.type) || '[Statistic Name]'}
                 </div>
-                <span className="stat-value ml-2 ">
+                <span className="stat-value ml-2 text-5xl ">
                   {(statistics as any)[valuekey]}
                 </span>
               </div>
@@ -568,9 +567,9 @@ function Profile(props: Props) {
       </div>
 
       {/* Right hand side */}
-      <div>
-        <div className="mx-0 my-3 max-h-[250px] min-h-[120px] w-full min-w-[224px] overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500 sm:my-0 sm:mx-3 sm:w-[250px]">
-          <p className="w-full font-heading text-lg font-semibold underline-offset-1 dark:text-green-600">
+      <div className="flex flex-col gap-3 sm:h-[550px]">
+        <div className="h-[275px] w-full overflow-clip  break-words rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500  sm:w-[300px]">
+          <p className="w-full font-heading text-lg font-semibold  dark:text-green-600 ">
             {name?.length <= 16
               ? name
               : 'Too long! Try shortening your display name.'}
@@ -581,18 +580,18 @@ function Profile(props: Props) {
         </div>
 
         {/* Input Fields */}
-        <ul className="items-between flex h-[340px] flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
+        <ul className="items-between flex h-full flex-col rounded-md bg-gray-200 p-3 pt-2 dark:bg-black-500">
           <h1 className="font-header inline align-top text-2xl  dark:text-green-500">
             Edit Profile
           </h1>
-          <li className="mb-2 flex flex-col">
+          <li className="mb-2 flex flex-col border-b-2 border-black-400 pb-2">
             <label htmlFor="in-game_input">In-Game Name</label>
             <input
               title="To use a different account, please log out"
               disabled
               id="in-game_input"
               type="text"
-              className="input-disabled rounded-md border-2 border-black-400 bg-[#69696965] px-1"
+              className="input-disabled rounded-md border-2 border-black-400 bg-[#69696965] px-1 text-gray-500"
               defaultValue={ign}
               onKeyUp={(e) => handleUserDetailsFormSubmit(e)}
               onChange={(e) => setIgn(e.target.value)}
@@ -655,18 +654,18 @@ function Profile(props: Props) {
             </div>
           </li>
 
-          <li>
+          <li className="mb-2">
             <Button
               type="positive"
               text={text}
               noMargin
               acceptCharset
-              className="relative"
+              className="relative "
               icon={
                 <FiCheckCircle
                   className={
                     `${buttonActive ? ' visible ' : ' invisible '}` +
-                    'absolute left-6 top-1/2 -translate-y-1/2 animate-pulse self-center'
+                    'absolute left-6 top-1/2 -translate-y-1/2 animate-pulse self-center '
                   }
                 ></FiCheckCircle>
               }
