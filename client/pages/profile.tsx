@@ -466,7 +466,7 @@ function Profile(props: Props) {
               </span>
             </div>
           </div>
-          <div className="flex w-12 flex-col justify-around gap-1 rounded-md bg-gray-200 p-1 dark:bg-black-500">
+          {/* <div className="flex w-12 flex-col justify-around gap-1 rounded-md bg-gray-200 p-1 dark:bg-black-500">
             <FiAward
               title="Valerian Cup 2019"
               color="green"
@@ -491,7 +491,7 @@ function Profile(props: Props) {
               fill="grey"
               className="h-full w-full"
             ></FiAward>
-          </div>
+          </div> */}
         </div>
 
         {/* WINRATE */}
