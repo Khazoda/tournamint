@@ -134,7 +134,7 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto grid h-full w-full max-w-[1500px] items-center gap-4 text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] md:gap-2 ">
+      <main className="mx-auto grid h-full w-full max-w-[1920px] items-center gap-4 text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] md:gap-2 ">
         {/* Left Half */}
         <div
           id="top_left"
