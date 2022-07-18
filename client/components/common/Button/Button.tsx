@@ -15,6 +15,7 @@ const Button = (props: {
   disabled?: boolean
   noMargin?: boolean
   fixedWidth?: boolean
+  fixedHeight?: boolean
   iconOnly?: boolean
 }) => {
   // Default prop values

@@ -10,14 +10,17 @@ export default function create_tournament({}: Props) {
   return (
     <div
       id="wrapper"
-      className=" grid h-full  min-h-screen overflow-y-auto px-4 pt-24 pb-4"
+      className=" grid h-full min-h-screen overflow-y-auto px-4 pt-24 pb-4"
     >
       <Head>
         <title>Tournamint — Create Tournament</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="mx-auto w-full sm:w-[300px]">
-        <form action="" className="flex flex-col gap-5 text-lg">
+        <form
+          action=""
+          className="flex flex-col gap-5 rounded-md bg-gray-300 p-4 text-lg dark:bg-black-600"
+        >
           <div className="flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
             <label tabIndex={0} className="mb-2">
               Tournament Name
@@ -53,23 +56,16 @@ export default function create_tournament({}: Props) {
             </div>
           </div>
           <div className="flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
-            <label htmlFor="meeting-time">
-              Choose a time for your appointment:
-            </label>
-
-            <input
-              type="datetime-local"
-              id="meeting-time"
-              name="meeting-time"
-              value="2018-06-12T19:30"
-              min="2018-06-07T00:00"
-              max="2018-06-14T00:00"
-              className="bg-white-200 font-semibold text-black-900 invalid:text-black-900 dark:bg-white-500 dark:text-black-900 dark:invert dark:invalid:text-white-200"
-            ></input>
-            <Datetime />
+            <label htmlFor="meeting-time">Start Date & Time</label>
+            <div className=" w-min rounded-md border-2 border-black-400 bg-white-100 p-2 dark:bg-black-900">
+              <Datetime
+                initialValue={new Date()}
+                className=" dark:text-black-500 dark:invert "
+              />
+            </div>
           </div>
-          <div className="flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
-            <Button text="Create" type="positive" className="w-auto"></Button>
+          <div className="flex flex-col rounded-md bg-gray-200 p-2 pr-4 dark:bg-black-500">
+            <Button text="Create" type="positive" className=""></Button>
           </div>
         </form>
       </main>
