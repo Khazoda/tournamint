@@ -193,7 +193,9 @@ const CreateTeamModal = (props: Props) => {
             {logos.map((logo) => (
               <div
                 className="relative h-16 w-16 overflow-hidden rounded-md border-2 border-black-500 hover:scale-105 hover:cursor-pointer hover:bg-blue-300 dark:hover:bg-black-400"
-                onClick={() => setIcon_out(logo.src)}
+                onClick={() => {
+                  setIcon_out(logo.src)
+                }}
               >
                 <Image
                   style={{ backgroundColor: selectedColour }}

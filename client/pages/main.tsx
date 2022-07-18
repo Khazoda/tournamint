@@ -42,6 +42,7 @@ const Home: NextPage<Props> = (props) => {
     if (countdownInterval) {
       clearInterval(countdownInterval)
     }
+    console.log(team)
   }, [])
 
   var countdownInterval = setInterval(function () {
