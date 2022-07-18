@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import React from 'react'
 import Button from '../../components/common/Button'
+import Datetime from 'react-datetime'
+import 'react-datetime/css/react-datetime.css'
 
 type Props = {}
 
@@ -14,7 +16,7 @@ export default function create_tournament({}: Props) {
         <title>Tournamint — Create Tournament</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="mx-auto">
+      <main className="mx-auto w-full sm:w-[300px]">
         <form action="" className="flex flex-col gap-5 text-lg">
           <div className="flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
             <label tabIndex={0} className="mb-2">
@@ -51,9 +53,10 @@ export default function create_tournament({}: Props) {
             </div>
           </div>
           <div className="flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
-            <label htmlFor="meeting-time" className="mb-2">
-              Start Date & Time
+            <label htmlFor="meeting-time">
+              Choose a time for your appointment:
             </label>
+
             <input
               type="datetime-local"
               id="meeting-time"
@@ -62,7 +65,8 @@ export default function create_tournament({}: Props) {
               min="2018-06-07T00:00"
               max="2018-06-14T00:00"
               className="bg-white-200 font-semibold text-black-900 invalid:text-black-900 dark:bg-white-500 dark:text-black-900 dark:invert dark:invalid:text-white-200"
-            />
+            ></input>
+            <Datetime />
           </div>
           <div className="flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
             <Button text="Create" type="positive" className="w-auto"></Button>

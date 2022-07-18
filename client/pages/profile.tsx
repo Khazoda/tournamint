@@ -412,7 +412,7 @@ function Profile(props: Props) {
       {/* Profile Showcase */}
       <div className="flex flex-col items-center gap-3 text-center sm:h-[550px]">
         {/* IN GAME NAME */}
-        <div className="  w-full min-w-[224px] overflow-x-hidden overflow-y-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 drop-shadow-lg dark:bg-black-500">
+        <div className=" min-h-12 flex w-full min-w-[224px] items-center justify-center overflow-x-hidden overflow-y-hidden overflow-ellipsis rounded-md bg-gray-200 px-3 py-2 text-center font-semibold drop-shadow-lg dark:bg-black-500">
           {ign}
         </div>
         {/* PROFILE PICTURE */}
@@ -544,7 +544,7 @@ function Profile(props: Props) {
         id="statistics_wrapper"
         className="flex flex-col items-center gap-3 sm:h-[550px]  "
       >
-        <div className="flex h-full w-full flex-col gap-1 rounded-md bg-gray-200 p-4 text-center shadow dark:bg-black-500 sm:w-[300px] ">
+        <div className="flex h-full w-full flex-col items-center justify-around gap-1 rounded-md bg-gray-200 p-4 text-center shadow dark:bg-black-500 sm:w-[300px] ">
           {cardStatistics.map((card) => {
             const valuekey = card.value_key
             return (
