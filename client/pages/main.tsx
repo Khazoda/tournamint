@@ -7,6 +7,7 @@ import Navbar from '../components/common/Navbar'
 import Button from '../components/common/Button'
 import { useUser } from '../context/UserContext'
 import TeamTidbit from '../components/common/TeamTidbit'
+import logos from '../globals/team_logos'
 
 import { default_card_statistics } from '../globals/seed_data'
 import MatchTidbit from '../components/common/MatchTidbit'
@@ -177,11 +178,11 @@ const Home: NextPage<Props> = (props) => {
                 {/* Left Team Container */}
                 <div className="absolute left-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center text-5xl">
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
-                    <Image
-                      src={team.team_icon_path}
-                      width={100}
-                      height={100}
-                    ></Image>
+                    <img
+                      className="h-full w-16"
+                      src={logos[team.team_icon_path].path}
+                      alt=""
+                    />
                   </span>
                   <span className="absolute left-2/3 z-50 -translate-x-full font-semibold text-white-200 drop-shadow-lg">
                     {team.team_tag}
@@ -209,7 +210,7 @@ const Home: NextPage<Props> = (props) => {
                   </span>
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <Image
-                      src={team.team_icon_path}
+                      src={logos[team.team_icon_path].path}
                       width={100}
                       height={100}
                     ></Image>

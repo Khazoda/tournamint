@@ -53,7 +53,7 @@ const userContextDefaultValues: userContextType = {
   tournamentsMade: 0,
   tournaments: {},
   team: {
-    team_icon_path: '/images/team_icons/logo_1.svg',
+    team_icon_path: 0,
     team_tag: 'ABC',
     team_colour_hex: '#FF0000',
     team_owner: 'Madlife',

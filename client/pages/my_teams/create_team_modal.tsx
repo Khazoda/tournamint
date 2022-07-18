@@ -44,7 +44,7 @@ const CreateTeamModal = (props: Props) => {
 
   const [tag_out, setTag_out] = useState<string>('')
   const [name_out, setName_out] = useState<string>('')
-  const [icon_out, setIcon_out] = useState<string>('')
+  const [icon_out, setIcon_out] = useState<number>(0)
   const [colour_out, setColour_out] = useState<string>('')
 
   const [dataOut, setDataOut] = useState<any>()
@@ -194,12 +194,12 @@ const CreateTeamModal = (props: Props) => {
               <div
                 className="relative h-16 w-16 overflow-hidden rounded-md border-2 border-black-500 hover:scale-105 hover:cursor-pointer hover:bg-blue-300 dark:hover:bg-black-400"
                 onClick={() => {
-                  setIcon_out(logo.src)
+                  setIcon_out(logo.index)
                 }}
               >
                 <Image
                   style={{ backgroundColor: selectedColour }}
-                  key={logo}
+                  key={logo.src}
                   className=""
                   src={logo.src}
                   alt=""

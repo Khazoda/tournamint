@@ -25,7 +25,7 @@ export interface IUser {
 }
 
 export interface ITeam {
-  team_icon_path: string
+  team_icon_path: number
   team_tag: string
   team_colour_hex: string
   team_owner: string

@@ -8,6 +8,7 @@ import CreateTeamModal from './create_team_modal'
 import JoinTeamModal from './join_team_modal'
 import { useRouter } from 'next/router'
 import { DD_PREFIX } from '../../globals/riot_consts'
+import logos from '../../globals/team_logos'
 
 export interface Props {
   userData: any
@@ -38,15 +39,29 @@ const MyTeamsPage = (props: Props) => {
   const [teamMembersData, setTeamMembersData] = useState<
     Array<ITeamMemberData>
   >([])
+  const [team_icon_path, setTeam_Icon_Path] = useState<string>(
+    'images/team_icons/logo_0.svg'
+  )
 
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
   const [showJoinModal, setShowJoinModal] = useState<boolean>(false)
+
+  useEffect(() => {
+    try {
+      if (team != null) {
+        console.log('PATH::::::::', logos[team.team_icon_path].path)
+      }
+    } catch (error) {}
+  }, [])
 
   useEffect(() => {
     refreshTeamInfo()
     if (team != null) {
       if (team.team_tag != undefined && team.team_tag != 'ABC') {
         getUserTeam(team.team_tag)
+
+        var path = logos[team.team_icon_path].src
+        setTeam_Icon_Path(path)
       }
     }
   }, [team])
@@ -62,6 +77,7 @@ const MyTeamsPage = (props: Props) => {
       .catch((res) => console.log(res.error))
 
     console.log('getUserTeam(): ', result)
+
     return result.response
   }
 
@@ -222,7 +238,7 @@ const MyTeamsPage = (props: Props) => {
           <div className="flex flex-col  rounded-md bg-green-300  p-4  dark:bg-black-500 ">
             <div className="flex flex-col justify-between border-b-2 md:flex-row ">
               <div className="flex flex-row">
-                <img className="h-full w-16" src={team.team_icon_path} alt="" />
+                <img className="h-full w-16" src={team_icon_path} alt="" />
                 <div className="mb-2 ml-4 flex flex-row rounded-sm ">
                   <div className="flex flex-row">
                     <div

@@ -189,6 +189,7 @@ const Home: NextPage = (props) => {
       .catch((res) => console.log(res.error))
 
     let team_temp = result.response
+    console.log('TEAM_TEMP:', team_temp)
 
     if (setUserDetails != null) {
       if (localStorage !== null) {
