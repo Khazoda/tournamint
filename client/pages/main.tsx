@@ -180,7 +180,7 @@ const Home: NextPage<Props> = (props) => {
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <img
                       className="h-full w-16"
-                      src={logos[team.team_icon_path].path}
+                      src={logos[team.team_icon_path].src}
                       alt=""
                     />
                   </span>
@@ -210,7 +210,7 @@ const Home: NextPage<Props> = (props) => {
                   </span>
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <Image
-                      src={logos[team.team_icon_path].path}
+                      src={logos[team.team_icon_path].src}
                       width={100}
                       height={100}
                     ></Image>
