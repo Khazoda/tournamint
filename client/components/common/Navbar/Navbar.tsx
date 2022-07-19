@@ -10,6 +10,9 @@ import { useUser } from '../../../context/UserContext'
 import '/globals/riot_consts'
 import { DD_PREFIX } from '../../../globals/riot_consts'
 import { useRouter } from 'next/router'
+import { Button } from 'react-daisyui'
+import { FiUsers } from 'react-icons/fi'
+import logos from '../../../globals/team_logos'
 
 export interface Props {
   is_dark: boolean
@@ -65,7 +68,7 @@ export default function Navbar(props: Props) {
   return (
     <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
       {/* Profile */}
-      <div className="inline-flex place-content-end text-right ">
+      <div className="inline-flex w-[250px] place-content-end text-right">
         <div className="flex w-8 flex-col items-end justify-between pr-1 md:w-auto md:pr-3">
           <div className="flex h-full flex-col content-center gap-1 md:h-auto md:flex-row ">
             <button
@@ -123,16 +126,41 @@ export default function Navbar(props: Props) {
           </div>
         </Link>
       </div>
-      {/* Navbar */}
-      <div className="hidden justify-center gap-3 lg:inline-flex">
+      {/* Team */}
+      <div className=" w-[250px] justify-center gap-3 lg:inline-flex">
         <Link href="/my_teams">
           <a href="" className="font-heading hover:font-bold">
-            My Team
+            {(team == null || team.team_tag == 'ABC') &&
+            router.pathname == '/main' ? (
+              <Button
+                startIcon={<FiUsers />}
+                color="success"
+                className="animate-bounce transition-all hover:animate-none"
+              >
+                My Team
+              </Button>
+            ) : team ? (
+              <Button
+                startIcon={
+                  <img
+                    className="inline h-8 w-8"
+                    src={logos[team.team_icon_path].src}
+                  ></img>
+                }
+                color="success"
+              >
+                My Team
+              </Button>
+            ) : (
+              <Button startIcon={<FiUsers />} color="success">
+                My Team
+              </Button>
+            )}
           </a>
         </Link>
       </div>
       {/* Logo */}
-      <div className="flex align-middle">
+      <div className="flex w-[250px] align-middle">
         <Link href="/main">
           <a
             title="Home"

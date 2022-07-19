@@ -228,10 +228,19 @@ const Home: NextPage<Props> = (props) => {
           id="bottom_left"
           className="relative col-start-1 col-end-3 row-start-2 row-end-3 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
-          <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
-            ( Tournament Bracket Name)
-          </div>
-          <TournamentDisplay team={team}></TournamentDisplay>
+          {team == null || team.team_tag == 'ABC' ? (
+            <div className="relative flex h-full w-full items-center justify-center text-5xl">
+              <p className="">Please create or join a team</p>
+            </div>
+          ) : (
+            <>
+              <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
+                ( Tournament Bracket Name)
+              </div>
+              <TournamentDisplay team={team}></TournamentDisplay>
+            </>
+          )}
+
           {/* {displayName} {biography} {ign} */}
         </div>
         {/* Right Half */}
