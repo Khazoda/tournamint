@@ -5,6 +5,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Navbar from '../components/common/Navbar'
 import Button from '../components/common/Button'
+import { Button as DaisyButton } from 'react-daisyui'
+
 import { useUser } from '../context/UserContext'
 import TeamTidbit from '../components/common/TeamTidbit'
 import logos from '../globals/team_logos'
@@ -15,6 +17,7 @@ import TournamentDisplay from '../components/common/TournamentDisplay'
 import Link from 'next/link'
 import { Countdown, Stats } from 'react-daisyui'
 import { Capitalize } from '../globals/global_functions'
+import { FiUsers } from 'react-icons/fi'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -229,12 +232,30 @@ const Home: NextPage<Props> = (props) => {
           className="relative col-start-1 col-end-3 row-start-2 row-end-3 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           {team == null || team.team_tag == 'ABC' ? (
-            <div className="relative flex h-full w-full items-center justify-center text-5xl">
-              <p className="">Please create or join a team</p>
+            <div className="relative flex h-full w-full items-center justify-center text-5xl ">
+              <p className="mr-4 font-heading all-small-caps">
+                <p className="align-middle ">
+                  Please
+                  <span className="align-top text-primary"> create</span> or
+                  <span className="align-top text-secondary "> join</span> a
+                  team
+                </p>
+              </p>
+              <Link href="/my_teams">
+                <a href="">
+                  <DaisyButton
+                    startIcon={<FiUsers />}
+                    color="success"
+                    className="animate-bounce transition-all hover:animate-none"
+                  >
+                    My Team
+                  </DaisyButton>
+                </a>
+              </Link>
             </div>
           ) : (
             <>
-              <div className="absolute left-1/2 top-4 -translate-x-1/2 pt-2 text-2xl">
+              <div className="absolute left-1/2 top-4  -translate-x-1/2 pt-2 text-2xl">
                 ( Tournament Bracket Name)
               </div>
               <TournamentDisplay team={team}></TournamentDisplay>
