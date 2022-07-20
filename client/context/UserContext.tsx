@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { IRankInfo, IStatistics, ITeam } from '../globals/types'
+import { IRankInfo, IStatistics, ITeam, ITournament } from '../globals/types'
 
 const defaultStatistics = {
   tournaments_played: 5,
@@ -22,7 +22,7 @@ export type userContextType = {
   rankInfo: IRankInfo
   statistics: IStatistics
   tournamentsMade: number
-  tournaments: any
+  tournaments: ITournament | null
   team: ITeam | null
 
   setUserDetails?: (
@@ -33,7 +33,7 @@ export type userContextType = {
     rankInfo: IRankInfo,
     statistics: IStatistics,
     tournamentsMade: number,
-    tournaments: any,
+    tournaments: ITournament | null,
     team: ITeam | null
   ) => void
 }
@@ -51,7 +51,16 @@ const userContextDefaultValues: userContextType = {
   },
   statistics: defaultStatistics,
   tournamentsMade: 0,
-  tournaments: {},
+  tournaments: {
+    tournament_id: '1',
+    name: 'Default Tournament Name',
+    organized_by_ign: 'Default',
+    type: 16,
+    rounds: null,
+    date_time_start: 'STRING',
+    date_time_end: 'STRING',
+    winning_team: null,
+  },
   team: {
     team_icon_path: 0,
     team_tag: 'ABC',

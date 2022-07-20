@@ -133,6 +133,7 @@ export default function Navbar(props: Props) {
             {(team == null || team.team_tag == 'ABC') &&
             router.pathname == '/main' ? (
               <Button
+                variant="outline"
                 startIcon={<FiUsers />}
                 color="success"
                 className="animate-bounce transition-all hover:animate-none"
@@ -141,6 +142,7 @@ export default function Navbar(props: Props) {
               </Button>
             ) : team ? (
               <Button
+                variant="outline"
                 startIcon={
                   <img
                     className="inline h-8 w-8"
@@ -152,7 +154,7 @@ export default function Navbar(props: Props) {
                 My Team
               </Button>
             ) : (
-              <Button startIcon={<FiUsers />} color="success">
+              <Button variant="outline" startIcon={<FiUsers />} color="success">
                 My Team
               </Button>
             )}

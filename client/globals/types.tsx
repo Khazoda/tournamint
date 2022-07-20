@@ -56,12 +56,12 @@ export enum TEAM_COLOURS {
 export interface ITournament {
   tournament_id: string
   name: string
-  organized_by: IUser
+  organized_by_ign: string
   type: 4 | 8 | 16
-  rounds: Array<IRound>
+  rounds: Array<IRound> | null
   date_time_start: string
   date_time_end: string
-  winning_team: ITeam
+  winning_team: ITeam | null
 }
 
 // One Round has multiple Matches

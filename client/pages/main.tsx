@@ -34,7 +34,15 @@ let carry_flag = {
 
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
-  const { displayName, biography, ign, statistics, team } = useUser()
+  const {
+    displayName,
+    biography,
+    ign,
+    statistics,
+    team,
+    tournaments,
+    tournamentsMade,
+  } = useUser()
   const [countdown_s, setCountdown_s] = useState<number>(0)
   const [countdown_m, setCountdown_m] = useState<number>(0)
   const [countdown_h, setCountdown_h] = useState<number>(0)
@@ -244,6 +252,7 @@ const Home: NextPage<Props> = (props) => {
               <Link href="/my_teams">
                 <a href="">
                   <DaisyButton
+                    variant="outline"
                     startIcon={<FiUsers />}
                     color="success"
                     className="animate-bounce transition-all hover:animate-none"
