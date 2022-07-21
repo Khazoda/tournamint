@@ -46,7 +46,7 @@ export default function create_tournament({}: Props) {
       type: number_of_teams,
       date_time_start: startDateTimeString || moment().toString(),
       is_private,
-      lobby_code,
+      lobby_code: is_private ? lobby_code : '',
       // Generative Tournament Data
       tournament_id: 'ABC123',
       rounds: null,
@@ -244,8 +244,8 @@ export default function create_tournament({}: Props) {
           <div
             className={`${
               is_private
-                ? 'my-2 max-h-full opacity-100 '
-                : 'my-0 max-h-0 opacity-0 '
+                ? 'pointer-events-auto my-2 max-h-full opacity-100'
+                : 'pointer-events-none my-0 max-h-0 opacity-0'
             } h-full rounded-md bg-gray-200 p-2 dark:bg-black-500`}
           >
             <div className="flex w-full flex-col justify-between ">
