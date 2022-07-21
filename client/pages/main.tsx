@@ -313,24 +313,32 @@ const Home: NextPage<Props> = (props) => {
           ) : (
             <>
               <div className="flex flex-row items-stretch justify-between px-6 pt-6">
-                <div className="flex w-1/3 items-start text-2xl">things</div>
+                <div className="flex w-1/3 items-start text-2xl">
+                  (placeholder)
+                </div>
                 <div className="flex w-1/3 justify-center text-3xl drop-shadow-lg">
                   {tournaments?.tournament_name ||
                     "-Can't load tournament name-"}
                 </div>
-                <div className=" flex w-1/3 flex-row justify-end gap-2">
-                  <span>Reveal join code:</span>
-                  <div className=" group relative rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
-                    <span
-                      className="opacity-0 transition-opacity  group-hover:opacity-100"
-                      onClick={() =>
-                        navigator.clipboard.writeText(team.team_join_key)
-                      }
-                      title="Click to copy"
-                    >
-                      {team.team_join_key}
-                    </span>
-                  </div>
+                <div className=" flex w-1/3 flex-row justify-end gap-2 text-lg all-small-caps">
+                  {tournaments.lobby_code == '' ? (
+                    <p className=""> Public Tournament</p>
+                  ) : (
+                    <>
+                      <span>Reveal join code:</span>
+                      <div className=" group relative h-min rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
+                        <span
+                          className="opacity-0 transition-opacity group-hover:opacity-100"
+                          onClick={() =>
+                            navigator.clipboard.writeText(team.team_join_key)
+                          }
+                          title="Click to copy"
+                        >
+                          {tournaments.lobby_code}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
