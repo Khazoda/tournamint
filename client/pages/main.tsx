@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { Countdown, Stats } from 'react-daisyui'
 import { Capitalize } from '../globals/global_functions'
 import { FiUsers } from 'react-icons/fi'
+import moment from 'moment'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -107,6 +108,10 @@ const Home: NextPage<Props> = (props) => {
   var countdownInterval = setInterval(function () {
     var now = new Date().getTime()
     var left = countDownTime - now
+
+    if (tournaments) {
+      left = moment(tournaments.date_time_start).toDate().getTime() - now
+    }
 
     setCountdown_d(Math.floor(left / (1000 * 60 * 60 * 24)))
     setCountdown_h(
