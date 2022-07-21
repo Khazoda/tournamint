@@ -54,6 +54,7 @@ const userContextDefaultValues: userContextType = {
   tournaments: {
     tournament_id: '1',
     name: 'Default Tournament Name',
+    private: false,
     organized_by_ign: 'Default',
     type: 16,
     rounds: null,

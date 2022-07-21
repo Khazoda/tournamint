@@ -56,6 +56,7 @@ export enum TEAM_COLOURS {
 export interface ITournament {
   tournament_id: string
   name: string
+  private: boolean
   organized_by_ign: string
   type: 4 | 8 | 16
   rounds: Array<IRound> | null
