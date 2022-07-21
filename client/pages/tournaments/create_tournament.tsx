@@ -3,20 +3,155 @@ import React, { useEffect, useState } from 'react'
 import Button from '../../components/common/Button'
 import Datetime from 'react-datetime'
 import 'react-datetime/css/react-datetime.css'
-import { Moment } from 'moment'
+import moment, { Moment } from 'moment'
 import { Toggle } from 'react-daisyui'
 import { Capitalize } from '../../globals/global_functions'
+import { useUser } from '../../context/UserContext'
+import { IAccountData, ITournament } from '../../globals/types'
 
 type Props = {}
 
 export default function create_tournament({}: Props) {
-  const [startDate, setStartDate] = useState<string | Moment>()
+  const {
+    displayName,
+    biography,
+    ign,
+    setUserDetails,
+    rankInfo,
+    statistics,
+    team,
+    tournaments,
+    tournamentsMade,
+    favouriteChampion,
+  } = useUser()
+  const [name, setName] = useState('')
+  const [number_of_teams, setNumber_of_teams] = useState<4 | 8 | 16>(8)
+  const [startDateTime, setStartDateTime] = useState<string | Moment>()
+  const [startDateTimeString, setStartDateTimeString] = useState<string>()
+
   const [is_private, setPrivate] = useState<boolean>(true)
+  const [lobby_code, setLobby_code] = useState('')
 
   useEffect(() => {
-    console.log(startDate)
-  }, [startDate])
+    setStartDateTimeString(startDateTime?.toString())
 
+    // console.log(startDateTime?.toString())
+    // console.log(moment(startDateTime?.toString()))
+  }, [startDateTime])
+
+  const createTournament = () => {
+    const dataOut: ITournament = {
+      // Initial Tournament Data
+      tournament_name: name,
+      type: number_of_teams,
+      date_time_start: startDateTimeString || moment().toString(),
+      is_private,
+      lobby_code,
+      // Generative Tournament Data
+      tournament_id: 'ABC123',
+      rounds: null,
+      date_time_end: null,
+      winning_team: null,
+      // Tournament metadata
+      organized_by_ign: ign,
+    }
+    saveTournamentDetailsToCloud(dataOut)
+    // *Debug*
+    console.log(
+      'Creating Tournament with values:',
+      name,
+      number_of_teams,
+      startDateTimeString,
+      is_private,
+      lobby_code
+    )
+  }
+
+  const saveTournamentDetailsToCloud = async (dataOut: ITournament) => {
+    const response = await fetch('/api/tournament/tournament', {
+      body: JSON.stringify({ data: dataOut }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    })
+
+    const { error } = await response.json()
+    console.log('error:', error)
+
+    if (error) {
+      console.log(error)
+    } else if (response.status == 200) {
+      if (setUserDetails != undefined) {
+        setUserDetails(
+          displayName,
+          biography,
+          ign,
+          favouriteChampion,
+          rankInfo,
+          statistics,
+          tournamentsMade + 1,
+          dataOut,
+          team
+        )
+        localStorage.setItem(
+          'userDetails',
+          JSON.stringify({
+            displayName: displayName,
+            biography: biography,
+            ign: ign,
+            favouriteChampion: favouriteChampion,
+            rankInfo: {
+              tier: rankInfo.tier,
+              rank: rankInfo.rank,
+              wins: rankInfo.wins,
+              losses: rankInfo.losses,
+            },
+            statistics: {
+              tournaments_played: statistics.tournaments_played,
+              tournaments_won: statistics.tournaments_won,
+              matches_won: statistics.matches_won,
+              people_met: statistics.people_met,
+            },
+            tournamentsMade: tournamentsMade,
+            tournaments: dataOut,
+            team: team,
+          })
+        )
+        // Redis account team set
+        let get_data: any = null
+        const account_api_url =
+          '/api/account?' + new URLSearchParams({ ign: ign })
+        const account_get_response = await fetch(account_api_url)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('HTTP status ' + res.status)
+            }
+            return res.json()
+          })
+          .then(async (res) => {
+            if (res.status != 'Account does not yet exist') {
+              get_data = res
+            }
+          })
+          .catch((res) => console.log(res.error))
+        if (get_data != undefined) {
+          const accountDataOut: IAccountData = {
+            ign: get_data.ign,
+            username: get_data.username,
+            bio: get_data.bio,
+            favourite_champion: get_data.favourite_champion,
+            passcode: get_data.passcode,
+            team_tag: get_data.team_tag,
+            tournament_id: dataOut.tournament_id,
+          }
+          const account_post_response = await fetch('/api/account', {
+            body: JSON.stringify({ data: accountDataOut }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'PATCH',
+          })
+        }
+      }
+    }
+  }
   return (
     <div
       id="wrapper"
@@ -39,6 +174,7 @@ export default function create_tournament({}: Props) {
               type="text"
               placeholder="Worlds Group Cup 2022"
               className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="my-2 flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
@@ -52,6 +188,21 @@ export default function create_tournament({}: Props) {
               defaultValue={2}
               className="range range-secondary range-xs"
               step={1}
+              onChange={(e) => {
+                switch (e.target.value) {
+                  case '1':
+                    setNumber_of_teams(4)
+                    break
+                  case '2':
+                    setNumber_of_teams(8)
+                    break
+                  case '3':
+                    setNumber_of_teams(16)
+                    break
+                  default:
+                    break
+                }
+              }}
             />
             <div className="flex w-full justify-between px-2 text-sm">
               <div className="flex flex-col items-start">
@@ -69,7 +220,7 @@ export default function create_tournament({}: Props) {
             <label>Start Date & Time</label>
             <div className=" w-min rounded-md border-2 border-black-400 bg-white-100 p-2 dark:bg-black-900">
               <Datetime
-                onChange={(e) => setStartDate(e)}
+                onChange={(e) => setStartDateTime(e)}
                 initialValue={new Date()}
                 className=" dark:text-black-500 dark:invert "
               />
@@ -106,6 +257,7 @@ export default function create_tournament({}: Props) {
                 maxLength={6}
                 placeholder="ABC123"
                 className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1 uppercase  text-black-900 first-letter:capitalize dark:text-white-100"
+                onChange={(e) => setLobby_code(e.target.value)}
               />
             </div>
           </div>
@@ -114,7 +266,12 @@ export default function create_tournament({}: Props) {
               is_private ? 'mt-2 ' : 'mt-0 '
             } flex flex-col rounded-md bg-gray-200 p-2 pr-4 transition-all dark:bg-black-500`}
           >
-            <Button text="Create" type="positive" className=""></Button>
+            <Button
+              text="Create"
+              type="positive"
+              className=""
+              onClick={() => createTournament()}
+            ></Button>
           </div>
         </form>
       </main>

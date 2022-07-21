@@ -55,14 +55,15 @@ export enum TEAM_COLOURS {
 // One Tournament has multiple Rounds
 export interface ITournament {
   tournament_id: string
-  name: string
-  private: boolean
+  tournament_name: string
+  is_private: boolean
   organized_by_ign: string
   type: 4 | 8 | 16
   rounds: Array<IRound> | null
   date_time_start: string
-  date_time_end: string
+  date_time_end: string | null
   winning_team: ITeam | null
+  lobby_code: string
 }
 
 // One Round has multiple Matches
@@ -91,4 +92,5 @@ export interface IAccountData {
   favourite_champion: string
   passcode: string
   team_tag: string
+  tournament_id: string
 }

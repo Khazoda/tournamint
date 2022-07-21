@@ -125,6 +125,7 @@ const Home: NextPage = (props) => {
       favourite_champion: 'aatrox',
       passcode: pass,
       team_tag: 'ABC',
+      tournament_id: 'ABC123',
     }
     const account_post_response = await fetch('/api/account', {
       body: JSON.stringify({ data: dataOut }),
