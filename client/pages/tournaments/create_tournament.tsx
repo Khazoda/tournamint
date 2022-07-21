@@ -48,7 +48,7 @@ export default function create_tournament({}: Props) {
       is_private,
       lobby_code: is_private ? lobby_code : '',
       // Generative Tournament Data
-      tournament_id: 'ABC123',
+      tournament_id: 'ABB123',
       rounds: null,
       date_time_end: null,
       winning_team: null,

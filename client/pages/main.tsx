@@ -31,7 +31,11 @@ let carry_flag = {
   hours: true,
   days: true,
 }
-
+interface ITournamentDisplayData {
+  ign: string
+  icon_id: string
+  level: string
+}
 const Home: NextPage<Props> = (props) => {
   const { is_dark = false, setDark = null, ...restProps } = props
   const {
@@ -50,6 +54,8 @@ const Home: NextPage<Props> = (props) => {
 
   const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
 
+  const [raw_team_data, setRaw_team_data] = useState<ITournamentDisplayData>()
+
   useEffect(() => {
     if (countdownInterval) {
       clearInterval(countdownInterval)
@@ -58,6 +64,40 @@ const Home: NextPage<Props> = (props) => {
     console.log(team)
   }, [])
 
+  useEffect(() => {
+    refreshTournamentInfo()
+    if (tournaments != null) {
+      if (
+        tournaments.tournament_id != undefined &&
+        tournaments.tournament_id != 'ABC123'
+      ) {
+        getUserTournament(tournaments.tournament_id)
+      }
+    }
+  }, [tournaments])
+
+  const getUserTournament = async (id: string) => {
+    const url =
+      '/api/tournament/tournament?' + new URLSearchParams({ tournament_id: id })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    console.log('getTournament(): ', result)
+
+    setRaw_team_data(result.response)
+    console.log(raw_team_data)
+
+    return result.response
+  }
+
+  const refreshTournamentInfo = () => {
+    var tempTeamMembersData: Array<ITournamentDisplayData> = [
+      { ign: 'Default', icon_id: '505', level: '120' },
+    ]
+  }
+
+  // Countdown function
   var countdownInterval = setInterval(function () {
     var now = new Date().getTime()
     var left = countDownTime - now
