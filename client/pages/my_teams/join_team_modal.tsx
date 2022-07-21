@@ -138,6 +138,7 @@ const JoinTeamModal = (props: Props) => {
                   favourite_champion: get_data.favourite_champion,
                   passcode: get_data.passcode,
                   team_tag: tag,
+                  tournament_id: get_data.tournament_id,
                 }
                 const account_post_response = await fetch('/api/account', {
                   body: JSON.stringify({ data: dataOut }),

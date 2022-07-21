@@ -133,10 +133,13 @@ const Home: NextPage = (props) => {
       method: 'POST',
     })
     if (account_post_response.status == 200) {
-      setAccount_data({ dataOut })
+      // setAccount_data({ dataOut })
       // console.log(account_post_response)
 
-      populateUserData(dataOut)
+      const team_data = await getTeamData(dataOut)
+      const tournament_data = await getTournamentData(dataOut.tournament_id)
+      populateUserData(dataOut, team_data, tournament_data)
+
       setTimeout(() => {
         window.location.href = '/profile'
       }, 500)
@@ -155,7 +158,9 @@ const Home: NextPage = (props) => {
         }
         return res.json()
       })
-      .then((res) => {
+      .then(async (res) => {
+        console.log(res)
+
         try {
           if (res.status == 400) {
             // Invalid name popup
@@ -164,8 +169,12 @@ const Home: NextPage = (props) => {
             if (pass_input == res.passcode) {
               // console.log(pass_input, res)
 
-              setAccount_data(res)
-              populateUserData(res)
+              // setAccount_data(res)
+              const team_data = await getTeamData(res)
+              const tournament_data = await getTournamentData(res.tournament_id)
+              // console.log(team_data, tournament_data, res)
+
+              populateUserData(res, team_data, tournament_data)
               setTimeout(() => {
                 window.location.href = '/main'
               }, 500)
@@ -181,7 +190,8 @@ const Home: NextPage = (props) => {
       .catch((res) => console.log('Error:', res.error))
   }
 
-  const populateUserData = async (account_data: any) => {
+  const getTeamData = async (account_data: any) => {
+    // Get Team data from cloud
     const url =
       '/api/teamData?' +
       new URLSearchParams({ team_tag: account_data.team_tag })
@@ -190,8 +200,25 @@ const Home: NextPage = (props) => {
       .catch((res) => console.log(res.error))
 
     let team_temp = result.response
-    console.log('TEAM_TEMP:', team_temp)
+    return team_temp
+  }
+  const getTournamentData = async (tournament_id: string) => {
+    //Get Tournament data from cloud
+    const tournament_url =
+      '/api/tournament/tournament?' + new URLSearchParams({ tournament_id })
+    const tournament_result = await fetch(tournament_url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
 
+    let tournament_temp = tournament_result
+    return tournament_temp
+  }
+
+  const populateUserData = async (
+    account_data: any,
+    team_data: any,
+    tournament_data: any
+  ) => {
     if (setUserDetails != null) {
       if (localStorage !== null) {
         setUserDetails(
@@ -212,8 +239,8 @@ const Home: NextPage = (props) => {
             people_met: seed_data.statistics.people_met,
           },
           seed_data.tournamentsMade,
-          seed_data.tournaments,
-          team_temp
+          tournament_data,
+          team_data
         )
 
         localStorage.setItem(
@@ -236,8 +263,8 @@ const Home: NextPage = (props) => {
               people_met: seed_data.statistics.people_met,
             },
             tournamentsMade: seed_data.tournamentsMade,
-            tournaments: seed_data.tournaments,
-            team: team_temp,
+            tournaments: tournament_data,
+            team: team_data,
           })
         )
       }

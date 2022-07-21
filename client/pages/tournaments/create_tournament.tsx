@@ -32,12 +32,23 @@ export default function create_tournament({}: Props) {
   const [is_private, setPrivate] = useState<boolean>(true)
   const [lobby_code, setLobby_code] = useState('')
 
+  const [dataOut, setDataOut] = useState<ITournament>()
+
   useEffect(() => {
     setStartDateTimeString(startDateTime?.toString())
 
     // console.log(startDateTime?.toString())
     // console.log(moment(startDateTime?.toString()))
   }, [startDateTime])
+
+  const handleTournamentCreateFormSubmit = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key == 'Enter') {
+      e.preventDefault()
+      createTournament()
+    }
+  }
 
   const createTournament = () => {
     const dataOut: ITournament = {
@@ -48,14 +59,15 @@ export default function create_tournament({}: Props) {
       is_private,
       lobby_code: is_private ? lobby_code : '',
       // Generative Tournament Data
-      tournament_id: 'ABB123',
+      tournament_id: 'ADB123',
       rounds: null,
       date_time_end: null,
       winning_team: null,
       // Tournament metadata
       organized_by_ign: ign,
     }
-    saveTournamentDetailsToCloud(dataOut)
+    setDataOut(dataOut)
+
     // *Debug*
     console.log(
       'Creating Tournament with values:',
@@ -67,7 +79,13 @@ export default function create_tournament({}: Props) {
     )
   }
 
-  const saveTournamentDetailsToCloud = async (dataOut: ITournament) => {
+  useEffect(() => {
+    console.log('dataOut', dataOut)
+
+    saveTournamentDetailsToCloud()
+  }, [dataOut])
+
+  const saveTournamentDetailsToCloud = async () => {
     const response = await fetch('/api/tournament/tournament', {
       body: JSON.stringify({ data: dataOut }),
       headers: { 'Content-Type': 'application/json' },
@@ -78,8 +96,8 @@ export default function create_tournament({}: Props) {
     console.log('error:', error)
 
     if (error) {
-      console.log(error)
-    } else if (response.status == 200) {
+      console.log('error:', error)
+    } else if (response.status == 200 && dataOut != undefined) {
       if (setUserDetails != undefined) {
         setUserDetails(
           displayName,
@@ -111,7 +129,7 @@ export default function create_tournament({}: Props) {
               matches_won: statistics.matches_won,
               people_met: statistics.people_met,
             },
-            tournamentsMade: tournamentsMade,
+            tournamentsMade: tournamentsMade + 1,
             tournaments: dataOut,
             team: team,
           })
@@ -162,10 +180,7 @@ export default function create_tournament({}: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="mx-auto w-full sm:w-[300px]">
-        <form
-          action=""
-          className="flex flex-col rounded-md bg-gray-300 p-4 text-lg transition-all dark:bg-black-600"
-        >
+        <div className="flex flex-col rounded-md bg-gray-300 p-4 text-lg transition-all dark:bg-black-600">
           <div className="mb-2 flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
             <label tabIndex={0} className="mb-2">
               Tournament Name
@@ -175,6 +190,7 @@ export default function create_tournament({}: Props) {
               placeholder="Worlds Group Cup 2022"
               className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
               onChange={(e) => setName(e.target.value)}
+              onKeyUp={(e) => handleTournamentCreateFormSubmit(e)}
             />
           </div>
           <div className="my-2 flex flex-col rounded-md bg-gray-200 p-2 dark:bg-black-500">
@@ -203,6 +219,7 @@ export default function create_tournament({}: Props) {
                     break
                 }
               }}
+              onKeyUp={(e) => handleTournamentCreateFormSubmit(e)}
             />
             <div className="flex w-full justify-between px-2 text-sm">
               <div className="flex flex-col items-start">
@@ -258,6 +275,7 @@ export default function create_tournament({}: Props) {
                 placeholder="ABC123"
                 className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1 uppercase  text-black-900 first-letter:capitalize dark:text-white-100"
                 onChange={(e) => setLobby_code(e.target.value)}
+                onKeyUp={(e) => handleTournamentCreateFormSubmit(e)}
               />
             </div>
           </div>
@@ -273,7 +291,7 @@ export default function create_tournament({}: Props) {
               onClick={() => createTournament()}
             ></Button>
           </div>
-        </form>
+        </div>
       </main>
     </div>
   )

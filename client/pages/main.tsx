@@ -54,7 +54,8 @@ const Home: NextPage<Props> = (props) => {
 
   const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
 
-  const [raw_team_data, setRaw_team_data] = useState<ITournamentDisplayData>()
+  const [raw_tournament_data, setRaw_tournament_data] =
+    useState<ITournamentDisplayData>()
 
   useEffect(() => {
     if (countdownInterval) {
@@ -71,6 +72,8 @@ const Home: NextPage<Props> = (props) => {
         tournaments.tournament_id != undefined &&
         tournaments.tournament_id != 'ABC123'
       ) {
+        console.log('TOURNAMENT ID::::::', tournaments)
+
         getUserTournament(tournaments.tournament_id)
       }
     }
@@ -85,11 +88,14 @@ const Home: NextPage<Props> = (props) => {
 
     console.log('getTournament(): ', result)
 
-    setRaw_team_data(result.response)
-    console.log(raw_team_data)
+    setRaw_tournament_data(result)
 
     return result.response
   }
+
+  useEffect(() => {
+    console.log(raw_tournament_data)
+  }, [raw_tournament_data])
 
   const refreshTournamentInfo = () => {
     var tempTeamMembersData: Array<ITournamentDisplayData> = [
@@ -302,12 +308,36 @@ const Home: NextPage<Props> = (props) => {
                 </a>
               </Link>
             </div>
+          ) : tournaments == null || tournaments?.tournament_id == 'ABC123' ? (
+            <>no tournament...</>
           ) : (
             <>
-              <div className="absolute left-1/2 top-4  -translate-x-1/2 pt-2 text-2xl">
-                ( Tournament Bracket Name)
+              <div className="flex flex-row">
+                <div className="absolute left-1/2 top-4  -translate-x-1/2 pt-2 text-2xl">
+                  {tournaments?.tournament_name ||
+                    "-Can't load tournament name-"}
+                </div>
+                <div className="flex flex-row gap-2">
+                  <span>Reveal join code:</span>
+                  <div className=" group relative rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
+                    <span
+                      className="opacity-0 transition-opacity  group-hover:opacity-100"
+                      onClick={() =>
+                        navigator.clipboard.writeText(team.team_join_key)
+                      }
+                      title="Click to copy"
+                    >
+                      {team.team_join_key}
+                    </span>
+                    <span className="absolute top-0 left-0 w-full bg-white-100 group-hover:hidden"></span>
+                  </div>
+                </div>
               </div>
-              <TournamentDisplay team={team}></TournamentDisplay>
+
+              <TournamentDisplay
+                team={team}
+                tournament={tournaments}
+              ></TournamentDisplay>
             </>
           )}
 

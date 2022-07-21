@@ -357,6 +357,7 @@ function Profile(props: Props) {
                 favourite_champion: favouriteChampion[0],
                 passcode: get_data.passcode,
                 team_tag: get_data.team_tag,
+                tournament_id: get_data.tournament_id,
               }
               // console.log('data_out', dataOut)
 

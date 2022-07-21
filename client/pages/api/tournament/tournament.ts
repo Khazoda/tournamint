@@ -17,14 +17,18 @@ export default async function handler(
     // * CREATE TOURNAMENT *
     // ******************
     if (req.method == 'POST') {
+
         const data = req.body.data
+
         if (!data) {
             res.status(400).json({ error: 'No tournament data being sent' })
         } else {
             const tournament_id = data.tournament_id
-            // console.log("New team TAG:", id_tag);
+            console.log("New tournament ID:", tournament_id);
 
             const tournament_data = data
+            console.log("New tournament data:", tournament_data);
+
             // const response = await redis.hset('teams', { [JSON.stringify(id_tag)]: JSON.stringify(team_data) });
             const response = await redis.hset("TOURNAMENTS", { [tournament_id]: tournament_data });
             // console.log(response);
@@ -57,12 +61,13 @@ export default async function handler(
     // ** GET TOURNAMENT **
     // *****************
     if (req.method == 'GET') {
-        const ign: any = req.query.tournament_id
+        const tournament_id: any = req.query.tournament_id
         // console.log('team_tag param:', team_tag);
         let response = null;
+        console.log(req.query);
 
         try {
-            response = await redis.hget("TOURNAMENTS", ign).then(data => {
+            response = await redis.hget("TOURNAMENTS", tournament_id).then(data => {
                 if (data == null) {
                     res.status(200).json({ status: 'Tournament does not exist' })
                 } else {

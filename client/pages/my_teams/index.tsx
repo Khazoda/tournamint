@@ -47,14 +47,6 @@ const MyTeamsPage = (props: Props) => {
   const [showJoinModal, setShowJoinModal] = useState<boolean>(false)
 
   useEffect(() => {
-    try {
-      if (team != null) {
-        console.log('PATH::::::::', logos[team.team_icon_path].path)
-      }
-    } catch (error) {}
-  }, [])
-
-  useEffect(() => {
     refreshTeamInfo()
     if (team != null) {
       if (team.team_tag != undefined && team.team_tag != 'ABC') {
