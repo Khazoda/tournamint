@@ -5,6 +5,7 @@ import Datetime from 'react-datetime'
 import 'react-datetime/css/react-datetime.css'
 import { Moment } from 'moment'
 import { Toggle } from 'react-daisyui'
+import { Capitalize } from '../../globals/global_functions'
 
 type Props = {}
 
@@ -102,8 +103,9 @@ export default function create_tournament({}: Props) {
               </label>
               <input
                 type="text"
+                maxLength={6}
                 placeholder="ABC123"
-                className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1  text-black-900 first-letter:capitalize dark:text-white-100"
+                className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1 uppercase  text-black-900 first-letter:capitalize dark:text-white-100"
               />
             </div>
           </div>
