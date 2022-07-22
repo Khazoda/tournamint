@@ -201,7 +201,9 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className="relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600"
+          className={`${
+            team == null ? 'col-end-3' : 'col-end-2'
+          } relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
         >
           <div className="relative my-2 mx-2 flex w-48 flex-row justify-between rounded-md bg-green-200 p-2 dark:bg-black-500 dark:text-white-200">
             <div className="flex h-full w-1/2 flex-col justify-between">
@@ -291,8 +293,8 @@ const Home: NextPage<Props> = (props) => {
           className="relative col-start-1 col-end-3 row-start-2 row-end-3 h-full flex-col justify-between rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           {team == null || team.team_tag == 'ABC' ? (
-            <div className="relative flex h-full w-full items-center justify-center text-5xl ">
-              <p className="mr-4 font-heading all-small-caps">
+            <div className="relative flex h-full w-full flex-col items-center justify-center text-5xl">
+              <p className="mr-4 mt-auto mb-8 font-heading all-small-caps">
                 <p className="align-middle ">
                   Please
                   <span className="align-top text-primary"> create</span> or
@@ -312,6 +314,21 @@ const Home: NextPage<Props> = (props) => {
                   </DaisyButton>
                 </a>
               </Link>
+              <div
+                id="footer"
+                className="footer footer-center mt-auto p-4 text-base-content"
+              >
+                <span className="flex flex-row gap-1">
+                  &copy; 2022
+                  <a
+                    target={'_blank'}
+                    href="http://junefaleiro.com"
+                    className="m-0 hover:text-base-300"
+                  >
+                    June Faleiro
+                  </a>
+                </span>
+              </div>
             </div>
           ) : tournaments == null || tournaments?.tournament_id == 'ABC123' ? (
             <div className="relative flex h-full w-full items-center justify-center text-5xl ">
@@ -382,41 +399,43 @@ const Home: NextPage<Props> = (props) => {
           {/* {displayName} {biography} {ign} */}
         </div>
         {/* Right Half */}
-        <div
-          id="top_right"
-          className=" md:cols-end-2 row-start-1 row-end-1 flex  h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600 md:col-start-2"
-        >
+        {team != null && (
           <div
-            className={`${
-              tournaments == null || tournaments?.tournament_id == 'ABC123'
-                ? 'animate-pulse'
-                : 'animate-none'
-            }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
+            id="top_right"
+            className=" md:cols-end-2 row-start-1 row-end-1 flex  h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600 md:col-start-2"
           >
-            <Link href="tournaments/create_tournament">
-              <Button
-                text="Create Tournament"
-                noMargin
-                type="positive"
-                className=" text-white-500 drop-shadow-sm"
-              ></Button>
-            </Link>
-            <div className="mt-auto flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
-              <Button
-                text="Join Tournament"
-                noMargin
-                type="neutral"
-                className="text-white-500"
-              ></Button>
-              <Button
-                text="Find Tournament"
-                noMargin
-                type="neutral"
-                className="text-white-500"
-              ></Button>
+            <div
+              className={`${
+                tournaments == null || tournaments?.tournament_id == 'ABC123'
+                  ? 'animate-pulse'
+                  : 'animate-none'
+              }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
+            >
+              <Link href="tournaments/create_tournament">
+                <Button
+                  text="Create Tournament"
+                  noMargin
+                  type="positive"
+                  className=" text-white-500 drop-shadow-sm"
+                ></Button>
+              </Link>
+              <div className="mt-auto flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
+                <Button
+                  text="Join Tournament"
+                  noMargin
+                  type="neutral"
+                  className="text-white-500"
+                ></Button>
+                <Button
+                  text="Find Tournament"
+                  noMargin
+                  type="neutral"
+                  className="text-white-500"
+                ></Button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   )
