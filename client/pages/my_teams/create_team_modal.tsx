@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 import Image from 'next/image'
 import Button from '../../components/common/Button'
@@ -48,6 +48,28 @@ const CreateTeamModal = (props: Props) => {
   const [colour_out, setColour_out] = useState<string>('')
 
   const [dataOut, setDataOut] = useState<any>()
+
+  const icon_focused_default = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]
+  const [is_icon_focused, setIconFocused] =
+    useState<Array<boolean>>(icon_focused_default)
+
+  const toggleIconFocus = (index: number) => {
+    let newState = icon_focused_default
+    newState[index] = true
+
+    setIconFocused(newState)
+  }
 
   const createTeam = () => {
     setDataOut({
@@ -163,7 +185,7 @@ const CreateTeamModal = (props: Props) => {
 
   return (
     <div className="absolute top-0 left-0  z-50 h-screen w-screen bg-transparent backdrop-blur-sm">
-      <div className="absolute top-1/2 left-1/2 flex h-[500px] w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-md border-2 border-green-400 bg-green-400 drop-shadow-lg dark:border-black-800 dark:bg-black-600 sm:w-[350px]">
+      <div className="absolute top-1/2 left-1/2 flex h-[625px] w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-md border-2 border-green-400 bg-green-400 drop-shadow-lg dark:border-black-800 dark:bg-black-600 sm:w-[350px]">
         <button
           className="ml-auto mt-2 mr-2 hover:cursor-pointer"
           onClick={onClick}
@@ -190,13 +212,19 @@ const CreateTeamModal = (props: Props) => {
               className="rounded-md border-2 border-green-500 bg-green-600 px-1 placeholder:text-black-400 dark:border-black-400 dark:bg-black-400 dark:placeholder:text-gray-400"
             />
           </div>
-          <div className="flex h-64 w-full flex-row flex-wrap items-center justify-center gap-4 overflow-y-auto border-2 border-blue-300 bg-blue-100 py-1 px-4 shadow-inner dark:border-black-700 dark:bg-black-500">
+          <div className="flex h-96 w-full flex-row flex-wrap items-center justify-around gap-4 overflow-y-auto border-2 border-blue-300 bg-blue-100 py-1 px-4 shadow-inner dark:border-black-700 dark:bg-black-500">
             {logos.map((logo) => (
               <div
-                className="relative h-16 w-16 overflow-hidden rounded-md border-2 border-black-500 hover:scale-105 hover:cursor-pointer hover:bg-blue-300 dark:hover:bg-black-400"
+                className={`${
+                  is_icon_focused[logo.index]
+                    ? 'scale-105 animate-pulse'
+                    : 'outline-none'
+                } relative h-16 w-16 overflow-hidden rounded-md  hover:scale-105 hover:cursor-pointer hover:bg-blue-300  dark:hover:bg-black-400`}
                 onClick={() => {
+                  toggleIconFocus(logo.index)
                   setIcon_out(logo.index)
                 }}
+                tabIndex={0}
               >
                 <Image
                   style={{ backgroundColor: selectedColour }}
@@ -228,6 +256,7 @@ const CreateTeamModal = (props: Props) => {
           type="positive"
           onClick={() => createTeam()}
           fixedWidth
+          fixedHeight
         ></Button>
       </div>
     </div>
