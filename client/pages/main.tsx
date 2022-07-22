@@ -288,7 +288,7 @@ const Home: NextPage<Props> = (props) => {
 
         <div
           id="bottom_left"
-          className="relative col-start-1 col-end-3 row-start-2 row-end-3 flex-col justify-center rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
+          className="relative col-start-1 col-end-3 row-start-2 row-end-3 h-full flex-col justify-between rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           {team == null || team.team_tag == 'ABC' ? (
             <div className="relative flex h-full w-full items-center justify-center text-5xl ">
@@ -361,6 +361,21 @@ const Home: NextPage<Props> = (props) => {
                 team={team}
                 tournament={tournaments}
               ></TournamentDisplay>
+              <div
+                id="footer"
+                className="footer footer-center p-4 text-base-content"
+              >
+                <span className="flex flex-row gap-1">
+                  &copy; 2022
+                  <a
+                    target={'_blank'}
+                    href="http://junefaleiro.com"
+                    className="m-0 hover:text-base-300"
+                  >
+                    June Faleiro
+                  </a>
+                </span>
+              </div>
             </>
           )}
 
