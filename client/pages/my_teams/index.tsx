@@ -228,7 +228,10 @@ const MyTeamsPage = (props: Props) => {
           </div>
         ) : (
           <div className="flex flex-col  rounded-md bg-green-300  p-4  dark:bg-black-500 ">
-            <div className="flex flex-col justify-between border-b-2 md:flex-row ">
+            <div
+              style={{ borderColor: team.team_colour_hex }}
+              className="flex flex-col justify-between border-b-2 md:flex-row "
+            >
               <div className="flex flex-row">
                 <img className="h-full w-16" src={team_icon_path} alt="" />
                 <div className="mb-2 ml-4 flex flex-row rounded-sm ">
@@ -245,7 +248,10 @@ const MyTeamsPage = (props: Props) => {
                     >
                       {team.team_tag}
                     </div>
-                    <div className="mx-4 min-h-full w-0.5 bg-white-100"></div>
+                    <div
+                      style={{ background: team.team_colour_hex }}
+                      className="mx-4 min-h-full w-0.5 bg-white-100"
+                    ></div>
                   </div>
                   <div className="text-lg">
                     <span
@@ -303,6 +309,7 @@ const MyTeamsPage = (props: Props) => {
                     >
                       <div
                         title="View Profile"
+                        style={{ borderColor: team.team_colour_hex }}
                         className={`${
                           teamMembersData[0].ign == e.ign
                             ? 'h-[68px] w-[68px] md:h-20 md:w-20'
@@ -323,7 +330,10 @@ const MyTeamsPage = (props: Props) => {
                           objectFit="cover"
                           className=""
                         ></Image>
-                        <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
+                        <span
+                          style={{ borderColor: team.team_colour_hex }}
+                          className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-[1px] border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800"
+                        >
                           {e.level}
                         </span>
                       </div>
@@ -343,7 +353,10 @@ const MyTeamsPage = (props: Props) => {
                 )
               })}
 
-              <span className="block h-0.5 w-full bg-white-200"></span>
+              <span
+                style={{ background: team.team_colour_hex }}
+                className="block h-0.5 w-full bg-white-200"
+              ></span>
               <div className="mt-2 flex flex-row justify-between">
                 <span>
                   {'Total number of people met: ' +
