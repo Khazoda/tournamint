@@ -69,7 +69,7 @@ export default async function handler(
         try {
             response = await redis.hget("TOURNAMENTS", tournament_id).then(data => {
                 if (data == null) {
-                    res.status(200).json({ status: 'Tournament does not exist' })
+                    res.status(400).json({ status: 'Tournament does not exist', tournament_id: 'ABC123' })
                 } else {
                     res.status(200).json(data)
                 }

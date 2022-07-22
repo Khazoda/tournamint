@@ -314,7 +314,17 @@ const Home: NextPage<Props> = (props) => {
               </Link>
             </div>
           ) : tournaments == null || tournaments?.tournament_id == 'ABC123' ? (
-            <>no tournament...</>
+            <div className="relative flex h-full w-full items-center justify-center text-5xl ">
+              <p className="mr-4 font-heading all-small-caps">
+                <p className="align-middle ">
+                  Please
+                  <span className="align-top text-primary"> create</span>,
+                  <span className="align-top text-secondary "> join</span> or
+                  <span className="align-top text-secondary "> find</span> a
+                  tournament
+                </p>
+              </p>
+            </div>
           ) : (
             <>
               <div className="flex flex-row items-stretch justify-between px-6 pt-6">
@@ -361,7 +371,13 @@ const Home: NextPage<Props> = (props) => {
           id="top_right"
           className=" md:cols-end-2 row-start-1 row-end-1 flex  h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600 md:col-start-2"
         >
-          <div className=" flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 dark:bg-emerald-900 md:flex-col">
+          <div
+            className={`${
+              tournaments == null || tournaments?.tournament_id == 'ABC123'
+                ? 'animate-pulse'
+                : 'animate-none'
+            }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
+          >
             <Link href="tournaments/create_tournament">
               <Button
                 text="Create Tournament"
