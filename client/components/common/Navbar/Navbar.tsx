@@ -56,7 +56,7 @@ export default function Navbar(props: Props) {
             people_met: 0,
           },
           0,
-          '',
+          null,
           null
         )
 

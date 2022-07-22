@@ -19,6 +19,7 @@ import { Countdown, Stats } from 'react-daisyui'
 import { Capitalize } from '../globals/global_functions'
 import { FiUsers } from 'react-icons/fi'
 import moment from 'moment'
+import { DD_PREFIX } from '../globals/riot_consts'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -57,6 +58,7 @@ const Home: NextPage<Props> = (props) => {
 
   const [raw_tournament_data, setRaw_tournament_data] =
     useState<ITournamentDisplayData>()
+  const [organizer_data, setOrganizer_data] = useState<any>()
 
   useEffect(() => {
     if (countdownInterval) {
@@ -90,8 +92,19 @@ const Home: NextPage<Props> = (props) => {
     console.log('getTournament(): ', result)
 
     setRaw_tournament_data(result)
-
+    getTournamentOrganizer()
     return result.response
+  }
+
+  const getTournamentOrganizer = async () => {
+    axios
+      .get('/api/userData', {
+        params: { ign: tournaments?.organized_by_ign },
+      })
+      .then(function (response) {
+        let userDataResponse = response.data
+        setOrganizer_data(userDataResponse)
+      })
   }
 
   useEffect(() => {
@@ -346,13 +359,45 @@ const Home: NextPage<Props> = (props) => {
             <>
               <div className="flex flex-row items-stretch justify-between px-6 pt-6">
                 <div className="flex w-1/3 items-start text-2xl">
-                  (placeholder)
+                  {organizer_data != undefined && organizer_data != null ? (
+                    <div className="flex flex-row items-start gap-2">
+                      <div className=" group relative inline-flex h-[68px] w-[68px] flex-row gap-4 border-2 border-green-500 transition-[border] md:h-[60px] md:w-[60px] ">
+                        <Image
+                          src={
+                            organizer_data.profileIconId === undefined
+                              ? '/images/spinner.svg'
+                              : DD_PREFIX +
+                                'img/profileicon/' +
+                                organizer_data.profileIconId +
+                                '.png'
+                          }
+                          alt="Profile picture"
+                          layout="fill"
+                          objectFit="cover"
+                          className=""
+                        ></Image>
+                        <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] ">
+                          {organizer_data.summonerLevel === undefined
+                            ? '666'
+                            : organizer_data.summonerLevel}
+                        </span>
+                      </div>
+                      <div className="flex flex-col text-sm">
+                        Organized by
+                        <span className="flex-start flex text-3xl all-small-caps">
+                          {tournaments.organized_by_ign}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>loading...</div>
+                  )}
                 </div>
                 <div className="flex w-1/3 justify-center text-3xl drop-shadow-lg">
                   {tournaments?.tournament_name ||
                     "-Can't load tournament name-"}
                 </div>
-                <div className=" flex w-1/3 flex-row justify-end gap-2 text-lg all-small-caps">
+                <div className=" flex w-1/3 flex-col items-end justify-end gap-2 text-sm ">
                   {tournaments.lobby_code == '' ? (
                     <p className=""> Public Tournament</p>
                   ) : (
