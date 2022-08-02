@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Router from 'next/router'
 import React from 'react'
 import { useState } from 'react'
 import { FiX } from 'react-icons/fi'
@@ -67,12 +68,14 @@ export default function join_tournament(props: Props) {
       .then((res) => res.json())
       .catch((res) => console.log(res.error))
 
-    let tournament_temp = result.response
-    if (tournament_temp.lobby_code == lobby_code) {
-      if (team != null) {
+    let tournament_temp = result
+    console.log('TUTEMP', id, tournament_temp);
+
+    if (tournament_temp.lobby_code.toUpperCase() == lobby_code.toUpperCase()) {
+      if (tournaments?.tournament_id == id) {
         alert('Your team is already part of a tournament.')
       } else {
-        if (result.response == null) {
+        if (tournament_temp == null) {
           alert('Invalid Tournament Tag.')
         } else {
           if (tournament_temp.organized_by_ign == ign) {
@@ -144,6 +147,7 @@ export default function join_tournament(props: Props) {
               )
 
             }
+            Router.push('/main')
           }
         }
       }
@@ -178,7 +182,7 @@ export default function join_tournament(props: Props) {
                 maxLength={6}
                 placeholder="ABC123"
                 className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1 uppercase  text-black-900 first-letter:capitalize dark:text-white-100"
-                onChange={(e) => setLobby_code(e.target.value)}
+                onChange={(e) => setTournament_id(e.target.value)}
                 onKeyUp={(e) => handleTournamentJoinFormSubmit(e)}
               />
             </div>

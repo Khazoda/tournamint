@@ -59,8 +59,8 @@ export default function create_tournament({ }: Props) {
       type: number_of_teams,
       date_time_start: startDateTimeString || moment().toString(),
       is_private,
-      lobby_code: is_private ? lobby_code : '',
-      tournament_id: tournament_id,
+      lobby_code: is_private ? lobby_code.toUpperCase() : '',
+      tournament_id: tournament_id.toUpperCase(),
       // Generative Tournament Data
       rounds: null,
       date_time_end: null,
