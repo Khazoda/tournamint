@@ -57,11 +57,9 @@ export default async function handler(
       response = await redis.hgetall("TEAMS")
 
     } else {
-      if (await redis.hexists('TEAMS', team_tag)) {
-        response = 'EXISTS'
-      } else {
-        response = await redis.hget("TEAMS", team_tag)
-      }
+
+      response = await redis.hget("TEAMS", team_tag)
+
     }
 
 

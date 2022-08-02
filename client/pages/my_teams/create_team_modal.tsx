@@ -91,7 +91,7 @@ const CreateTeamModal = (props: Props) => {
 
   const saveTeamDetailsToCloud = async () => {
     // Check team tag isn't taken
-    const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag_out.toUpperCase() })
+    const url = '/api/teamDataExists?' + new URLSearchParams({ team_tag: tag_out.toUpperCase() })
     const result = await fetch(url)
       .then((res) => res.json())
       .catch((res) => console.log(res.error))
