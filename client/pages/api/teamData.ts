@@ -13,7 +13,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  // console.log("[teamData] method:", req.method);
+  console.log("[teamData] method:", req.method);
 
   if (req.method == 'POST') {
     const data = req.body.data
@@ -64,6 +64,21 @@ export default async function handler(
 
     // console.log(response);
 
+    res.json({ response })
+
+  }
+
+  if (req.method == 'DELETE') {
+
+    const team_tag: any = req.body.team_tag
+    let response = null;
+
+    if (team_tag != null) {
+      response = await redis.hdel('TEAMS', team_tag)
+    } else {
+      res.status(400).json({ error: 'No team tag given' })
+
+    }
     res.json({ response })
 
   }

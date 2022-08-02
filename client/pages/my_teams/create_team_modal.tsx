@@ -90,6 +90,20 @@ const CreateTeamModal = (props: Props) => {
   }, [dataOut])
 
   const saveTeamDetailsToCloud = async () => {
+    // Check team tag isn't taken
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag_out.toUpperCase() })
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    console.log('getUserTeam(): ', result)
+
+    console.log('AAAAAAAAAAAAARGHHHHHH', result.response);
+
+
+
+
+
     const response = await fetch('/api/teamData', {
       body: JSON.stringify({ data: dataOut }),
       headers: { 'Content-Type': 'application/json' },
@@ -215,11 +229,10 @@ const CreateTeamModal = (props: Props) => {
           <div className="flex h-96 w-full flex-row flex-wrap items-center justify-around gap-4 overflow-y-auto border-2 border-blue-300 bg-blue-100 py-1 px-4 shadow-inner dark:border-black-700 dark:bg-black-500">
             {logos.map((logo) => (
               <div
-                className={`${
-                  is_icon_focused[logo.index]
-                    ? 'scale-105 animate-pulse'
-                    : 'outline-none'
-                } relative h-16 w-16 overflow-hidden rounded-md  hover:scale-105 hover:cursor-pointer hover:bg-blue-300  dark:hover:bg-black-400`}
+                className={`${is_icon_focused[logo.index]
+                  ? 'scale-105 animate-pulse'
+                  : 'outline-none'
+                  } relative h-16 w-16 overflow-hidden rounded-md  hover:scale-105 hover:cursor-pointer hover:bg-blue-300  dark:hover:bg-black-400`}
                 onClick={() => {
                   toggleIconFocus(logo.index)
                   setIcon_out(logo.index)

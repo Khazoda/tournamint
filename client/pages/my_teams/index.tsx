@@ -147,53 +147,66 @@ const MyTeamsPage = (props: Props) => {
         let temp_team = await getUserTeam(team.team_tag)
         let temp_all_teams = await getUserTeam('')
         if (temp_team.team_owner == ign) {
-          alert(
-            'you are the team owner, are you sure you want to delete your team?'
-          )
+          // alert(
+          //   'you are the team owner, are you sure you want to delete your team?'
+          // )
+          console.log(team.team_tag, temp_team.team_owner);
+          const response = await fetch('/api/teamData', {
+            body: JSON.stringify({ team_tag: team.team_tag }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'DELETE',
+          })
+          const { error } = await response.json()
+          console.log('error:', error)
+
+          if (error) {
+            // console.log(error)
+          } else if (response.status == 200) {
+          }
+
         } else {
           if (temp_team.team_members.includes(ign)) {
             temp_team.team_members[temp_team.team_members.indexOf(ign)] = null
+            const response = await fetch('/api/teamData', {
+              body: JSON.stringify({ data: temp_team }),
+              headers: { 'Content-Type': 'application/json' },
+              method: 'PATCH',
+            })
+            const { error } = await response.json()
+            console.log('error:', error)
+
+            if (error) {
+              // console.log(error)
+            } else if (response.status == 200) {
+            }
           }
         }
-
-        const response = await fetch('/api/teamData', {
-          body: JSON.stringify({ data: temp_team }),
-          headers: { 'Content-Type': 'application/json' },
-          method: 'PATCH',
-        })
-        const { error } = await response.json()
-        console.log('error:', error)
-
-        if (error) {
-          // console.log(error)
-        } else if (response.status == 200) {
-        }
       }
+      localStorage.setItem(
+        'userDetails',
+        JSON.stringify({
+          displayName: displayName,
+          biography: biography,
+          ign: ign,
+          favouriteChampion: favouriteChampion,
+          rankInfo: {
+            tier: rankInfo.tier,
+            rank: rankInfo.rank,
+            wins: rankInfo.wins,
+            losses: rankInfo.losses,
+          },
+          statistics: {
+            tournaments_played: statistics.tournaments_played,
+            tournaments_won: statistics.tournaments_won,
+            matches_won: statistics.matches_won,
+            people_met: statistics.people_met,
+          },
+          tournamentsMade: tournamentsMade,
+          tournaments: tournaments,
+          team: null,
+        })
+      )
     }
-    localStorage.setItem(
-      'userDetails',
-      JSON.stringify({
-        displayName: displayName,
-        biography: biography,
-        ign: ign,
-        favouriteChampion: favouriteChampion,
-        rankInfo: {
-          tier: rankInfo.tier,
-          rank: rankInfo.rank,
-          wins: rankInfo.wins,
-          losses: rankInfo.losses,
-        },
-        statistics: {
-          tournaments_played: statistics.tournaments_played,
-          tournaments_won: statistics.tournaments_won,
-          matches_won: statistics.matches_won,
-          people_met: statistics.people_met,
-        },
-        tournamentsMade: tournamentsMade,
-        tournaments: tournaments,
-        team: null,
-      })
-    )
     // router.reload()
   }
 
@@ -238,10 +251,9 @@ const MyTeamsPage = (props: Props) => {
                   <div className="flex flex-row">
                     <div
                       className={
-                        `${
-                          team.team_colour_hex != null
-                            ? 'text-[' + team.team_colour_hex + ']'
-                            : ''
+                        `${team.team_colour_hex != null
+                          ? 'text-[' + team.team_colour_hex + ']'
+                          : ''
                         }` +
                         ' font-big text-6xl uppercase text-blue-700 dark:text-blue-400'
                       }
@@ -256,10 +268,9 @@ const MyTeamsPage = (props: Props) => {
                   <div className="text-lg">
                     <span
                       className={
-                        `${
-                          team.team_colour_hex != null
-                            ? 'text-[' + team.team_colour_hex + ']'
-                            : ''
+                        `${team.team_colour_hex != null
+                          ? 'text-[' + team.team_colour_hex + ']'
+                          : ''
                         }` +
                         ' text-2xl uppercase text-blue-700 dark:text-blue-400'
                       }
@@ -294,36 +305,33 @@ const MyTeamsPage = (props: Props) => {
                 return (
                   <div
                     key={e.ign}
-                    className={`${
-                      teamMembersData[0].ign == e.ign
-                        ? 'h-24 bg-green-500 dark:bg-black-800'
-                        : 'h-20 bg-green-400 dark:bg-black-700'
-                    } mb-2 flex w-full flex-row rounded-md `}
+                    className={`${teamMembersData[0].ign == e.ign
+                      ? 'h-24 bg-green-500 dark:bg-black-800'
+                      : 'h-20 bg-green-400 dark:bg-black-700'
+                      } mb-2 flex w-full flex-row rounded-md `}
                   >
                     <div
-                      className={`${
-                        teamMembersData[0].ign == e.ign
-                          ? 'h-24 w-24'
-                          : 'h-20 w-20'
-                      } relative flex  items-center justify-center`}
+                      className={`${teamMembersData[0].ign == e.ign
+                        ? 'h-24 w-24'
+                        : 'h-20 w-20'
+                        } relative flex  items-center justify-center`}
                     >
                       <div
                         title="View Profile"
                         style={{ borderColor: team.team_colour_hex }}
-                        className={`${
-                          teamMembersData[0].ign == e.ign
-                            ? 'h-[68px] w-[68px] md:h-20 md:w-20'
-                            : 'h-20 w-20  md:h-[60px] md:w-[60px]'
-                        } group relative my-auto border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800  `}
+                        className={`${teamMembersData[0].ign == e.ign
+                          ? 'h-[68px] w-[68px] md:h-20 md:w-20'
+                          : 'h-20 w-20  md:h-[60px] md:w-[60px]'
+                          } group relative my-auto border-[1px] border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800  `}
                       >
                         <Image
                           src={
                             userData.profileIconId === undefined
                               ? '/images/spinner.svg'
                               : DD_PREFIX +
-                                'img/profileicon/' +
-                                e.icon_id +
-                                '.png'
+                              'img/profileicon/' +
+                              e.icon_id +
+                              '.png'
                           }
                           alt="Profile picture"
                           layout="fill"
@@ -339,11 +347,10 @@ const MyTeamsPage = (props: Props) => {
                       </div>
                     </div>
                     <div
-                      className={`${
-                        teamMembersData[0].ign == e.ign
-                          ? 'text-2xl font-semibold'
-                          : 'text-xl font-normal'
-                      } ml-8 flex items-center `}
+                      className={`${teamMembersData[0].ign == e.ign
+                        ? 'text-2xl font-semibold'
+                        : 'text-xl font-normal'
+                        } ml-8 flex items-center `}
                     >
                       {teamMembersData[0].ign == e.ign
                         ? 'Team Leader ' + e.ign

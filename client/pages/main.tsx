@@ -214,9 +214,8 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className={`${
-            team == null ? 'col-end-3' : 'col-end-2'
-          } relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
+          className={`${team == null ? 'col-end-3' : 'col-end-2'
+            } relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
         >
           <div className="relative my-2 mx-2 flex w-48 flex-row justify-between rounded-md bg-green-200 p-2 dark:bg-black-500 dark:text-white-200">
             <div className="flex h-full w-1/2 flex-col justify-between">
@@ -367,9 +366,9 @@ const Home: NextPage<Props> = (props) => {
                             organizer_data.profileIconId === undefined
                               ? '/images/spinner.svg'
                               : DD_PREFIX +
-                                'img/profileicon/' +
-                                organizer_data.profileIconId +
-                                '.png'
+                              'img/profileicon/' +
+                              organizer_data.profileIconId +
+                              '.png'
                           }
                           alt="Profile picture"
                           layout="fill"
@@ -450,11 +449,10 @@ const Home: NextPage<Props> = (props) => {
             className=" md:cols-end-2 row-start-1 row-end-1 flex  h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600 md:col-start-2"
           >
             <div
-              className={`${
-                tournaments == null || tournaments?.tournament_id == 'ABC123'
-                  ? 'animate-pulse'
-                  : 'animate-none'
-              }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
+              className={`${tournaments == null || tournaments?.tournament_id == 'ABC123'
+                ? 'animate-pulse'
+                : 'animate-none'
+                }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
             >
               <Link href="tournaments/create_tournament">
                 <Button
@@ -465,12 +463,14 @@ const Home: NextPage<Props> = (props) => {
                 ></Button>
               </Link>
               <div className="mt-auto flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
-                <Button
-                  text="Join Tournament"
-                  noMargin
-                  type="neutral"
-                  className="text-white-500"
-                ></Button>
+                <Link href="tournaments/join_tournament">
+                  <Button
+                    text="Join Tournament"
+                    noMargin
+                    type="neutral"
+                    className="text-white-500"
+                  ></Button>
+                </Link>
                 <Button
                   text="Find Tournament"
                   noMargin

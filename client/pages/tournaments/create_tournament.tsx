@@ -11,7 +11,7 @@ import { IAccountData, ITournament } from '../../globals/types'
 
 type Props = {}
 
-export default function create_tournament({}: Props) {
+export default function create_tournament({ }: Props) {
   const {
     displayName,
     biography,
@@ -31,6 +31,7 @@ export default function create_tournament({}: Props) {
 
   const [is_private, setPrivate] = useState<boolean>(true)
   const [lobby_code, setLobby_code] = useState('')
+  const [tournament_id, setTournamentID] = useState('')
 
   const [dataOut, setDataOut] = useState<ITournament>()
 
@@ -58,8 +59,8 @@ export default function create_tournament({}: Props) {
       date_time_start: startDateTimeString || moment().toString(),
       is_private,
       lobby_code: is_private ? lobby_code : '',
+      tournament_id: tournament_id,
       // Generative Tournament Data
-      tournament_id: 'ADB123',
       rounds: null,
       date_time_end: null,
       winning_team: null,
@@ -75,6 +76,7 @@ export default function create_tournament({}: Props) {
       number_of_teams,
       startDateTimeString,
       is_private,
+      tournament_id,
       lobby_code
     )
   }
@@ -176,7 +178,7 @@ export default function create_tournament({}: Props) {
       className=" grid h-full min-h-screen overflow-y-auto px-4 pt-24 pb-4"
     >
       <Head>
-        <title>Tournamint — Create Tournament</title>
+        <title>Create Tournament</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="mx-auto w-full sm:w-[300px]">
@@ -244,9 +246,8 @@ export default function create_tournament({}: Props) {
             </div>
           </div>
           <div
-            className={`${
-              is_private ? 'mb-2 ' : 'mb-0 '
-            } mt-2 flex flex-col rounded-md bg-gray-200 p-2  dark:bg-black-500`}
+            className={`${is_private ? 'mb-2 ' : 'mb-0 '
+              } mt-2 flex flex-col rounded-md bg-gray-200 p-2  dark:bg-black-500`}
           >
             <div className="flex w-full flex-row items-center justify-between ">
               <span>Private</span>
@@ -259,11 +260,30 @@ export default function create_tournament({}: Props) {
             </div>
           </div>
           <div
-            className={`${
-              is_private
-                ? 'pointer-events-auto my-2 max-h-full opacity-100'
-                : 'pointer-events-none my-0 max-h-0 opacity-0'
-            } h-full rounded-md bg-gray-200 p-2 dark:bg-black-500`}
+            className={`${is_private
+              ? 'pointer-events-auto my-2 max-h-full opacity-100'
+              : 'pointer-events-none my-0 max-h-0 opacity-0'
+              } h-full rounded-md bg-gray-200 p-2 dark:bg-black-500`}
+          >
+            <div className="flex w-full flex-col justify-between ">
+              <label tabIndex={0} className="mb-2">
+                Tournament ID Code
+              </label>
+              <input
+                type="text"
+                maxLength={6}
+                placeholder="ABC123"
+                className=" w-full rounded-md border-2 border-black-400 bg-transparent px-1 uppercase  text-black-900 first-letter:capitalize dark:text-white-100"
+                onChange={(e) => setTournamentID(e.target.value)}
+                onKeyUp={(e) => handleTournamentCreateFormSubmit(e)}
+              />
+            </div>
+          </div>
+          <div
+            className={`${is_private
+              ? 'pointer-events-auto my-2 max-h-full opacity-100'
+              : 'pointer-events-none my-0 max-h-0 opacity-0'
+              } h-full rounded-md bg-gray-200 p-2 dark:bg-black-500`}
           >
             <div className="flex w-full flex-col justify-between ">
               <label tabIndex={0} className="mb-2">
@@ -280,9 +300,8 @@ export default function create_tournament({}: Props) {
             </div>
           </div>
           <div
-            className={`${
-              is_private ? 'mt-2 ' : 'mt-0 '
-            } flex flex-col rounded-md bg-gray-200 p-2 pr-4 transition-all dark:bg-black-500`}
+            className={`${is_private ? 'mt-2 ' : 'mt-0 '
+              } flex flex-col rounded-md bg-gray-200 p-2 pr-4 transition-all dark:bg-black-500`}
           >
             <Button
               text="Create"
