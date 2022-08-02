@@ -13,18 +13,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  console.log("[teamData] method:", req.method);
+  console.log("[tournamentExists] method:", req.method);
+
   if (req.method == 'GET') {
-    const team_tag: any = req.query.team_tag
+    const tournament_id: any = req.query.tournament_id
     // console.log('team_tag param:', team_tag);
     let response = null;
 
-    if (await redis.hexists('TEAMS', team_tag)) {
+    if (await redis.hexists('TOURNAMENTS', tournament_id)) {
       response = 'EXISTS'
     }
-
-
-
     // console.log(response);
 
     res.json({ response })

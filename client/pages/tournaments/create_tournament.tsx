@@ -8,6 +8,7 @@ import { Toggle } from 'react-daisyui'
 import { Capitalize } from '../../globals/global_functions'
 import { useUser } from '../../context/UserContext'
 import { IAccountData, ITournament } from '../../globals/types'
+import Router from 'next/router'
 
 type Props = {}
 
@@ -88,86 +89,104 @@ export default function create_tournament({ }: Props) {
   }, [dataOut])
 
   const saveTournamentDetailsToCloud = async () => {
-    const response = await fetch('/api/tournament/tournament', {
-      body: JSON.stringify({ data: dataOut }),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    })
+    if (tournament_id != '') {
+      // Check tournament ID isn't taken
+      const url = '/api/tournament/tournamentExists?' + new URLSearchParams({ tournament_id: tournament_id.toUpperCase() })
+      const result = await fetch(url)
+        .then((res) => res.json())
+        .catch((res) => console.log(res.error))
 
-    const { error } = await response.json()
-    console.log('error:', error)
+      console.log('TournamentExists Result: ', result)
 
-    if (error) {
-      console.log('error:', error)
-    } else if (response.status == 200 && dataOut != undefined) {
-      if (setUserDetails != undefined) {
-        setUserDetails(
-          displayName,
-          biography,
-          ign,
-          favouriteChampion,
-          rankInfo,
-          statistics,
-          tournamentsMade + 1,
-          dataOut,
-          team
-        )
-        localStorage.setItem(
-          'userDetails',
-          JSON.stringify({
-            displayName: displayName,
-            biography: biography,
-            ign: ign,
-            favouriteChampion: favouriteChampion,
-            rankInfo: {
-              tier: rankInfo.tier,
-              rank: rankInfo.rank,
-              wins: rankInfo.wins,
-              losses: rankInfo.losses,
-            },
-            statistics: {
-              tournaments_played: statistics.tournaments_played,
-              tournaments_won: statistics.tournaments_won,
-              matches_won: statistics.matches_won,
-              people_met: statistics.people_met,
-            },
-            tournamentsMade: tournamentsMade + 1,
-            tournaments: dataOut,
-            team: team,
-          })
-        )
-        // Redis account team set
-        let get_data: any = null
-        const account_api_url =
-          '/api/account?' + new URLSearchParams({ ign: ign })
-        const account_get_response = await fetch(account_api_url)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error('HTTP status ' + res.status)
-            }
-            return res.json()
-          })
-          .then(async (res) => {
-            if (res.status != 'Account does not yet exist') {
-              get_data = res
-            }
-          })
-          .catch((res) => console.log(res.error))
-        if (get_data != undefined) {
-          const accountDataOut: IAccountData = {
-            ign: get_data.ign,
-            username: get_data.username,
-            bio: get_data.bio,
-            favourite_champion: get_data.favourite_champion,
-            passcode: get_data.passcode,
-            team_tag: get_data.team_tag,
-            tournament_id: dataOut.tournament_id,
-          }
-          const account_post_response = await fetch('/api/account', {
-            body: JSON.stringify({ data: accountDataOut }),
+      if (result != undefined) {
+        if (result.response == 'EXISTS') {
+          alert('Tournament ID in use. Please try another')
+        } else {
+          // Save tournament details
+          const response = await fetch('/api/tournament/tournament', {
+            body: JSON.stringify({ data: dataOut }),
             headers: { 'Content-Type': 'application/json' },
-            method: 'PATCH',
+            method: 'POST',
           })
+
+          const { error } = await response.json()
+          console.log('error:', error)
+
+          if (error) {
+            console.log('error:', error)
+          } else if (response.status == 200 && dataOut != undefined) {
+            if (setUserDetails != undefined) {
+              setUserDetails(
+                displayName,
+                biography,
+                ign,
+                favouriteChampion,
+                rankInfo,
+                statistics,
+                tournamentsMade + 1,
+                dataOut,
+                team
+              )
+              localStorage.setItem(
+                'userDetails',
+                JSON.stringify({
+                  displayName: displayName,
+                  biography: biography,
+                  ign: ign,
+                  favouriteChampion: favouriteChampion,
+                  rankInfo: {
+                    tier: rankInfo.tier,
+                    rank: rankInfo.rank,
+                    wins: rankInfo.wins,
+                    losses: rankInfo.losses,
+                  },
+                  statistics: {
+                    tournaments_played: statistics.tournaments_played,
+                    tournaments_won: statistics.tournaments_won,
+                    matches_won: statistics.matches_won,
+                    people_met: statistics.people_met,
+                  },
+                  tournamentsMade: tournamentsMade + 1,
+                  tournaments: dataOut,
+                  team: team,
+                })
+              )
+              // Redis account team set
+              let get_data: any = null
+              const account_api_url =
+                '/api/account?' + new URLSearchParams({ ign: ign })
+              const account_get_response = await fetch(account_api_url)
+                .then((res) => {
+                  if (!res.ok) {
+                    throw new Error('HTTP status ' + res.status)
+                  }
+                  return res.json()
+                })
+                .then(async (res) => {
+                  if (res.status != 'Account does not yet exist') {
+                    get_data = res
+                  }
+                })
+                .catch((res) => console.log(res.error))
+              if (get_data != undefined) {
+                const accountDataOut: IAccountData = {
+                  ign: get_data.ign,
+                  username: get_data.username,
+                  bio: get_data.bio,
+                  favourite_champion: get_data.favourite_champion,
+                  passcode: get_data.passcode,
+                  team_tag: get_data.team_tag,
+                  tournament_id: dataOut.tournament_id,
+                }
+                const account_post_response = await fetch('/api/account', {
+                  body: JSON.stringify({ data: accountDataOut }),
+                  headers: { 'Content-Type': 'application/json' },
+                  method: 'PATCH',
+                })
+              }
+            }
+          }
+          Router.push('/main')
         }
       }
     }
