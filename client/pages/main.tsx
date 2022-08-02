@@ -60,13 +60,7 @@ const Home: NextPage<Props> = (props) => {
     useState<ITournamentDisplayData>()
   const [organizer_data, setOrganizer_data] = useState<any>()
 
-  useEffect(() => {
-    if (countdownInterval) {
-      clearInterval(countdownInterval)
-    }
 
-    console.log(team)
-  }, [])
 
   useEffect(() => {
     refreshTournamentInfo()
@@ -117,10 +111,24 @@ const Home: NextPage<Props> = (props) => {
     ]
   }
 
-  // Countdown function
-  var countdownInterval = setInterval(function () {
+  // Countdown functionality
+  useEffect(() => {
+    if (countdownInterval) {
+      clearInterval(countdownInterval)
+    }
+
+    console.log(team)
+  }, [])
+
+  // Countdown logic
+  const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
+  const countDownDate = humanReadableDate
+  const countDownTime = countDownDate.getTime()
+
+  const countdownInterval = setInterval(function () {
     var now = new Date().getTime()
     var left = countDownTime - now
+    console.log('left', left);
 
     if (tournaments) {
       left = moment(tournaments.date_time_start).toDate().getTime() - now
@@ -132,14 +140,11 @@ const Home: NextPage<Props> = (props) => {
     )
     setCountdown_m(Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)))
     setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
+
   }, 1000)
 
-  // Countdown logic
-  const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
-  const countDownDate = humanReadableDate
-  const countDownTime = countDownDate.getTime()
-
   // !Deprecated, concurrency unsafe countdown logic implementation
+
   // // WHEN SECONDS VALUE CHANGES
   // useEffect(() => {
   //   const timer = setTimeout(() => {
@@ -214,38 +219,44 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className={`${team == null ? 'col-end-3' : 'col-end-2'
+          className={`${(team == null) || (team != null && tournaments?.tournament_id != 'ABC123') ? 'col-end-4' : 'col-end-2'
             } relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
         >
-          <div className="relative my-2 mx-2 flex w-48 flex-row justify-between rounded-md bg-green-200 p-2 dark:bg-black-500 dark:text-white-200">
-            <div className="flex h-full w-1/2 flex-col justify-between">
-              <div className="flex flex-col items-center pb-2 ">
-                <Countdown
-                  className=" font-mono text-6xl"
-                  value={countdown_d}
-                />
-                days
+          {/* Countdown Container */}
+          {(team != null && tournaments?.tournament_id != 'ABC123') &&
+            <>
+              <div className="relative my-2 mx-2 flex w-72 flex-row justify-between rounded-md bg-green-200 p-2 dark:bg-black-500 dark:text-white-200">
+                <div className="flex h-full w-4/5 flex-col justify-between">
+                  <div className="flex flex-col items-center pb-2 ">
+                    <Countdown
+                      className=" font-mono text-6xl"
+                      value={countdown_d}
+                    />
+                    days
+                  </div>
+                  <h4 className="text-md flex flex-col text-black-600 dark:text-white-600 ">
+                    <span>{tournaments?.date_time_start}</span>
+                  </h4>
+                </div>
+                <div className="grid w-auto grid-flow-row auto-rows-max items-center justify-center gap-1 ">
+                  <div className="flex flex-col items-center">
+                    <Countdown className="font-mono text-2xl" value={countdown_h} />
+                    hours
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Countdown className="font-mono text-2xl" value={countdown_m} />
+                    min
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Countdown className="font-mono text-2xl" value={countdown_s} />
+                    secs
+                  </div>
+                </div>
               </div>
-              <h4 className="text-md flex flex-col text-black-600 dark:text-white-600 ">
-                <span>{humanReadableDate.toLocaleString()}</span>
-              </h4>
-            </div>
-            <div className="grid w-auto grid-flow-row auto-rows-max items-center justify-center gap-1 ">
-              <div className="flex flex-col items-center">
-                <Countdown className="font-mono text-2xl" value={countdown_h} />
-                hours
-              </div>
-              <div className="flex flex-col items-center">
-                <Countdown className="font-mono text-2xl" value={countdown_m} />
-                min
-              </div>
-              <div className="flex flex-col items-center">
-                <Countdown className="font-mono text-2xl" value={countdown_s} />
-                secs
-              </div>
-            </div>
-          </div>
-          <span className="relative top-1/4 my-2 h-3/4 w-1 -translate-y-1/4 bg-black-500"></span>
+              <span className="relative top-1/4 my-2 h-3/4 w-1 -translate-y-1/4 bg-black-500"></span>
+            </>
+          }
+
           <div className="relative ml-auto flex h-full w-full justify-center p-2">
             {team ? (
               <div className="relative  flex h-full w-11/12 flex-row gap-4 self-center">
@@ -444,9 +455,10 @@ const Home: NextPage<Props> = (props) => {
         </div>
         {/* Right Half */}
         {team != null && (
+          tournaments?.tournament_id == 'ABC123' &&
           <div
             id="top_right"
-            className=" md:cols-end-2 row-start-1 row-end-1 flex  h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600 md:col-start-2"
+            className={`${tournaments?.tournament_id == 'ABC123' ? 'md:cols-end-2 row-start-1 row-end-1 md:col-start-2' : ''} flex h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600`}
           >
             <div
               className={`${tournaments == null || tournaments?.tournament_id == 'ABC123'
