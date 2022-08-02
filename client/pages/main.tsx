@@ -412,12 +412,24 @@ const Home: NextPage<Props> = (props) => {
                     <p className=""> Public Tournament</p>
                   ) : (
                     <>
-                      <span>Reveal join code:</span>
+                      <span>Reveal Tournament ID:</span>
                       <div className=" group relative h-min rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
                         <span
                           className="opacity-0 transition-opacity group-hover:opacity-100"
                           onClick={() =>
-                            navigator.clipboard.writeText(team.team_join_key)
+                            navigator.clipboard.writeText(tournaments.tournament_id)
+                          }
+                          title="Click to copy"
+                        >
+                          {tournaments.tournament_id}
+                        </span>
+                      </div>
+                      <span>Reveal Join Code:</span>
+                      <div className=" group relative h-min rounded-sm bg-black-700 px-1 py-0.5 shadow-md transition-all duration-75 hover:cursor-pointer active:bg-gray-600 active:duration-[0]">
+                        <span
+                          className="opacity-0 transition-opacity group-hover:opacity-100"
+                          onClick={() =>
+                            navigator.clipboard.writeText(tournaments.lobby_code)
                           }
                           title="Click to copy"
                         >
