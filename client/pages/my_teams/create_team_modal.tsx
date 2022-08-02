@@ -98,94 +98,95 @@ const CreateTeamModal = (props: Props) => {
 
     console.log('getUserTeam(): ', result)
 
-    console.log('AAAAAAAAAAAAARGHHHHHH', result.response);
+    if (result.response == 'EXISTS') {
+      alert('Team tag in use. Please try another')
+    } else {
 
 
+      // Save team data
+      const response = await fetch('/api/teamData', {
+        body: JSON.stringify({ data: dataOut }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+      const { error } = await response.json()
+      console.log('error:', error)
 
-
-
-    const response = await fetch('/api/teamData', {
-      body: JSON.stringify({ data: dataOut }),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    })
-    const { error } = await response.json()
-    console.log('error:', error)
-
-    if (error) {
-      // console.log(error)
-    } else if (response.status == 200) {
-      if (setUserDetails != undefined) {
-        setUserDetails(
-          displayName,
-          biography,
-          ign,
-          favouriteChampion,
-          rankInfo,
-          statistics,
-          tournamentsMade,
-          tournaments,
-          dataOut
-        )
-        localStorage.setItem(
-          'userDetails',
-          JSON.stringify({
-            displayName: displayName,
-            biography: biography,
-            ign: ign,
-            favouriteChampion: favouriteChampion,
-            rankInfo: {
-              tier: rankInfo.tier,
-              rank: rankInfo.rank,
-              wins: rankInfo.wins,
-              losses: rankInfo.losses,
-            },
-            statistics: {
-              tournaments_played: statistics.tournaments_played,
-              tournaments_won: statistics.tournaments_won,
-              matches_won: statistics.matches_won,
-              people_met: statistics.people_met,
-            },
-            tournamentsMade: tournamentsMade,
-            tournaments: tournaments,
-            team: dataOut,
-          })
-        )
-        // Redis account team set
-        let get_data: any = null
-        const account_api_url =
-          '/api/account?' + new URLSearchParams({ ign: ign })
-        const account_get_response = await fetch(account_api_url)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error('HTTP status ' + res.status)
+      if (error) {
+        // console.log(error)
+      } else if (response.status == 200) {
+        if (setUserDetails != undefined) {
+          setUserDetails(
+            displayName,
+            biography,
+            ign,
+            favouriteChampion,
+            rankInfo,
+            statistics,
+            tournamentsMade,
+            tournaments,
+            dataOut
+          )
+          localStorage.setItem(
+            'userDetails',
+            JSON.stringify({
+              displayName: displayName,
+              biography: biography,
+              ign: ign,
+              favouriteChampion: favouriteChampion,
+              rankInfo: {
+                tier: rankInfo.tier,
+                rank: rankInfo.rank,
+                wins: rankInfo.wins,
+                losses: rankInfo.losses,
+              },
+              statistics: {
+                tournaments_played: statistics.tournaments_played,
+                tournaments_won: statistics.tournaments_won,
+                matches_won: statistics.matches_won,
+                people_met: statistics.people_met,
+              },
+              tournamentsMade: tournamentsMade,
+              tournaments: tournaments,
+              team: dataOut,
+            })
+          )
+          // Redis account team set
+          let get_data: any = null
+          const account_api_url =
+            '/api/account?' + new URLSearchParams({ ign: ign })
+          const account_get_response = await fetch(account_api_url)
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error('HTTP status ' + res.status)
+              }
+              return res.json()
+            })
+            .then(async (res) => {
+              if (res.status != 'Account does not yet exist') {
+                get_data = res
+              }
+            })
+            .catch((res) => console.log(res.error))
+          if (get_data != undefined) {
+            const dataOut: IAccountData = {
+              ign: get_data.ign,
+              username: get_data.username,
+              bio: get_data.bio,
+              favourite_champion: get_data.favourite_champion,
+              passcode: get_data.passcode,
+              team_tag: tag_out.toUpperCase(),
+              tournament_id: get_data.tournament_id,
             }
-            return res.json()
-          })
-          .then(async (res) => {
-            if (res.status != 'Account does not yet exist') {
-              get_data = res
-            }
-          })
-          .catch((res) => console.log(res.error))
-        if (get_data != undefined) {
-          const dataOut: IAccountData = {
-            ign: get_data.ign,
-            username: get_data.username,
-            bio: get_data.bio,
-            favourite_champion: get_data.favourite_champion,
-            passcode: get_data.passcode,
-            team_tag: tag_out.toUpperCase(),
-            tournament_id: get_data.tournament_id,
+            const account_post_response = await fetch('/api/account', {
+              body: JSON.stringify({ data: dataOut }),
+              headers: { 'Content-Type': 'application/json' },
+              method: 'PATCH',
+            })
           }
-          const account_post_response = await fetch('/api/account', {
-            body: JSON.stringify({ data: dataOut }),
-            headers: { 'Content-Type': 'application/json' },
-            method: 'PATCH',
-          })
         }
+        onClick()
       }
-      onClick()
     }
   }
   useEffect(() => {

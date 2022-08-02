@@ -207,7 +207,7 @@ const MyTeamsPage = (props: Props) => {
         })
       )
     }
-    // router.reload()
+    router.reload()
   }
 
   return (

@@ -57,8 +57,11 @@ export default async function handler(
       response = await redis.hgetall("TEAMS")
 
     } else {
-      response = await redis.hget("TEAMS", team_tag)
-
+      if (await redis.hexists('TEAMS', team_tag)) {
+        response = 'EXISTS'
+      } else {
+        response = await redis.hget("TEAMS", team_tag)
+      }
     }
 
 
@@ -67,6 +70,7 @@ export default async function handler(
     res.json({ response })
 
   }
+
 
   if (req.method == 'DELETE') {
 
