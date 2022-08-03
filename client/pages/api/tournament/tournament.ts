@@ -67,13 +67,23 @@ export default async function handler(
         console.log(req.query);
 
         try {
-            response = await redis.hget("TOURNAMENTS", tournament_id).then(data => {
-                if (data == null) {
-                    res.status(400).json({ status: 'Tournament does not exist', tournament_id: tournament_id })
-                } else {
-                    res.status(200).json(data)
-                }
-            })
+            if (tournament_id == '') {
+                response = await redis.hgetall("TOURNAMENTS").then(data => {
+                    if (data == null) {
+                        res.status(400).json({ status: 'Error retrieving tournaments' })
+                    } else {
+                        res.status(200).json(data)
+                    }
+                })
+            } else {
+                response = await redis.hget("TOURNAMENTS", tournament_id).then(data => {
+                    if (data == null) {
+                        res.status(400).json({ status: 'Tournament does not exist', tournament_id: tournament_id })
+                    } else {
+                        res.status(200).json(data)
+                    }
+                })
+            }
         } catch (error) {
             res.status(400).json({ error: error })
         }

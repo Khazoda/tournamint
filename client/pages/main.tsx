@@ -128,7 +128,6 @@ const Home: NextPage<Props> = (props) => {
   const countdownInterval = setInterval(function () {
     var now = new Date().getTime()
     var left = countDownTime - now
-    console.log('left', left);
 
     if (tournaments) {
       left = moment(tournaments.date_time_start).toDate().getTime() - now
@@ -495,12 +494,14 @@ const Home: NextPage<Props> = (props) => {
                     className="text-white-500"
                   ></Button>
                 </Link>
-                <Button
-                  text="Find Tournament"
-                  noMargin
-                  type="neutral"
-                  className="text-white-500"
-                ></Button>
+                <Link href="tournaments/join_public_tournament">
+                  <Button
+                    text="Find Tournament"
+                    noMargin
+                    type="neutral"
+                    className="text-white-500"
+                  ></Button>
+                </Link>
               </div>
             </div>
           </div>
