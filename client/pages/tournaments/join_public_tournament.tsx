@@ -1,13 +1,22 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { ITournament } from "../../globals/types";
 
-function join_public_tournament() {
-    const [public_tournaments, setPublic_tournaments] = useState()
+export interface Props {
+
+}
+const FindTournamentPage = (props: Props) => {
+    const [public_tournaments, setPublic_tournaments] = useState<Array<ITournament>>([])
 
     useEffect(() => {
         getPublicTournaments()
 
     }, [])
+
+    useEffect(() => {
+        console.log(public_tournaments);
+    }, [public_tournaments])
+
 
 
     const getPublicTournaments = async () => {
@@ -20,13 +29,15 @@ function join_public_tournament() {
         let tournament_temp = result
         console.log(tournament_temp);
 
-        let public_tournaments_temp: any = {}
+        let public_tournaments_temp: any = []
         Object.keys(tournament_temp).forEach((key: any) => {
             if (!tournament_temp[key].is_private) {
-                public_tournaments_temp[key] = tournament_temp[key]
+                public_tournaments_temp.push(tournament_temp[key])
             }
         });
         setPublic_tournaments(public_tournaments_temp)
+        console.log(public_tournaments_temp);
+
     }
 
 
@@ -40,10 +51,17 @@ function join_public_tournament() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="mx-auto w-full sm:w-[300px]">
-                boink
-            </main>
-        </div>
+                <div>
+                    Hi
+                    {public_tournaments.map((e) => {
+                        return (
+                            <div>{e.tournament_id}</div>
+                        )
+                    })}
+                </div>
+            </main >
+        </div >
     );
 }
 
-export default join_public_tournament;
+export default FindTournamentPage;
