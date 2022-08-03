@@ -32,9 +32,15 @@ const FindTournamentPage = (props: Props) => {
 
         let public_tournaments_temp: any = []
         Object.keys(tournament_temp).forEach((key: any) => {
-            if (!tournament_temp[key].is_private) {
-                public_tournaments_temp.push(tournament_temp[key])
+            // Guard Clauses
+            if (tournament_temp[key].is_private) {
+                return
             }
+            if (new Date() > tournament_temp[key].startDateTime) {
+                return
+            }
+
+            public_tournaments_temp.push(tournament_temp[key])
         });
         setPublic_tournaments(public_tournaments_temp)
         console.log(public_tournaments_temp);
@@ -51,19 +57,27 @@ const FindTournamentPage = (props: Props) => {
                 <title>Find Tournament</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="mx-auto w-full sm:w-[300px]">
-                <div>
+            <main className="mx-auto w-full sm:w-full">
+                <div className="flex flex-row gap-5 flex-wrap">
 
                     {public_tournaments.map((e) => {
                         return (
-                            <>
-                                <div>{Capitalize(e.tournament_name)}</div>
-                                <div>{e.organized_by_ign}</div>
-                                <div>{e.type}</div>
-                                <div>{e.date_time_start}</div>
+                            <div className="card w-96 bg-base-100 dark:bg-black-500 shadow-xl">
+                                <div className="card-body">
+                                    <h2 className="card-title">{Capitalize(e.tournament_name)}</h2>
+                                    <div className="flex flex-row justify-between"><p>Organizer: {e.organized_by_ign}</p>
+                                        <p>Number of Teams:{e.type}</p></div>
 
-                                <div>{e.tournament_id}</div>
-                            </>
+                                    <p className="text-secondary">{e.date_time_start}</p>
+
+                                    <div className="card-actions justify-start">
+                                        <button className="btn btn-primary btn-sm">Join Now</button>
+                                    </div>
+                                    <div className="absolute top-2 right-4 text-gray-500">{e.tournament_id}</div>
+                                </div>
+                            </div>
+
+
                         )
                     })}
                 </div>

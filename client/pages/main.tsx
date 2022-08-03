@@ -406,7 +406,7 @@ const Home: NextPage<Props> = (props) => {
                   {tournaments?.tournament_name ||
                     "-Can't load tournament name-"}
                 </div>
-                <div className=" flex w-1/3 flex-col items-end justify-end gap-2 text-sm ">
+                <div className=" flex w-1/3 flex-col items-end justify-start gap-2 text-sm ">
                   {tournaments.lobby_code == '' ? (
                     <p className=""> Public Tournament</p>
                   ) : (

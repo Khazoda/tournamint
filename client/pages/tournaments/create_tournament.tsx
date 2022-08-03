@@ -279,10 +279,8 @@ export default function create_tournament({ }: Props) {
             </div>
           </div>
           <div
-            className={`${is_private
-              ? 'pointer-events-auto my-2 max-h-full opacity-100'
-              : 'pointer-events-none my-0 max-h-0 opacity-0'
-              } h-full rounded-md bg-gray-200 p-2 dark:bg-black-500`}
+            className={`
+               pointer-events-auto my-2 max-h-full opacity-100 h-full rounded-md bg-gray-200 p-2 dark:bg-black-500`}
           >
             <div className="flex w-full flex-col justify-between ">
               <label tabIndex={0} className="mb-2">
