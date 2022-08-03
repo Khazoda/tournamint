@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { Capitalize } from "../../globals/global_functions";
 import { ITournament } from "../../globals/types";
 
 export interface Props {
@@ -52,10 +53,17 @@ const FindTournamentPage = (props: Props) => {
             </Head>
             <main className="mx-auto w-full sm:w-[300px]">
                 <div>
-                    Hi
+
                     {public_tournaments.map((e) => {
                         return (
-                            <div>{e.tournament_id}</div>
+                            <>
+                                <div>{Capitalize(e.tournament_name)}</div>
+                                <div>{e.organized_by_ign}</div>
+                                <div>{e.type}</div>
+                                <div>{e.date_time_start}</div>
+
+                                <div>{e.tournament_id}</div>
+                            </>
                         )
                     })}
                 </div>
