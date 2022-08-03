@@ -31,12 +31,16 @@ const FindTournamentPage = (props: Props) => {
         console.log(tournament_temp);
 
         let public_tournaments_temp: any = []
+
+        const now = new Date()
         Object.keys(tournament_temp).forEach((key: any) => {
+            let tournament_date = new Date(tournament_temp[key].date_time_start)
+
             // Guard Clauses
             if (tournament_temp[key].is_private) {
                 return
             }
-            if (new Date() > tournament_temp[key].startDateTime) {
+            if (now > tournament_date) {
                 return
             }
 
@@ -66,9 +70,10 @@ const FindTournamentPage = (props: Props) => {
                                 <div className="card-body">
                                     <h2 className="card-title">{Capitalize(e.tournament_name)}</h2>
                                     <div className="flex flex-row justify-between"><p>Organizer: {e.organized_by_ign}</p>
-                                        <p>Number of Teams:{e.type}</p></div>
+                                        <p>Number of Teams: {e.type}</p></div>
 
-                                    <p className="text-secondary">{e.date_time_start}</p>
+                                    <p className="text-secondary">{new Date(e.date_time_start).toLocaleString()}</p>
+                                    <p className="text-secondary">{new Date().toLocaleString()}</p>
 
                                     <div className="card-actions justify-start">
                                         <button className="btn btn-primary btn-sm">Join Now</button>
