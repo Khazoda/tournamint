@@ -6,7 +6,7 @@ import { FiX } from 'react-icons/fi'
 import Button from '../../components/common/Button'
 import { useUser } from '../../context/UserContext'
 import { Capitalize } from '../../globals/global_functions'
-import { IAccountData } from '../../globals/types'
+import { IAccountData, ITeam } from '../../globals/types'
 
 interface Props {
   onClick: any
@@ -145,6 +145,46 @@ export default function join_tournament(props: Props) {
                   team: team,
                 })
               )
+              // Redis team tournament set
+              let get_team_data: any = null
+              if (team != null) {
+                const team_api_url =
+                  '/api/teamData?' + new URLSearchParams({ team_tag: team.team_tag })
+                const team_get_response = await fetch(team_api_url)
+                  .then((res) => {
+                    if (!res.ok) {
+                      throw new Error('HTTP status ' + res.status)
+                    }
+                    return res.json()
+                  })
+                  .then(async (res) => {
+                    if (res.status != 'Team does not exist') {
+                      get_team_data = res.response
+                    }
+                  })
+                  .catch((res) => console.log(res.error))
+
+                if (get_team_data != undefined) {
+                  console.log(get_team_data);
+
+                  const teamDataOut: ITeam = {
+                    team_icon_path: get_team_data.team_icon_path,
+                    team_tag: get_team_data.team_tag,
+                    team_colour_hex: get_team_data.team_colour_hex,
+                    team_owner: get_team_data.team_owner,
+                    team_members: get_team_data.team_members,
+                    team_name: get_team_data.team_name,
+                    team_statistics: get_team_data.team_statistics,
+                    team_join_key: get_team_data.team_join_key,
+                    tournament_id: tournament_id
+                  }
+                  const team_post_response = await fetch('/api/teamData', {
+                    body: JSON.stringify({ data: teamDataOut }),
+                    headers: { 'Content-Type': 'application/json' },
+                    method: 'PATCH',
+                  })
+                }
+              }
 
             }
             Router.push('/main')
