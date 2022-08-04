@@ -76,43 +76,97 @@ const JoinTeamModal = (props: Props) => {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'PATCH',
               })
-              if (setUserDetails != undefined) {
-                setUserDetails(
-                  displayName,
-                  biography,
-                  ign,
-                  favouriteChampion,
-                  rankInfo,
-                  statistics,
-                  tournamentsMade,
-                  tournaments,
-                  team_temp
-                )
+
+              let tournaments_temp = tournaments
+              let tournament_safety_flag = false;
+              try {
+                if (tournaments_temp != null) {
+                  tournaments_temp.tournament_id = team_temp.tournament_id
+                  if (tournaments_temp.tournament_id != null && tournaments_temp.tournament_id != 'ABC123') {
+                    tournament_safety_flag = true
+                  }
+                }
+              } catch (error) {
+                console.log(error);
               }
-              localStorage.setItem(
-                'userDetails',
-                JSON.stringify({
-                  displayName: displayName,
-                  biography: biography,
-                  ign: ign,
-                  favouriteChampion: favouriteChampion,
-                  rankInfo: {
-                    tier: rankInfo.tier,
-                    rank: rankInfo.rank,
-                    wins: rankInfo.wins,
-                    losses: rankInfo.losses,
-                  },
-                  statistics: {
-                    tournaments_played: statistics.tournaments_played,
-                    tournaments_won: statistics.tournaments_won,
-                    matches_won: statistics.matches_won,
-                    people_met: statistics.people_met,
-                  },
-                  tournamentsMade: tournamentsMade,
-                  tournaments: tournaments,
-                  team: team_temp,
-                })
-              )
+
+              if (setUserDetails != undefined) {
+                if (tournament_safety_flag) {
+                  setUserDetails(
+                    displayName,
+                    biography,
+                    ign,
+                    favouriteChampion,
+                    rankInfo,
+                    statistics,
+                    tournamentsMade,
+                    tournaments_temp,
+                    team_temp
+                  )
+
+                  localStorage.setItem(
+                    'userDetails',
+                    JSON.stringify({
+                      displayName: displayName,
+                      biography: biography,
+                      ign: ign,
+                      favouriteChampion: favouriteChampion,
+                      rankInfo: {
+                        tier: rankInfo.tier,
+                        rank: rankInfo.rank,
+                        wins: rankInfo.wins,
+                        losses: rankInfo.losses,
+                      },
+                      statistics: {
+                        tournaments_played: statistics.tournaments_played,
+                        tournaments_won: statistics.tournaments_won,
+                        matches_won: statistics.matches_won,
+                        people_met: statistics.people_met,
+                      },
+                      tournamentsMade: tournamentsMade,
+                      tournaments: tournaments_temp,
+                      team: team_temp,
+                    })
+                  )
+                } else {
+                  setUserDetails(
+                    displayName,
+                    biography,
+                    ign,
+                    favouriteChampion,
+                    rankInfo,
+                    statistics,
+                    tournamentsMade,
+                    tournaments,
+                    team_temp
+                  )
+
+                  localStorage.setItem(
+                    'userDetails',
+                    JSON.stringify({
+                      displayName: displayName,
+                      biography: biography,
+                      ign: ign,
+                      favouriteChampion: favouriteChampion,
+                      rankInfo: {
+                        tier: rankInfo.tier,
+                        rank: rankInfo.rank,
+                        wins: rankInfo.wins,
+                        losses: rankInfo.losses,
+                      },
+                      statistics: {
+                        tournaments_played: statistics.tournaments_played,
+                        tournaments_won: statistics.tournaments_won,
+                        matches_won: statistics.matches_won,
+                        people_met: statistics.people_met,
+                      },
+                      tournamentsMade: tournamentsMade,
+                      tournaments: tournaments,
+                      team: team_temp,
+                    })
+                  )
+                }
+              }
               // Redis account team set
               let get_data: any = null
               const account_api_url =
@@ -138,7 +192,7 @@ const JoinTeamModal = (props: Props) => {
                   favourite_champion: get_data.favourite_champion,
                   passcode: get_data.passcode,
                   team_tag: tag,
-                  tournament_id: get_data.tournament_id,
+                  tournament_id: team_temp.tournament_id,
                 }
                 const account_post_response = await fetch('/api/account', {
                   body: JSON.stringify({ data: dataOut }),
