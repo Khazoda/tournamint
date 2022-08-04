@@ -402,9 +402,9 @@ const Home: NextPage<Props> = (props) => {
                     <div>loading...</div>
                   )}
                 </div>
-                <div className="flex w-1/3 justify-center text-3xl drop-shadow-lg">
+                <div className="flex w-1/3 justify-center text-3xl drop-shadow-lg ">
                   {tournaments?.tournament_name ||
-                    "-Can't load tournament name-"}
+                    <span className='text-red-600'>Unable to load tournament correctly, please log out and in.</span>}
                 </div>
                 <div className=" flex w-1/3 flex-col items-end justify-start gap-2 text-sm ">
                   {tournaments.lobby_code == '' ? (

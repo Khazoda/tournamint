@@ -64,143 +64,147 @@ const JoinTeamModal = (props: Props) => {
         if (result.response == null) {
           alert('Invalid Team Tag.')
         } else {
-          if (team_temp.team_owner == ign) {
-            alert(
-              'you are the team owner, how did you even access this page? 🤔'
-            )
+          if (team_temp.team_members.length == 5) {
+            alert('The team is full. Please join another')
           } else {
-            if (!team_temp.team_members.includes(ign)) {
-              team_temp.team_members.push(ign)
-              const response = await fetch('/api/teamData', {
-                body: JSON.stringify({ data: team_temp }),
-                headers: { 'Content-Type': 'application/json' },
-                method: 'PATCH',
-              })
-
-              let tournaments_temp = tournaments
-              let tournament_safety_flag = false;
-              try {
-                if (tournaments_temp != null) {
-                  tournaments_temp.tournament_id = team_temp.tournament_id
-                  if (tournaments_temp.tournament_id != null && tournaments_temp.tournament_id != 'ABC123') {
-                    tournament_safety_flag = true
-                  }
-                }
-              } catch (error) {
-                console.log(error);
-              }
-
-              if (setUserDetails != undefined) {
-                if (tournament_safety_flag) {
-                  setUserDetails(
-                    displayName,
-                    biography,
-                    ign,
-                    favouriteChampion,
-                    rankInfo,
-                    statistics,
-                    tournamentsMade,
-                    tournaments_temp,
-                    team_temp
-                  )
-
-                  localStorage.setItem(
-                    'userDetails',
-                    JSON.stringify({
-                      displayName: displayName,
-                      biography: biography,
-                      ign: ign,
-                      favouriteChampion: favouriteChampion,
-                      rankInfo: {
-                        tier: rankInfo.tier,
-                        rank: rankInfo.rank,
-                        wins: rankInfo.wins,
-                        losses: rankInfo.losses,
-                      },
-                      statistics: {
-                        tournaments_played: statistics.tournaments_played,
-                        tournaments_won: statistics.tournaments_won,
-                        matches_won: statistics.matches_won,
-                        people_met: statistics.people_met,
-                      },
-                      tournamentsMade: tournamentsMade,
-                      tournaments: tournaments_temp,
-                      team: team_temp,
-                    })
-                  )
-                } else {
-                  setUserDetails(
-                    displayName,
-                    biography,
-                    ign,
-                    favouriteChampion,
-                    rankInfo,
-                    statistics,
-                    tournamentsMade,
-                    tournaments,
-                    team_temp
-                  )
-
-                  localStorage.setItem(
-                    'userDetails',
-                    JSON.stringify({
-                      displayName: displayName,
-                      biography: biography,
-                      ign: ign,
-                      favouriteChampion: favouriteChampion,
-                      rankInfo: {
-                        tier: rankInfo.tier,
-                        rank: rankInfo.rank,
-                        wins: rankInfo.wins,
-                        losses: rankInfo.losses,
-                      },
-                      statistics: {
-                        tournaments_played: statistics.tournaments_played,
-                        tournaments_won: statistics.tournaments_won,
-                        matches_won: statistics.matches_won,
-                        people_met: statistics.people_met,
-                      },
-                      tournamentsMade: tournamentsMade,
-                      tournaments: tournaments,
-                      team: team_temp,
-                    })
-                  )
-                }
-              }
-              // Redis account team set
-              let get_data: any = null
-              const account_api_url =
-                '/api/account?' + new URLSearchParams({ ign: ign })
-              const account_get_response = await fetch(account_api_url)
-                .then((res) => {
-                  if (!res.ok) {
-                    throw new Error('HTTP status ' + res.status)
-                  }
-                  return res.json()
-                })
-                .then(async (res) => {
-                  if (res.status != 'Account does not yet exist') {
-                    get_data = res
-                  }
-                })
-                .catch((res) => console.log(res.error))
-              if (get_data != undefined) {
-                const dataOut: IAccountData = {
-                  ign: get_data.ign,
-                  username: get_data.username,
-                  bio: get_data.bio,
-                  favourite_champion: get_data.favourite_champion,
-                  passcode: get_data.passcode,
-                  team_tag: tag,
-                  tournament_id: team_temp.tournament_id,
-                }
-                const account_post_response = await fetch('/api/account', {
-                  body: JSON.stringify({ data: dataOut }),
+            if (team_temp.team_owner == ign) {
+              alert(
+                'you are the team owner, how did you even access this page? 🤔'
+              )
+            } else {
+              if (!team_temp.team_members.includes(ign)) {
+                team_temp.team_members.push(ign)
+                const response = await fetch('/api/teamData', {
+                  body: JSON.stringify({ data: team_temp }),
                   headers: { 'Content-Type': 'application/json' },
                   method: 'PATCH',
-                }).then(() => onClick())
+                })
+
+                let tournaments_temp = tournaments
+                let tournament_safety_flag = false;
+                try {
+                  if (tournaments_temp != null) {
+                    tournaments_temp.tournament_id = team_temp.tournament_id
+                    if (tournaments_temp.tournament_id != null && tournaments_temp.tournament_id != 'ABC123') {
+                      tournament_safety_flag = true
+                    }
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+
+                if (setUserDetails != undefined) {
+                  if (tournament_safety_flag) {
+                    setUserDetails(
+                      displayName,
+                      biography,
+                      ign,
+                      favouriteChampion,
+                      rankInfo,
+                      statistics,
+                      tournamentsMade,
+                      tournaments_temp,
+                      team_temp
+                    )
+
+                    localStorage.setItem(
+                      'userDetails',
+                      JSON.stringify({
+                        displayName: displayName,
+                        biography: biography,
+                        ign: ign,
+                        favouriteChampion: favouriteChampion,
+                        rankInfo: {
+                          tier: rankInfo.tier,
+                          rank: rankInfo.rank,
+                          wins: rankInfo.wins,
+                          losses: rankInfo.losses,
+                        },
+                        statistics: {
+                          tournaments_played: statistics.tournaments_played,
+                          tournaments_won: statistics.tournaments_won,
+                          matches_won: statistics.matches_won,
+                          people_met: statistics.people_met,
+                        },
+                        tournamentsMade: tournamentsMade,
+                        tournaments: tournaments_temp,
+                        team: team_temp,
+                      })
+                    )
+                  } else {
+                    setUserDetails(
+                      displayName,
+                      biography,
+                      ign,
+                      favouriteChampion,
+                      rankInfo,
+                      statistics,
+                      tournamentsMade,
+                      tournaments,
+                      team_temp
+                    )
+
+                    localStorage.setItem(
+                      'userDetails',
+                      JSON.stringify({
+                        displayName: displayName,
+                        biography: biography,
+                        ign: ign,
+                        favouriteChampion: favouriteChampion,
+                        rankInfo: {
+                          tier: rankInfo.tier,
+                          rank: rankInfo.rank,
+                          wins: rankInfo.wins,
+                          losses: rankInfo.losses,
+                        },
+                        statistics: {
+                          tournaments_played: statistics.tournaments_played,
+                          tournaments_won: statistics.tournaments_won,
+                          matches_won: statistics.matches_won,
+                          people_met: statistics.people_met,
+                        },
+                        tournamentsMade: tournamentsMade,
+                        tournaments: tournaments,
+                        team: team_temp,
+                      })
+                    )
+                  }
+                }
+                // Redis account team set
+                let get_data: any = null
+                const account_api_url =
+                  '/api/account?' + new URLSearchParams({ ign: ign })
+                const account_get_response = await fetch(account_api_url)
+                  .then((res) => {
+                    if (!res.ok) {
+                      throw new Error('HTTP status ' + res.status)
+                    }
+                    return res.json()
+                  })
+                  .then(async (res) => {
+                    if (res.status != 'Account does not yet exist') {
+                      get_data = res
+                    }
+                  })
+                  .catch((res) => console.log(res.error))
+                if (get_data != undefined) {
+                  const dataOut: IAccountData = {
+                    ign: get_data.ign,
+                    username: get_data.username,
+                    bio: get_data.bio,
+                    favourite_champion: get_data.favourite_champion,
+                    passcode: get_data.passcode,
+                    team_tag: tag,
+                    tournament_id: team_temp.tournament_id,
+                  }
+                  const account_post_response = await fetch('/api/account', {
+                    body: JSON.stringify({ data: dataOut }),
+                    headers: { 'Content-Type': 'application/json' },
+                    method: 'PATCH',
+                  }).then(() => onClick())
+                }
+                console.log('Team Join Status:', response.status)
               }
-              console.log('Team Join Status:', response.status)
             }
           }
         }
