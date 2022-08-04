@@ -81,6 +81,7 @@ const CreateTeamModal = (props: Props) => {
       team_name: name_out,
       team_statistics: statistics,
       team_join_key: createID(6),
+      tournament_id: 'ABC123'
       //
     })
   }

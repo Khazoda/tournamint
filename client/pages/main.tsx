@@ -218,7 +218,7 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className={`${(team != null && tournaments?.tournament_id != 'ABC123' ? 'col-end-3' : '')} ${(team == null ? 'col-end-3' : '')}
+          className={`${(team != null && tournaments?.tournament_id != 'ABC123' ? 'col-start-1 col-end-4' : '')} ${(team == null ? 'col-start-1 col-end-4' : '')}
             } relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
         >
           {/* Countdown Container */}
@@ -312,7 +312,7 @@ const Home: NextPage<Props> = (props) => {
 
         <div
           id="bottom_left"
-          className="relative col-start-1 col-end-3 row-start-2 row-end-3 h-full flex-col justify-between rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
+          className="relative col-start-1 col-end-4 row-start-2 row-end-3 h-full flex-col justify-between rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           {team == null || team.team_tag == 'ABC' ? (
             <div className="relative flex h-full w-full flex-col items-center justify-center text-5xl">

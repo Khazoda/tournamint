@@ -33,6 +33,7 @@ export interface ITeam {
   team_name: string
   team_statistics: IStatistics
   team_join_key: string
+  tournament_id: string
 }
 
 export interface ITeamColour {

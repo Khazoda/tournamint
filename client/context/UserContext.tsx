@@ -72,8 +72,9 @@ const userContextDefaultValues: userContextType = {
     team_name: 'Amazing Blue Chickens',
     team_statistics: defaultStatistics,
     team_join_key: '12345678',
+    tournament_id: 'ABC123'
   },
-  setUserDetails: () => {},
+  setUserDetails: () => { },
 }
 const UserContext = createContext<userContextType>(userContextDefaultValues)
 
