@@ -1,13 +1,28 @@
 import Head from "next/head";
+import Router from "next/router";
 import { useEffect, useState } from "react";
+import { useUser } from "../../context/UserContext";
 import { Capitalize } from "../../globals/global_functions";
-import { ITournament } from "../../globals/types";
+import { IAccountData, ITeam, ITournament } from "../../globals/types";
 
 export interface Props {
 
 }
 const FindTournamentPage = (props: Props) => {
     const [public_tournaments, setPublic_tournaments] = useState<Array<ITournament>>([])
+
+    const {
+        displayName,
+        biography,
+        ign,
+        statistics,
+        team,
+        favouriteChampion,
+        rankInfo,
+        tournaments,
+        tournamentsMade,
+        setUserDetails,
+    } = useUser()
 
     useEffect(() => {
         getPublicTournaments()
@@ -52,6 +67,158 @@ const FindTournamentPage = (props: Props) => {
     }
 
 
+    // Fired on button click
+    const joinTournament = async (id: string) => {
+
+        // Account Redis
+        let account_data: any = null
+        const account_api_url =
+            '/api/account?' + new URLSearchParams({ ign: ign })
+        const account_get_response = await fetch(account_api_url)
+            .then((res) => res.json())
+            .then(async (res) => {
+                if (res.status != 'Account does not exist') {
+                    account_data = res
+                }
+            })
+            .catch((res) => console.log(res.error))
+
+
+        // Tournament Redis
+        id = id.toUpperCase()
+        console.log('joining tournament with tournament_id:', id)
+
+        const url = '/api/tournament/tournament?' + new URLSearchParams({ tournament_id: id })
+        const result = await fetch(url)
+            .then((res) => res.json())
+            .catch((res) => console.log(res.error))
+
+        let tournament_temp = result
+        console.log('TUTEMP', id, tournament_temp);
+
+        if (tournaments?.tournament_id == id) {
+            alert('Your team is already part of a tournament.')
+        } else {
+            if (tournament_temp == null) {
+                alert('Invalid Tournament Tag.')
+            } else {
+                if (tournament_temp.organized_by_ign == ign) {
+                    alert(
+                        'you are the Tournament owner, how did you even access this page? 🤔'
+                    )
+                } else {
+                    // TODO if(user is not team owner){} else {
+                    if (false) {
+                    } else {
+                        //! tournament_temp.teams.push(team)
+
+                        try {
+                            const dataOut: IAccountData = {
+                                ign: ign,
+                                username: account_data.username,
+                                bio: account_data.bio,
+                                favourite_champion: account_data.favourite_champion,
+                                passcode: account_data.passcode,
+                                team_tag: account_data.team_tag,
+                                tournament_id: id,
+                            }
+                            // console.log('data_out', dataOut)
+
+                            const account_post_response = await fetch('/api/account', {
+                                body: JSON.stringify({ data: dataOut }),
+                                headers: { 'Content-Type': 'application/json' },
+                                method: 'PATCH',
+                            })
+                        } catch (error) {
+                            console.log(error)
+                        }
+                        if (setUserDetails != undefined) {
+                            setUserDetails(
+                                displayName,
+                                biography,
+                                ign,
+                                favouriteChampion,
+                                rankInfo,
+                                statistics,
+                                tournamentsMade,
+                                tournament_temp,
+                                team
+                            )
+                        }
+                        localStorage.setItem(
+                            'userDetails',
+                            JSON.stringify({
+                                displayName: displayName,
+                                biography: biography,
+                                ign: ign,
+                                favouriteChampion: favouriteChampion,
+                                rankInfo: {
+                                    tier: rankInfo.tier,
+                                    rank: rankInfo.rank,
+                                    wins: rankInfo.wins,
+                                    losses: rankInfo.losses,
+                                },
+                                statistics: {
+                                    tournaments_played: statistics.tournaments_played,
+                                    tournaments_won: statistics.tournaments_won,
+                                    matches_won: statistics.matches_won,
+                                    people_met: statistics.people_met,
+                                },
+                                tournamentsMade: tournamentsMade,
+                                tournaments: tournament_temp,
+                                team: team,
+                            })
+                        )
+                        // Redis team tournament set
+                        let get_team_data: any = null
+                        if (team != null) {
+                            const team_api_url =
+                                '/api/teamData?' + new URLSearchParams({ team_tag: team.team_tag })
+                            const team_get_response = await fetch(team_api_url)
+                                .then((res) => {
+                                    if (!res.ok) {
+                                        throw new Error('HTTP status ' + res.status)
+                                    }
+                                    return res.json()
+                                })
+                                .then(async (res) => {
+                                    if (res.status != 'Team does not exist') {
+                                        get_team_data = res.response
+                                    }
+                                })
+                                .catch((res) => console.log(res.error))
+
+                            if (get_team_data != undefined) {
+                                console.log(get_team_data);
+
+                                const teamDataOut: ITeam = {
+                                    team_icon_path: get_team_data.team_icon_path,
+                                    team_tag: get_team_data.team_tag,
+                                    team_colour_hex: get_team_data.team_colour_hex,
+                                    team_owner: get_team_data.team_owner,
+                                    team_members: get_team_data.team_members,
+                                    team_name: get_team_data.team_name,
+                                    team_statistics: get_team_data.team_statistics,
+                                    team_join_key: get_team_data.team_join_key,
+                                    tournament_id: id
+                                }
+                                const team_post_response = await fetch('/api/teamData', {
+                                    body: JSON.stringify({ data: teamDataOut }),
+                                    headers: { 'Content-Type': 'application/json' },
+                                    method: 'PATCH',
+                                })
+                            }
+                        }
+
+                    }
+                    Router.push('/main')
+                }
+            }
+        }
+    }
+
+
+
     return (
         <div
             id="wrapper"
@@ -66,7 +233,7 @@ const FindTournamentPage = (props: Props) => {
 
                     {public_tournaments.map((e) => {
                         return (
-                            <div className="card w-96 bg-base-100 dark:bg-black-500 shadow-xl">
+                            <div key={e.tournament_id} className="card w-96 bg-base-100 dark:bg-black-500 shadow-xl">
                                 <div className="card-body">
                                     <h2 className="card-title">{Capitalize(e.tournament_name)}</h2>
                                     <div className="flex flex-row justify-between"><p>Organizer: {e.organized_by_ign}</p>
@@ -76,7 +243,7 @@ const FindTournamentPage = (props: Props) => {
                                     <p className="text-secondary">{new Date().toLocaleString()}</p>
 
                                     <div className="card-actions justify-start">
-                                        <button className="btn btn-primary btn-sm">Join Now</button>
+                                        <button onClick={() => joinTournament(e.tournament_id)} className="btn btn-primary btn-sm">Join Now</button>
                                     </div>
                                     <div className="absolute top-2 right-4 text-gray-500">{e.tournament_id}</div>
                                 </div>
