@@ -206,6 +206,8 @@ const FindTournamentPage = (props: Props) => {
                                     body: JSON.stringify({ data: teamDataOut }),
                                     headers: { 'Content-Type': 'application/json' },
                                     method: 'PATCH',
+                                }).then(() => {
+                                    setTournamentRedis(tournament_temp, teamDataOut)
                                 })
                             }
                         }
@@ -217,6 +219,35 @@ const FindTournamentPage = (props: Props) => {
         }
     }
 
+    const setTournamentRedis = async (tournament_temp: ITournament, teamDataOut: ITeam) => {
+        // Redis tournament team set
+        if (tournament_temp != undefined) {
+            console.log(tournament_temp);
+            let temp_teams: ITeam[] = tournament_temp.teams
+            console.log('temp_teams:', temp_teams);
+
+            temp_teams.push(teamDataOut)
+
+            const tournamentDataOut: ITournament = {
+                tournament_id: tournament_temp.tournament_id,
+                tournament_name: tournament_temp.tournament_name,
+                is_private: tournament_temp.is_private,
+                organized_by_ign: tournament_temp.organized_by_ign,
+                type: tournament_temp.type,
+                rounds: tournament_temp.rounds,
+                date_time_start: tournament_temp.date_time_start,
+                date_time_end: tournament_temp.date_time_end,
+                winning_team: tournament_temp.winning_team,
+                lobby_code: tournament_temp.lobby_code,
+                teams: temp_teams
+            }
+            const team_post_response = await fetch('/api/tournament', {
+                body: JSON.stringify({ data: tournamentDataOut }),
+                headers: { 'Content-Type': 'application/json' },
+                method: 'PATCH',
+            })
+        }
+    }
 
 
     return (

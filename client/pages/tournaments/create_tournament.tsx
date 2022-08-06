@@ -7,7 +7,7 @@ import moment, { Moment } from 'moment'
 import { Toggle } from 'react-daisyui'
 import { Capitalize } from '../../globals/global_functions'
 import { useUser } from '../../context/UserContext'
-import { IAccountData, ITeam, ITournament } from '../../globals/types'
+import { IAccountData, IStatistics, ITeam, ITournament } from '../../globals/types'
 import Router from 'next/router'
 
 type Props = {}
@@ -52,6 +52,23 @@ export default function create_tournament({ }: Props) {
     }
   }
 
+  const team_seed_statistics: IStatistics = {
+    tournaments_played: 0,
+    tournaments_won: 0,
+    matches_won: 0,
+    people_met: 0
+  }
+  const temp_seed_team: ITeam = {
+    team_icon_path: 0,
+    team_tag: '',
+    team_colour_hex: '',
+    team_owner: '',
+    team_members: [],
+    team_name: '',
+    team_statistics: team_seed_statistics,
+    team_join_key: '',
+    tournament_id: ''
+  }
   const createTournament = () => {
     const dataOut: ITournament = {
       // Initial Tournament Data
@@ -61,6 +78,7 @@ export default function create_tournament({ }: Props) {
       is_private,
       lobby_code: is_private ? lobby_code.toUpperCase() : '',
       tournament_id: tournament_id.toUpperCase(),
+      teams: [temp_seed_team],
       // Generative Tournament Data
       rounds: null,
       date_time_end: null,

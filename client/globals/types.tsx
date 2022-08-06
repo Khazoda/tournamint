@@ -29,7 +29,7 @@ export interface ITeam {
   team_tag: string
   team_colour_hex: string
   team_owner: string
-  team_members: Array<string>
+  team_members: string[]
   team_name: string
   team_statistics: IStatistics
   team_join_key: string
@@ -60,11 +60,12 @@ export interface ITournament {
   is_private: boolean
   organized_by_ign: string
   type: 4 | 8 | 16
-  rounds: Array<IRound> | null
+  rounds: IRound[] | null
   date_time_start: string
   date_time_end: string | null
   winning_team: ITeam | null
   lobby_code: string
+  teams: ITeam[]
 }
 
 // One Round has multiple Matches
