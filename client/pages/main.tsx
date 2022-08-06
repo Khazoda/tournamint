@@ -218,8 +218,7 @@ const Home: NextPage<Props> = (props) => {
         {/* Left Half */}
         <div
           id="top_left"
-          className={`${(team != null && tournaments?.tournament_id != 'ABC123' ? 'col-start-1 col-end-4' : '')} ${(team == null ? 'col-start-1 col-end-4' : '')}
-            } relative col-start-1 col-end-2 row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
+          className={`${(team != null && tournaments?.tournament_id != 'ABC123' ? ' col-start-1 col-end-4' : '')} ${(team == null && tournaments?.tournament_id == 'ABC123' ? ' col-start-1 col-end-4' : '')} relative row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
         >
           {/* Countdown Container */}
           {(team != null && tournaments?.tournament_id != 'ABC123') &&
