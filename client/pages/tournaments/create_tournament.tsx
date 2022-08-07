@@ -51,26 +51,11 @@ export default function create_tournament({ }: Props) {
       createTournament()
     }
   }
-
-  const team_seed_statistics: IStatistics = {
-    tournaments_played: 0,
-    tournaments_won: 0,
-    matches_won: 0,
-    people_met: 0
-  }
-  const temp_seed_team: ITeam = {
-    team_icon_path: 0,
-    team_tag: '',
-    team_colour_hex: '',
-    team_owner: '',
-    team_members: [],
-    team_name: '',
-    team_statistics: team_seed_statistics,
-    team_join_key: '',
-    tournament_id: ''
+  interface ITournamentModified extends ITournament {
+    teams: ITeam[] | []
   }
   const createTournament = () => {
-    const dataOut: ITournament = {
+    const dataOut: ITournamentModified = {
       // Initial Tournament Data
       tournament_name: name,
       type: number_of_teams,
@@ -78,7 +63,7 @@ export default function create_tournament({ }: Props) {
       is_private,
       lobby_code: is_private ? lobby_code.toUpperCase() : '',
       tournament_id: tournament_id.toUpperCase(),
-      teams: [temp_seed_team],
+      teams: [],
       // Generative Tournament Data
       rounds: null,
       date_time_end: null,

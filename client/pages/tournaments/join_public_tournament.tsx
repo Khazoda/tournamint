@@ -241,7 +241,7 @@ const FindTournamentPage = (props: Props) => {
                 lobby_code: tournament_temp.lobby_code,
                 teams: temp_teams
             }
-            const team_post_response = await fetch('/api/tournament', {
+            const team_post_response = await fetch('/api/tournament/tournament', {
                 body: JSON.stringify({ data: tournamentDataOut }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'PATCH',
