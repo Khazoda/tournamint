@@ -241,7 +241,7 @@ const FindTournamentPage = (props: Props) => {
                 lobby_code: tournament_temp.lobby_code,
                 teams: temp_teams
             }
-            const team_post_response = await fetch('/api/tournament/tournament', {
+            const tournament_post_response = await fetch('/api/tournament/tournament', {
                 body: JSON.stringify({ data: tournamentDataOut }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'PATCH',
@@ -268,10 +268,9 @@ const FindTournamentPage = (props: Props) => {
                                 <div className="card-body">
                                     <h2 className="card-title">{Capitalize(e.tournament_name)}</h2>
                                     <div className="flex flex-row justify-between"><p>Organizer: {e.organized_by_ign}</p>
-                                        <p>Number of Teams: {e.type}</p></div>
+                                        <p className={`${e.teams.length / e.type < 0.5 ? 'text-lime-500' : ''} ${e.teams.length / e.type > 0.5 ? 'text-orange-500' : ''} flex justify-end`}>{e.teams.length} / {e.type} Teams</p></div>
 
                                     <p className="text-secondary">{new Date(e.date_time_start).toLocaleString()}</p>
-                                    <p className="text-secondary">{new Date().toLocaleString()}</p>
 
                                     <div className="card-actions justify-start">
                                         <button onClick={() => joinTournament(e.tournament_id)} className="btn btn-primary btn-sm">Join Now</button>
