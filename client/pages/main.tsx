@@ -60,6 +60,8 @@ const Home: NextPage<Props> = (props) => {
     useState<ITournamentDisplayData>()
   const [organizer_data, setOrganizer_data] = useState<any>()
 
+  const [vs_showing, setVs_showing] = useState<boolean>(false)
+
 
 
   useEffect(() => {
@@ -256,7 +258,7 @@ const Home: NextPage<Props> = (props) => {
           }
 
           <div className="relative ml-auto flex h-full w-full justify-center p-2">
-            {team ? (
+            {vs_showing ? (
               <div className="relative  flex h-full w-11/12 flex-row gap-4 self-center">
                 {/* Skewed backgrounds */}
                 <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00552d]"></span>
