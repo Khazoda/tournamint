@@ -81,18 +81,18 @@ const TournamentFillingUp = (props: {
 
             <div className="w-full h-full flex flex-row flex-wrap gap-4">
                 {fresh_tournament_data != undefined && fresh_tournament_data.teams.map((team: ITeam) => {
+                    console.log(team.team_colour_hex);
+
                     return (
-                        <div key={team.team_tag} className="card w-48 bg-base-100 dark:bg-gray-700 shadow-xl">
-                            <figure className="px-10 pt-10">
-                                <img src={logos[team.team_icon_path].src} alt="team_icon" className="rounded-xl" />
+                        <div key={team.team_tag} style={{ borderColor: team.team_colour_hex }} className={" border-2 card w-48 h-64 bg-base-100 dark:bg-gray-700 shadow-xl"}>
+                            <div className=" w-full h-24 flex flex-row items-center justify-center bg-black-400 drop-shadow-lg">
+                                <img src={logos[team.team_icon_path].src} alt="team_icon" className="rounded-xl w-20 h-20" />
+                                <h1 style={{ color: team.team_colour_hex }} className="card-title text-3xl tracking-widest drop-shadow-lg">{team.team_tag}</h1>
+                            </div>
+                            <div className="card-body items-center text-center p-2">
+                                <h1 className="card-title text-xl max-w-[10rem] text-ellipsis overflow-hidden inline" title={team.team_name}>{team.team_name}</h1>
 
-                            </figure>
-                            <div className="card-body items-center text-center">
-                                <h1 className="card-title text-3xl tracking-widest text-primary">{team.team_tag}</h1>
-                                <h1 className="card-title text-xl">{team.team_name}</h1>
-
-                                <div className="block">{team.team_owner}</div>
-                                {riot_data[team.team_tag] != undefined &&
+                                {riot_data[team.team_tag] != undefined ?
                                     <div
                                         title="View Profile"
                                         className="group relative inline h-[68px] w-[68px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
@@ -117,8 +117,29 @@ const TournamentFillingUp = (props: {
                                                 : riot_data[team.team_tag].summonerLevel}
                                         </span>
                                     </div>
+                                    :
+                                    <div
+                                        title="View Profile"
+                                        className="group relative inline h-[68px] w-[68px] border-2 border-green-500 transition-[border] hover:cursor-pointer hover:border-green-800 md:h-[60px] md:w-[60px] "
+                                    >
+                                        <Image
+                                            src={
+                                                '/images/spinner.svg'
+
+                                            }
+                                            alt="Profile picture"
+                                            layout="fill"
+                                            objectFit="cover"
+                                            className=""
+                                        ></Image>
+                                        <span className="absolute -bottom-3 left-1/2 w-3/4 -translate-x-1/2 rounded-md border-2 border-green-500 bg-gray-800 px-2 text-center text-sm text-white-200 transition-[border] group-hover:border-green-800">
+                                            666
+                                        </span>
+                                    </div>
 
                                 }
+                                <div className="block pt-2">{team.team_owner}</div>
+
                             </div>
                         </div>
                     )
