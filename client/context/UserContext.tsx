@@ -62,6 +62,7 @@ const userContextDefaultValues: userContextType = {
     date_time_end: 'STRING',
     winning_team: null,
     lobby_code: 'ABC123',
+    teams: []
   },
   team: {
     team_icon_path: 0,

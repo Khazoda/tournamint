@@ -20,6 +20,7 @@ import { Capitalize } from '../globals/global_functions'
 import { FiUsers } from 'react-icons/fi'
 import moment from 'moment'
 import { DD_PREFIX } from '../globals/riot_consts'
+import TournamentFillingUp from '../components/common/TournamentDisplay/TournamentFillingUp'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -375,7 +376,7 @@ const Home: NextPage<Props> = (props) => {
             </div>
           ) : (
             <>
-              <div className="flex flex-row h-[94px] items-stretch justify-between bg-sky-800 rounded-bl-md rounded-br-md p-4">
+              <div className="flex flex-row h-[94px] items-stretch justify-between bg-sky-300 dark:bg-sky-800 rounded-bl-md rounded-br-md p-4">
                 <div className="flex w-1/3 items-start text-2xl">
                   {organizer_data != undefined && organizer_data != null ? (
                     <div className="flex flex-row items-start gap-2 ">
@@ -449,7 +450,7 @@ const Home: NextPage<Props> = (props) => {
                 </div>
               </div>
 
-              {tournament_state == TOURNAMENT_STATE.FILLING_UP && (<>1</>)}
+              {tournament_state == TOURNAMENT_STATE.FILLING_UP && (<TournamentFillingUp team={team} tournament={tournaments}></TournamentFillingUp>)}
               {tournament_state == TOURNAMENT_STATE.FULL && (<>2</>)}
               {tournament_state == TOURNAMENT_STATE.SEEDED && (<>3</>)}
               {tournament_state == TOURNAMENT_STATE.ONGOING &&
@@ -480,49 +481,51 @@ const Home: NextPage<Props> = (props) => {
           {/* {displayName} {biography} {ign} */}
         </div>
         {/* Right Half */}
-        {team != null && (
-          tournaments?.tournament_id == 'ABC123' &&
-          <div
-            id="top_right"
-            className={`${tournaments?.tournament_id == 'ABC123' ? 'md:cols-end-2 row-start-1 row-end-1 md:col-start-2' : ''} flex h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600`}
-          >
+        {
+          team != null && (
+            tournaments?.tournament_id == 'ABC123' &&
             <div
-              className={`${tournaments == null || tournaments?.tournament_id == 'ABC123'
-                ? 'animate-pulse'
-                : 'animate-none'
-                }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
+              id="top_right"
+              className={`${tournaments?.tournament_id == 'ABC123' ? 'md:cols-end-2 row-start-1 row-end-1 md:col-start-2' : ''} flex h-full flex-col gap-3 self-start rounded-md bg-green-100 dark:bg-black-600`}
             >
-              <Link href="tournaments/create_tournament">
-                <Button
-                  text="Create Tournament"
-                  noMargin
-                  type="positive"
-                  className=" text-white-500 drop-shadow-sm"
-                ></Button>
-              </Link>
-              <div className="mt-auto flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
-                <Link href="tournaments/join_tournament">
+              <div
+                className={`${tournaments == null || tournaments?.tournament_id == 'ABC123'
+                  ? 'animate-pulse'
+                  : 'animate-none'
+                  }  flex h-full flex-row gap-3 rounded-md bg-emerald-500 p-2 px-2 py-2 hover:animate-none dark:bg-emerald-900 md:flex-col`}
+              >
+                <Link href="tournaments/create_tournament">
                   <Button
-                    text="Join Tournament"
+                    text="Create Tournament"
                     noMargin
-                    type="neutral"
-                    className="text-white-500"
+                    type="positive"
+                    className=" text-white-500 drop-shadow-sm"
                   ></Button>
                 </Link>
-                <Link href="tournaments/join_public_tournament">
-                  <Button
-                    text="Find Tournament"
-                    noMargin
-                    type="neutral"
-                    className="text-white-500"
-                  ></Button>
-                </Link>
+                <div className="mt-auto flex w-[150%] flex-col gap-2 rounded-md bg-emerald-400 p-2 drop-shadow-sm dark:bg-emerald-800 md:w-auto">
+                  <Link href="tournaments/join_tournament">
+                    <Button
+                      text="Join Tournament"
+                      noMargin
+                      type="neutral"
+                      className="text-white-500"
+                    ></Button>
+                  </Link>
+                  <Link href="tournaments/join_public_tournament">
+                    <Button
+                      text="Find Tournament"
+                      noMargin
+                      type="neutral"
+                      className="text-white-500"
+                    ></Button>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </main>
-    </div>
+          )
+        }
+      </main >
+    </div >
   )
 }
 
