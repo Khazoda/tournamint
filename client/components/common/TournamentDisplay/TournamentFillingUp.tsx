@@ -80,9 +80,9 @@ const TournamentFillingUp = (props: {
     }
     return (
         <>
-            <div>{fresh_tournament_data != undefined && fresh_tournament_data.teams.length} / {props.tournament.type} teams have joined</div>
-
-            <div className="w-full h-full flex flex-row flex-wrap gap-4">
+            {/* <div>{fresh_tournament_data != undefined && fresh_tournament_data.teams.length} / {props.tournament.type} teams have joined</div> */}
+            <div className="mt-4 text-lg">The tournament is not full yet. Please wait for more teams to join.</div>
+            <div className="w-full h-full flex flex-row flex-wrap gap-4 mt-4">
                 {fresh_tournament_data != undefined && fresh_tournament_data.teams.map((team: ITeam) => {
 
                     return (
@@ -148,7 +148,10 @@ const TournamentFillingUp = (props: {
                 })}
                 {
                     fresh_tournament_data != undefined &&
-                    [...Array(props.tournament.type - fresh_tournament_data.teams.length)].map((e, i) => <span className="busterCards" key={i}>{i}</span>)
+                    [...Array(props.tournament.type - fresh_tournament_data.teams.length)].map((e, i) =>
+                        <div key={i} style={{ borderColor: 'gray' }} className={" border-2 card w-48 h-64 bg-base-100 dark:bg-gray-900 shadow-xl"}>
+                        </div>
+                    )
                 }
 
             </div>
