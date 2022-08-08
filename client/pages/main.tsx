@@ -375,10 +375,10 @@ const Home: NextPage<Props> = (props) => {
             </div>
           ) : (
             <>
-              <div className="flex flex-row items-stretch justify-between px-6 pt-6">
+              <div className="flex flex-row h-[94px] items-stretch justify-between bg-sky-800 rounded-bl-md rounded-br-md p-4">
                 <div className="flex w-1/3 items-start text-2xl">
                   {organizer_data != undefined && organizer_data != null ? (
-                    <div className="flex flex-row items-start gap-2">
+                    <div className="flex flex-row items-start gap-2 ">
                       <div className=" group relative inline-flex h-[68px] w-[68px] flex-row gap-4 border-2 border-green-500 transition-[border] md:h-[60px] md:w-[60px] ">
                         <Image
                           src={
@@ -411,7 +411,7 @@ const Home: NextPage<Props> = (props) => {
                     <div>loading...</div>
                   )}
                 </div>
-                <div className="flex w-1/3 justify-center text-3xl drop-shadow-lg ">
+                <div className="flex w-1/3 justify-center items-center text-3xl drop-shadow-lg ">
                   {tournaments?.tournament_name ||
                     <span className='text-red-600'>Unable to load tournament correctly, please log out and in.</span>}
                 </div>
