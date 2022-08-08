@@ -24,6 +24,7 @@ const TournamentFillingUp = (props: {
 
     const [fresh_tournament_data, setFresh_tournament_data] = useState<ITournament>()
     const [riot_data, setRiot_data] = useState<any>({})
+    let empty_spots_counter: number[] = [1, 1, 1, 1, 1]
 
     const changeObjectState = (team: ITeam, data: { profileIconId: any; summonerLevel: any }) => {
         setRiot_data((riot_data: any) => ({
@@ -49,7 +50,9 @@ const TournamentFillingUp = (props: {
 
     useEffect(() => {
         refreshTournamentData()
-        console.log('Teams!!:', props.tournament.teams);
+        for (let index = 0; index < (props.tournament.type - props.tournament.teams.length); index++) {
+            empty_spots_counter.push(1)
+        }
 
         props.tournament.teams.forEach(async (team) => {
             if (team.team_tag != '') {
@@ -77,11 +80,10 @@ const TournamentFillingUp = (props: {
     }
     return (
         <>
-            <div>{props.tournament.teams.length} / {props.tournament.type} teams have joined</div>
+            <div>{fresh_tournament_data != undefined && fresh_tournament_data.teams.length} / {props.tournament.type} teams have joined</div>
 
             <div className="w-full h-full flex flex-row flex-wrap gap-4">
                 {fresh_tournament_data != undefined && fresh_tournament_data.teams.map((team: ITeam) => {
-                    console.log(team.team_colour_hex);
 
                     return (
                         <div key={team.team_tag} style={{ borderColor: team.team_colour_hex }} className={" border-2 card w-48 h-64 bg-base-100 dark:bg-gray-700 shadow-xl"}>
@@ -144,6 +146,11 @@ const TournamentFillingUp = (props: {
                         </div>
                     )
                 })}
+                {
+                    fresh_tournament_data != undefined &&
+                    [...Array(props.tournament.type - fresh_tournament_data.teams.length)].map((e, i) => <span className="busterCards" key={i}>{i}</span>)
+                }
+
             </div>
 
         </>
