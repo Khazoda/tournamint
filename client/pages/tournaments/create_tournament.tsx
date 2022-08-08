@@ -55,24 +55,27 @@ export default function create_tournament({ }: Props) {
     teams: ITeam[] | []
   }
   const createTournament = () => {
-    const dataOut: ITournamentModified = {
-      // Initial Tournament Data
-      tournament_name: name,
-      type: number_of_teams,
-      date_time_start: startDateTimeString || moment().toString(),
-      is_private,
-      lobby_code: is_private ? lobby_code.toUpperCase() : '',
-      tournament_id: tournament_id.toUpperCase(),
-      teams: [],
-      // Generative Tournament Data
-      rounds: null,
-      date_time_end: null,
-      winning_team: null,
-      // Tournament metadata
-      organized_by_ign: ign,
+    if (team != null) {
+      let temp_team = team
+      temp_team.tournament_id = tournament_id.toUpperCase()
+      const dataOut: ITournamentModified = {
+        // Initial Tournament Data
+        tournament_name: name,
+        type: number_of_teams,
+        date_time_start: startDateTimeString || moment().toString(),
+        is_private,
+        lobby_code: is_private ? lobby_code.toUpperCase() : '',
+        tournament_id: tournament_id.toUpperCase(),
+        teams: [temp_team],
+        // Generative Tournament Data
+        rounds: null,
+        date_time_end: null,
+        winning_team: null,
+        // Tournament metadata
+        organized_by_ign: ign,
+      }
+      setDataOut(dataOut)
     }
-    setDataOut(dataOut)
-
     // *Debug*
     console.log(
       'Creating Tournament with values:',
@@ -208,7 +211,7 @@ export default function create_tournament({ }: Props) {
                   .catch((res) => console.log(res.error))
 
                 if (get_team_data != undefined) {
-                  console.log(get_team_data);
+                  console.log('TOURNAMENT-ID', dataOut.tournament_id);
 
                   const teamDataOut: ITeam = {
                     team_icon_path: get_team_data.team_icon_path,
