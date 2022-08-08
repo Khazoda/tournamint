@@ -28,10 +28,17 @@ export interface Props {
   setDark: Function
 }
 
-let carry_flag = {
-  minutes: true,
-  hours: true,
-  days: true,
+// let carry_flag = {
+//   minutes: true,
+//   hours: true,
+//   days: true,
+// }
+enum TOURNAMENT_STATE {
+  FILLING_UP,
+  FULL,
+  SEEDED,
+  ONGOING,
+  ENDED
 }
 interface ITournamentDisplayData {
   ign: string
@@ -61,6 +68,7 @@ const Home: NextPage<Props> = (props) => {
   const [organizer_data, setOrganizer_data] = useState<any>()
 
   const [vs_showing, setVs_showing] = useState<boolean>(false)
+  const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.FILLING_UP)
 
 
 
@@ -258,7 +266,7 @@ const Home: NextPage<Props> = (props) => {
           }
 
           <div className="relative ml-auto flex h-full w-full justify-center p-2">
-            {vs_showing ? (
+            {team && vs_showing ? (
               <div className="relative  flex h-full w-11/12 flex-row gap-4 self-center">
                 {/* Skewed backgrounds */}
                 <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00552d]"></span>
@@ -441,10 +449,16 @@ const Home: NextPage<Props> = (props) => {
                 </div>
               </div>
 
-              <TournamentDisplay
-                team={team}
-                tournament={tournaments}
-              ></TournamentDisplay>
+              {tournament_state == TOURNAMENT_STATE.FILLING_UP && (<>1</>)}
+              {tournament_state == TOURNAMENT_STATE.FULL && (<>2</>)}
+              {tournament_state == TOURNAMENT_STATE.SEEDED && (<>3</>)}
+              {tournament_state == TOURNAMENT_STATE.ONGOING &&
+                (<TournamentDisplay
+                  team={team}
+                  tournament={tournaments}
+                ></TournamentDisplay>)
+              }
+
               <div
                 id="footer"
                 className="footer footer-center p-4 text-base-content"
