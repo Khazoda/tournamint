@@ -53,6 +53,8 @@ const Home: NextPage<Props> = (props) => {
     biography,
     ign,
     statistics,
+    favouriteChampion,
+    rankInfo,
     team,
     tournaments,
     tournamentsMade,
@@ -84,6 +86,7 @@ const Home: NextPage<Props> = (props) => {
 
         getUserTournament(tournaments.tournament_id)
       }
+
     }
   }, [tournaments])
 

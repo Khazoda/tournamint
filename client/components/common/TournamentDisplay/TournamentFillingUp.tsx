@@ -3,14 +3,26 @@ import logos from '../../../globals/team_logos'
 import { useEffect, useState } from "react"
 import { DD_PREFIX } from "../../../globals/riot_consts"
 import Image from 'next/image'
+import { useUser } from "../../../context/UserContext"
 
 const TournamentFillingUp = (props: {
     team: ITeam,
     tournament: ITournament
 
 }) => {
+    const {
+        displayName,
+        biography,
+        ign,
+        statistics,
+        favouriteChampion,
+        rankInfo,
+        team,
+        tournaments,
+        tournamentsMade,
+    } = useUser()
 
-    const [member_data, setMember_data] = useState()
+    const [fresh_tournament_data, setFresh_tournament_data] = useState<ITournament>()
     const [riot_data, setRiot_data] = useState<any>({})
 
     const changeObjectState = (team: ITeam, data: { profileIconId: any; summonerLevel: any }) => {
@@ -22,19 +34,33 @@ const TournamentFillingUp = (props: {
             }
         }));
     };
+
+    const refreshTournamentData = async () => {
+        // Tournament Redis
+        let id = props.tournament.tournament_id.toUpperCase()
+        const url = '/api/tournament/tournament?' + new URLSearchParams({ tournament_id: id })
+        const result = await fetch(url)
+            .then((res) => res.json())
+            .catch((res) => console.log(res.error))
+
+        setFresh_tournament_data(result)
+    }
+
+
     useEffect(() => {
+        refreshTournamentData()
+        console.log('Teams!!:', props.tournament.teams);
+
         props.tournament.teams.forEach(async (team) => {
             if (team.team_tag != '') {
                 const data = await getLolData(team.team_owner)
                 changeObjectState(team, data)
             }
         })
+
+
+
     }, [])
-
-    useEffect(() => {
-        console.log(riot_data);
-
-    }, [riot_data])
 
 
     const getLolData = async (ign: string) => {
@@ -54,7 +80,7 @@ const TournamentFillingUp = (props: {
             <div>{props.tournament.teams.length} / {props.tournament.type} teams have joined</div>
 
             <div className="w-full h-full flex flex-row flex-wrap gap-4">
-                {props.tournament.teams.map((team: ITeam) => {
+                {fresh_tournament_data != undefined && fresh_tournament_data.teams.map((team: ITeam) => {
                     return (
                         <div key={team.team_tag} className="card w-48 bg-base-100 dark:bg-gray-700 shadow-xl">
                             <figure className="px-10 pt-10">
