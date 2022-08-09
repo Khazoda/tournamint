@@ -93,8 +93,8 @@ const TournamentFillingUp = (props: {
                     return (
                         <div className="relative">
                             <img src={logos[team.team_icon_path].src} alt="team_icon" className="rounded-xl w-16 h-16 absolute -top-10 left-1/2 -translate-x-1/2 z-50" />
-                            <div key={team.team_tag} style={team.team_tag == userTeam.team_tag ? { borderColor: 'lime', borderWidth: '4px' } : { borderColor: team.team_colour_hex }} className={" border-2 card w-24 h-36 bg-base-100 dark:bg-gray-700 shadow-xl"}>
-                                <h1 title={team.team_name} style={{ color: team.team_colour_hex }} className="card-title text-3xl tracking-widest drop-shadow-lg mx-auto pt-2 cursor-default hover:scale-105">{team.team_tag}</h1>
+                            <div key={team.team_tag} style={team.team_tag == userTeam.team_tag ? { borderColor: 'lime', borderWidth: '4px' } : { borderColor: team.team_colour_hex }} className={" border-2 card w-24 h-36 bg-slate-600 dark:bg-gray-700 shadow-xl"}>
+                                <h1 title={team.team_name} style={{ color: team.team_colour_hex }} className="card-title text-3xl tracking-widest drop-shadow-lg mx-auto pt-2 cursor-default hover:scale-105 ">{team.team_tag}</h1>
                                 <div className="card-body items-center text-center p-2">
                                     {/* <h1 className="card-title text-xl max-w-[10rem] text-ellipsis overflow-hidden inline" title={team.team_name}>{team.team_name}</h1> */}
 
