@@ -21,6 +21,7 @@ import { FiUsers } from 'react-icons/fi'
 import moment from 'moment'
 import { DD_PREFIX } from '../globals/riot_consts'
 import TournamentFillingUp from '../components/common/TournamentDisplay/TournamentFillingUp'
+import TournamentFull from '../components/common/TournamentDisplay/TournamentFull'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -64,14 +65,14 @@ const Home: NextPage<Props> = (props) => {
   const [countdown_h, setCountdown_h] = useState<number>(0)
   const [countdown_d, setCountdown_d] = useState<number>(0)
 
-  const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
+  // const [secondsToNextMatch, setSecondsToNextMatch] = useState(10)
 
   const [raw_tournament_data, setRaw_tournament_data] =
     useState<ITournamentDisplayData>()
   const [organizer_data, setOrganizer_data] = useState<any>()
 
   const [vs_showing, setVs_showing] = useState<boolean>(false)
-  const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.FILLING_UP)
+  const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.FULL)
 
 
 
@@ -127,34 +128,38 @@ const Home: NextPage<Props> = (props) => {
 
   // Countdown functionality
   useEffect(() => {
-    if (countdownInterval) {
-      clearInterval(countdownInterval)
+    // Countdown logic
+    const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
+    const countDownDate = humanReadableDate
+    const countDownTime = countDownDate.getTime()
+
+    var countdownInterval: any = null;
+    countdownInterval = setInterval(function () {
+      var now = new Date().getTime()
+      var left = countDownTime - now
+
+      if (tournaments) {
+        left = moment(tournaments.date_time_start).toDate().getTime() - now
+      }
+
+      setCountdown_d(Math.floor(left / (1000 * 60 * 60 * 24)))
+      setCountdown_h(
+        Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      )
+      setCountdown_m(Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)))
+      setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
+
+    }, 1000)
+
+    return () => {
+      if (countdownInterval) {
+        clearInterval(countdownInterval)
+      }
     }
 
-    console.log(team)
-  }, [])
 
-  // Countdown logic
-  const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
-  const countDownDate = humanReadableDate
-  const countDownTime = countDownDate.getTime()
+  }, [tournaments])
 
-  const countdownInterval = setInterval(function () {
-    var now = new Date().getTime()
-    var left = countDownTime - now
-
-    if (tournaments) {
-      left = moment(tournaments.date_time_start).toDate().getTime() - now
-    }
-
-    setCountdown_d(Math.floor(left / (1000 * 60 * 60 * 24)))
-    setCountdown_h(
-      Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    )
-    setCountdown_m(Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)))
-    setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
-
-  }, 1000)
 
   // !Deprecated, concurrency unsafe countdown logic implementation
 
@@ -325,7 +330,7 @@ const Home: NextPage<Props> = (props) => {
 
         <div
           id="bottom_left"
-          className="relative col-start-1 col-end-4 row-start-2 row-end-3 h-full flex-col justify-between rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
+          className="border-secondary border-2 relative col-start-1 col-end-4 row-start-2 row-end-3 h-full flex-col justify-between rounded-md bg-green-100 dark:bg-black-600 md:flex md:h-full md:w-full"
         >
           {team == null || team.team_tag == 'ABC' ? (
             <div className="relative flex h-full w-full flex-col items-center justify-center text-5xl">
@@ -379,7 +384,7 @@ const Home: NextPage<Props> = (props) => {
             </div>
           ) : (
             <>
-              <div className="flex flex-row h-[94px] items-stretch justify-between bg-sky-300 dark:bg-sky-800 rounded-bl-md rounded-br-md p-4">
+              <div className="flex flex-row h-[94px] items-stretch justify-between border-b-2 border-gray-200 dark:border-gray-600 p-4 ">
                 <div className="flex w-1/3 items-start text-2xl">
                   {organizer_data != undefined && organizer_data != null ? (
                     <div className="flex flex-row items-start gap-2 ">
@@ -454,7 +459,7 @@ const Home: NextPage<Props> = (props) => {
               </div>
 
               {tournament_state == TOURNAMENT_STATE.FILLING_UP && (<TournamentFillingUp team={team} tournament={tournaments}></TournamentFillingUp>)}
-              {tournament_state == TOURNAMENT_STATE.FULL && (<>2</>)}
+              {tournament_state == TOURNAMENT_STATE.FULL && (<TournamentFull team={team} tournament={tournaments}></TournamentFull>)}
               {tournament_state == TOURNAMENT_STATE.SEEDED && (<>3</>)}
               {tournament_state == TOURNAMENT_STATE.ONGOING &&
                 (<TournamentDisplay
@@ -465,7 +470,7 @@ const Home: NextPage<Props> = (props) => {
 
               <div
                 id="footer"
-                className="footer footer-center p-4 text-base-content"
+                className="footer footer-center p-4 text-gray-400 dark:text-gray-600"
               >
                 <span className="flex flex-row gap-1">
                   &copy; 2022
