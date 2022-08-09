@@ -36,6 +36,7 @@ export interface Props {
 //   days: true,
 // }
 enum TOURNAMENT_STATE {
+  BUFFERING,
   FILLING_UP,
   FULL,
   SEEDED,
@@ -72,24 +73,7 @@ const Home: NextPage<Props> = (props) => {
   const [organizer_data, setOrganizer_data] = useState<any>()
 
   const [vs_showing, setVs_showing] = useState<boolean>(false)
-  const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.FULL)
-
-
-
-  useEffect(() => {
-    refreshTournamentInfo()
-    if (tournaments != null) {
-      if (
-        tournaments.tournament_id != undefined &&
-        tournaments.tournament_id != 'ABC123'
-      ) {
-        console.log('TOURNAMENT ID::::::', tournaments)
-
-        getUserTournament(tournaments.tournament_id)
-      }
-
-    }
-  }, [tournaments])
+  const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.BUFFERING)
 
   const getUserTournament = async (id: string) => {
     const url =
@@ -128,13 +112,24 @@ const Home: NextPage<Props> = (props) => {
 
   // Countdown functionality
   useEffect(() => {
-    // Countdown logic
+    refreshTournamentInfo()
+    if (tournaments != null) {
+      if (
+        tournaments.tournament_id != undefined &&
+        tournaments.tournament_id != 'ABC123'
+      ) {
+        console.log('TOURNAMENT ID::::::', tournaments)
+
+        getUserTournament(tournaments.tournament_id)
+      }
+
+    }
+    // *** COUNTDOWN LOGIC START ***
     const humanReadableDate = new Date(Date.UTC(2022, 8, 3, 34, 22))
     const countDownDate = humanReadableDate
     const countDownTime = countDownDate.getTime()
 
-    var countdownInterval: any = null;
-    countdownInterval = setInterval(function () {
+    const countdownInterval = setInterval(function () {
       var now = new Date().getTime()
       var left = countDownTime - now
 
@@ -150,10 +145,40 @@ const Home: NextPage<Props> = (props) => {
       setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
 
     }, 1000)
+    // *** COUNTDOWN LOGIC END ***
 
+    // *** TOURNAMENT STATE LOGIC START ***
+    const stateInterval = setInterval(function () {
+      if (tournaments) {
+        // Filling Up
+        if (tournaments.teams.length < tournaments.type) {
+          setTournament_state(TOURNAMENT_STATE.FILLING_UP)
+        }
+        // Full
+        const seeding_date_time = moment(tournaments.date_time_start).subtract(1, 'hour');
+        if (tournaments.teams.length == tournaments.type - 1 && moment(new Date()) < seeding_date_time) {
+          setTournament_state(TOURNAMENT_STATE.FULL)
+        }
+        // Seeding
+        if (tournaments.teams.length == tournaments.type - 1 && moment(new Date()) >= seeding_date_time) {
+          setTournament_state(TOURNAMENT_STATE.SEEDED)
+        }
+        // In Progress
+        if (tournaments.teams.length == tournaments.type - 1 && moment(new Date()) >= moment(tournaments.date_time_start)) {
+          setTournament_state(TOURNAMENT_STATE.ONGOING)
+        }
+      }
+
+    }, 1000)
+    // *** TOURNAMENT STATE LOGIC END ***
+
+    // *** CLEANUP ***
     return () => {
       if (countdownInterval) {
         clearInterval(countdownInterval)
+      }
+      if (stateInterval) {
+        clearInterval(stateInterval)
       }
     }
 
@@ -457,10 +482,10 @@ const Home: NextPage<Props> = (props) => {
                   )}
                 </div>
               </div>
-
+              {tournament_state == TOURNAMENT_STATE.BUFFERING && (<img className='w-48 h-48 mx-auto' src='/images/spinner.svg'></img>)}
               {tournament_state == TOURNAMENT_STATE.FILLING_UP && (<TournamentFillingUp team={team} tournament={tournaments}></TournamentFillingUp>)}
               {tournament_state == TOURNAMENT_STATE.FULL && (<TournamentFull team={team} tournament={tournaments}></TournamentFull>)}
-              {tournament_state == TOURNAMENT_STATE.SEEDED && (<>3</>)}
+              {tournament_state == TOURNAMENT_STATE.SEEDED && (<>Seeding Tournament...</>)}
               {tournament_state == TOURNAMENT_STATE.ONGOING &&
                 (<TournamentDisplay
                   team={team}
