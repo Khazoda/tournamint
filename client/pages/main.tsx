@@ -112,6 +112,8 @@ const Home: NextPage<Props> = (props) => {
 
   // Countdown functionality
   useEffect(() => {
+    console.log('tournaments value has changed');
+
     refreshTournamentInfo()
     if (tournaments != null) {
       if (
@@ -149,26 +151,7 @@ const Home: NextPage<Props> = (props) => {
 
     // *** TOURNAMENT STATE LOGIC START ***
     const stateInterval = setInterval(function () {
-      if (tournaments && tournaments.tournament_id != 'ABC123') {
-        // Filling Up
-        if (tournaments.teams.length < tournaments.type) {
-          setTournament_state(TOURNAMENT_STATE.FILLING_UP)
-        }
-        // Full
-        const seeding_date_time = moment(tournaments.date_time_start).subtract(1, 'hour');
-        if (tournaments.teams.length == tournaments.type - 1 && moment(new Date()) < seeding_date_time) {
-          setTournament_state(TOURNAMENT_STATE.FULL)
-        }
-        // Seeding
-        if (tournaments.teams.length == tournaments.type - 1 && moment(new Date()) >= seeding_date_time) {
-          setTournament_state(TOURNAMENT_STATE.SEEDED)
-        }
-        // In Progress
-        if (tournaments.teams.length == tournaments.type - 1 && moment(new Date()) >= moment(tournaments.date_time_start)) {
-          setTournament_state(TOURNAMENT_STATE.ONGOING)
-        }
-      }
-
+      evaluateTournamentState()
     }, 1000)
     // *** TOURNAMENT STATE LOGIC END ***
 
@@ -185,6 +168,38 @@ const Home: NextPage<Props> = (props) => {
 
   }, [tournaments])
 
+  const evaluateTournamentState = () => {
+    if (tournaments && tournaments.tournament_id != 'ABC123') {
+
+      // Filling Up
+      if (tournaments.teams.length < tournaments.type) {
+        if (tournament_state != TOURNAMENT_STATE.FILLING_UP) {
+          setTournament_state(TOURNAMENT_STATE.FILLING_UP)
+        }
+      }
+      // Full
+      const seeding_date_time = moment(tournaments.date_time_start).subtract(1, 'hour');
+      console.log(tournaments.teams.length, tournaments.type);
+
+      if (tournaments.teams.length == tournaments.type && moment(new Date()) < seeding_date_time) {
+        if (tournament_state != TOURNAMENT_STATE.FULL) {
+          setTournament_state(TOURNAMENT_STATE.FULL)
+        }
+      }
+      // Seeding
+      if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time) {
+        if (tournament_state != TOURNAMENT_STATE.SEEDED) {
+          setTournament_state(TOURNAMENT_STATE.SEEDED)
+        }
+      }
+      // In Progress
+      if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start)) {
+        if (tournament_state != TOURNAMENT_STATE.ONGOING) {
+          setTournament_state(TOURNAMENT_STATE.ONGOING)
+        }
+      }
+    }
+  }
 
   // !Deprecated, concurrency unsafe countdown logic implementation
 

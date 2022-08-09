@@ -64,8 +64,6 @@ export default async function handler(
         const tournament_id: any = req.query.tournament_id
         // console.log('team_tag param:', team_tag);
         let response = null;
-        console.log(req.query);
-
         try {
             if (tournament_id == '') {
                 response = await redis.hgetall("TOURNAMENTS").then(data => {
