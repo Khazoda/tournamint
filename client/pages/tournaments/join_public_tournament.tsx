@@ -107,8 +107,8 @@ const FindTournamentPage = (props: Props) => {
                         'you are the Tournament owner, how did you even access this page? 🤔'
                     )
                 } else {
-                    // TODO if(user is not team owner){} else {
-                    if (false) {
+                    if (team?.team_owner != ign) {
+                        alert('Only the team leader can sign up to tournaments')
                     } else {
                         //! tournament_temp.teams.push(team)
 

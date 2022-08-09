@@ -149,7 +149,7 @@ const Home: NextPage<Props> = (props) => {
 
     // *** TOURNAMENT STATE LOGIC START ***
     const stateInterval = setInterval(function () {
-      if (tournaments) {
+      if (tournaments && tournaments.tournament_id != 'ABC123') {
         // Filling Up
         if (tournaments.teams.length < tournaments.type) {
           setTournament_state(TOURNAMENT_STATE.FILLING_UP)
