@@ -88,7 +88,7 @@ const Home: NextPage = (props) => {
           } else {
             valid_lol_name = true
           }
-        } catch (error) {}
+        } catch (error) { }
       })
       .catch((res) => console.log('Error:', res.error))
 
@@ -185,7 +185,7 @@ const Home: NextPage = (props) => {
               }, 1500)
             }
           }
-        } catch (error) {}
+        } catch (error) { }
       })
       .catch((res) => console.log('Error:', res.error))
   }
@@ -279,9 +279,8 @@ const Home: NextPage = (props) => {
           className="max-w-sm rounded-lg drop-shadow-lg"
         />
         <div
-          className={`${
-            passcode_showing ? 'min-w-full' : 'min-w-min'
-          } max-w-[275px] rounded-lg border-2 border-white-500 bg-[rgba(255,255,255,0.2)] p-5 drop-shadow-md`}
+          className={`${passcode_showing ? 'min-w-full' : 'min-w-min'
+            } max-w-[275px] rounded-lg border-2 border-white-500 bg-[rgba(255,255,255,0.2)] p-5 drop-shadow-md`}
         >
           <h1 className="text-2xl font-bold">Welcome to </h1>
           <h1 className="text- text-5xl font-bold">Tournamint</h1>
@@ -307,9 +306,8 @@ const Home: NextPage = (props) => {
           >
             <div className="relative flex w-full max-w-md flex-col text-black-600">
               <div
-                className={`alert alert-sm alert-warning absolute top-2 left-0 w-full rounded-md shadow-md transition-transform ${
-                  show_popup ? 'translate-y-[115%]' : 'translate-y-0'
-                } ${passcode_showing ? 'w-4/5' : 'w-full'}`}
+                className={`alert alert-sm alert-warning absolute top-2 left-0 w-full rounded-md shadow-md transition-transform ${show_popup ? 'translate-y-[115%]' : 'translate-y-0'
+                  } ${passcode_showing ? 'w-4/5' : 'w-full'}`}
               >
                 <div>
                   <svg
@@ -319,9 +317,9 @@ const Home: NextPage = (props) => {
                     viewBox="0 0 24 24"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                     />
                   </svg>
@@ -336,9 +334,8 @@ const Home: NextPage = (props) => {
                   type="text"
                   placeholder="Start typing..."
                   disabled={passcode_showing ? true : false}
-                  className={`input input-bordered input-primary absolute top-0 left-0 w-full transition-all ${
-                    passcode_showing ? 'input-disabled w-4/5' : 'w-full '
-                  }`}
+                  className={`input input-bordered input-primary absolute top-0 left-0 w-full transition-all ${passcode_showing ? 'input-disabled w-4/5' : 'w-full '
+                    }`}
                   onChange={(e: any) => {
                     setName_input(e.target.value)
                   }}
@@ -351,13 +348,11 @@ const Home: NextPage = (props) => {
                   pattern="([0-9]*[0-9])"
                   placeholder="000000"
                   maxLength={6}
-                  className={`w-0/5 input input-secondary absolute top-0 -right-2 animate-none text-center transition-all invalid:bg-red-200 invalid:text-red-800 ${
-                    passcode_showing ? 'w-1/5 opacity-100 ' : 'w-0 opacity-0'
-                  } ${
-                    shake
+                  className={`w-0/5 input input-secondary absolute top-0 -right-2 animate-none text-center transition-all invalid:bg-red-200 invalid:text-red-800 ${passcode_showing ? 'w-1/5 opacity-100 ' : 'w-0 opacity-0'
+                    } ${shake
                       ? 'animate-wiggle border-2 border-red-500'
                       : 'animate-none'
-                  }`}
+                    }`}
                   onChange={(e: any) => {
                     setPass_input(e.target.value)
                   }}
