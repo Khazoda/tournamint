@@ -70,7 +70,7 @@ export interface ITournament {
 
 // One Round has multiple Matches
 export interface IRound {
-  match_id: string
+  round_id: string
   matches: Array<IMatch>
   date_time_start: string
   date_time_end: string
@@ -83,7 +83,7 @@ export interface IMatch {
   teams: Array<ITeam>
   date_time_start: string
   date_time_end: string
-  match_winner: ITeam
+  match_winner: ITeam | null
 }
 
 // Account Data interface for client <-> redis server
