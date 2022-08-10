@@ -56,7 +56,6 @@ const TournamentSeeded = (props: {
 
             const team_1 = shuffled_half_1[i]
             const team_2 = shuffled_half_2[i]
-            console.log(team_1, team_2);
             matches.push(constructMatch(team_1, team_2, i, tournament))
 
         }
@@ -84,7 +83,6 @@ const TournamentSeeded = (props: {
                 date_time_end: "",
                 round_winners: []
             }
-            console.log(matches);
 
             // Redis tournament team set
             if (tournament != undefined) {
