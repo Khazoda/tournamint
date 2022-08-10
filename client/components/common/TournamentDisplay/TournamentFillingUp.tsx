@@ -87,7 +87,7 @@ const TournamentFillingUp = (props: {
         <>
             {/* <div>{fresh_tournament_data != undefined && fresh_tournament_data.teams.length} / {props.tournament.type} teams have joined</div> */}
             <div className="mt-4 text-lg text-yellow-600 dark:text-yellow-400">The tournament is not full yet. Please wait for more teams to join.</div>
-            <div className="w-full h-full flex flex-row flex-wrap gap-4 mt-8 justify-evenly">
+            <div className="w-full h-full flex flex-row flex-wrap gap-4 mt-8 justify-center">
                 {fresh_tournament_data != undefined && fresh_tournament_data.teams.map((team: ITeam) => {
 
                     return (

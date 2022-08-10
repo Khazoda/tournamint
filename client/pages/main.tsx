@@ -22,6 +22,8 @@ import moment from 'moment'
 import { DD_PREFIX } from '../globals/riot_consts'
 import TournamentFillingUp from '../components/common/TournamentDisplay/TournamentFillingUp'
 import TournamentFull from '../components/common/TournamentDisplay/TournamentFull'
+import TournamentSeeded from '../components/common/TournamentDisplay/TournamentSeeded'
+import { ITournament } from '../globals/types'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -74,6 +76,7 @@ const Home: NextPage<Props> = (props) => {
 
   const [vs_showing, setVs_showing] = useState<boolean>(false)
   const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.BUFFERING)
+  const [fresh_tournament_data, setFresh_tournament_data] = useState<ITournament>()
 
   const getUserTournament = async (id: string) => {
     const url =
@@ -112,9 +115,11 @@ const Home: NextPage<Props> = (props) => {
 
   // Countdown functionality
   useEffect(() => {
-    console.log('tournaments value has changed');
+    console.log('tournaments value has changed:', tournaments?.tournament_id);
 
     refreshTournamentInfo()
+    refreshTournamentData()
+
     if (tournaments != null) {
       if (
         tournaments.tournament_id != undefined &&
@@ -149,53 +154,90 @@ const Home: NextPage<Props> = (props) => {
     }, 1000)
     // *** COUNTDOWN LOGIC END ***
 
-    // *** TOURNAMENT STATE LOGIC START ***
-    const stateInterval = setInterval(function () {
-      evaluateTournamentState()
-    }, 1000)
-    // *** TOURNAMENT STATE LOGIC END ***
-
     // *** CLEANUP ***
     return () => {
       if (countdownInterval) {
         clearInterval(countdownInterval)
-      }
-      if (stateInterval) {
-        clearInterval(stateInterval)
       }
     }
 
 
   }, [tournaments])
 
+  useEffect(() => {
+    if (tournaments?.tournament_id != 'ABC123') {
+      setTimeout(() => {
+        refreshTournamentData()
+      }, 1000);
+    }
+  }, [tournaments])
+
+
+
+  const refreshTournamentData = async () => {
+
+    if (tournaments != null) {
+      let id = tournaments.tournament_id.toUpperCase()
+      console.log('id:', id);
+
+      if (id != 'ABC123') {
+        // Tournament Redis
+        const url = '/api/tournament/tournament?' + new URLSearchParams({ tournament_id: id })
+        const result = await fetch(url)
+          .then((res) => res.json())
+          .catch((res) => console.log(res.error))
+
+        setFresh_tournament_data(result)
+      }
+    }
+  }
+
+  useEffect(() => {
+    evaluateTournamentState()
+    // *** TOURNAMENT STATE LOGIC START ***
+    const stateInterval = setInterval(function () {
+      evaluateTournamentState()
+    }, 1000)
+    // *** TOURNAMENT STATE LOGIC END ***
+    // *** CLEANUP ***
+    return () => {
+      if (stateInterval) {
+        clearInterval(stateInterval)
+      }
+    }
+  }, [fresh_tournament_data])
+
   const evaluateTournamentState = () => {
-    if (tournaments && tournaments.tournament_id != 'ABC123') {
 
-      // Filling Up
-      if (tournaments.teams.length < tournaments.type) {
-        if (tournament_state != TOURNAMENT_STATE.FILLING_UP) {
-          setTournament_state(TOURNAMENT_STATE.FILLING_UP)
-        }
-      }
-      // Full
-      const seeding_date_time = moment(tournaments.date_time_start).subtract(1, 'hour');
-      console.log(tournaments.teams.length, tournaments.type);
+    if (fresh_tournament_data != undefined) {
+      const tournaments = fresh_tournament_data
 
-      if (tournaments.teams.length == tournaments.type && moment(new Date()) < seeding_date_time) {
-        if (tournament_state != TOURNAMENT_STATE.FULL) {
-          setTournament_state(TOURNAMENT_STATE.FULL)
+      if (tournaments && tournaments.tournament_id != 'ABC123') {
+
+        // Filling Up
+        if (tournaments.teams.length < tournaments.type) {
+          if (tournament_state != TOURNAMENT_STATE.FILLING_UP) {
+            setTournament_state(TOURNAMENT_STATE.FILLING_UP)
+          }
         }
-      }
-      // Seeding
-      if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time) {
-        if (tournament_state != TOURNAMENT_STATE.SEEDED) {
-          setTournament_state(TOURNAMENT_STATE.SEEDED)
+        // Full
+        const seeding_date_time = moment(tournaments.date_time_start).subtract(1, 'hour');
+        if (tournaments.teams.length == tournaments.type && moment(new Date()) < seeding_date_time) {
+          if (tournament_state != TOURNAMENT_STATE.FULL) {
+            setTournament_state(TOURNAMENT_STATE.FULL)
+          }
         }
-      }
-      // In Progress
-      if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start)) {
-        if (tournament_state != TOURNAMENT_STATE.ONGOING) {
-          setTournament_state(TOURNAMENT_STATE.ONGOING)
+        // Seeding
+        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time) {
+          if (tournament_state != TOURNAMENT_STATE.SEEDED) {
+            setTournament_state(TOURNAMENT_STATE.SEEDED)
+          }
+        }
+        // In Progress
+        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start)) {
+          if (tournament_state != TOURNAMENT_STATE.ONGOING) {
+            setTournament_state(TOURNAMENT_STATE.ONGOING)
+          }
         }
       }
     }
@@ -500,7 +542,7 @@ const Home: NextPage<Props> = (props) => {
               {tournament_state == TOURNAMENT_STATE.BUFFERING && (<img className='w-48 h-48 mx-auto' src='/images/spinner.svg'></img>)}
               {tournament_state == TOURNAMENT_STATE.FILLING_UP && (<TournamentFillingUp team={team} tournament={tournaments}></TournamentFillingUp>)}
               {tournament_state == TOURNAMENT_STATE.FULL && (<TournamentFull team={team} tournament={tournaments}></TournamentFull>)}
-              {tournament_state == TOURNAMENT_STATE.SEEDED && (<>Seeding Tournament...</>)}
+              {tournament_state == TOURNAMENT_STATE.SEEDED && (<TournamentSeeded team={team} tournament={tournaments}></TournamentSeeded>)}
               {tournament_state == TOURNAMENT_STATE.ONGOING &&
                 (<TournamentDisplay
                   team={team}
