@@ -23,7 +23,7 @@ import { DD_PREFIX } from '../globals/riot_consts'
 import TournamentFillingUp from '../components/common/TournamentDisplay/TournamentFillingUp'
 import TournamentFull from '../components/common/TournamentDisplay/TournamentFull'
 import TournamentSeeded from '../components/common/TournamentDisplay/TournamentSeeded'
-import { ITournament } from '../globals/types'
+import { IMatch, IRound, ITeam, ITournament } from '../globals/types'
 
 let body: HTMLBodyElement | null = null
 let localStorage: Storage
@@ -236,11 +236,53 @@ const Home: NextPage<Props> = (props) => {
         // In Progress
         if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start) && tournaments.rounds) {
           if (tournament_state != TOURNAMENT_STATE.ONGOING) {
+            setVs_showing(true)
             setTournament_state(TOURNAMENT_STATE.ONGOING)
           }
         }
       }
     }
+  }
+
+  const getNextOpponent = (): ITeam => {
+    let currentRound: IRound = {
+      round_id: 'ABC123',
+      matches: [],
+      date_time_start: '',
+      date_time_end: '',
+      round_winners: []
+    }
+    let nextOpponent: ITeam = {
+      team_icon_path: 0,
+      team_tag: 'ABC123',
+      team_colour_hex: '',
+      team_owner: '',
+      team_members: [],
+      team_name: '',
+      team_statistics: { tournaments_played: 0, tournaments_won: 0, matches_won: 0, people_met: 0 },
+      team_join_key: '',
+      tournament_id: ''
+    }
+
+    if (tournaments) {
+      console.log(tournaments);
+      tournaments.rounds?.forEach((round: IRound) => {
+        currentRound = round
+      })
+      if (currentRound.round_id != 'ABC123') {
+        currentRound.matches.forEach((match: IMatch) => {
+          if (match.teams[0].team_tag == team?.team_tag) {
+            nextOpponent = match.teams[1]
+          }
+          if (match.teams[1].team_tag == team?.team_tag) {
+            nextOpponent = match.teams[0]
+          }
+          return nextOpponent
+
+        })
+      }
+    }
+    return nextOpponent
   }
 
   // !Deprecated, concurrency unsafe countdown logic implementation
@@ -393,11 +435,11 @@ const Home: NextPage<Props> = (props) => {
                 {/* Right Team Container */}
                 <div className="absolute right-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center justify-end  text-5xl">
                   <span className="absolute right-2/3 z-50 translate-x-full font-semibold text-white-200 drop-shadow-lg">
-                    {team.team_tag}
+                    {getNextOpponent().team_tag}
                   </span>
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <Image
-                      src={logos[team.team_icon_path].src}
+                      src={logos[getNextOpponent().team_icon_path].src}
                       width={100}
                       height={100}
                     ></Image>
