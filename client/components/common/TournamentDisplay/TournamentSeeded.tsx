@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
+import Image from 'next/image'
 import { Button } from "react-daisyui"
 import { useUser } from "../../../context/UserContext"
 import { IMatch, IRound, ITeam, ITournament } from "../../../globals/types"
 import MatchTidbit from "../MatchTidbit"
 import logos from '../../../globals/team_logos'
+import { DD_PREFIX } from "../../../globals/riot_consts"
 
 const TournamentSeeded = (props: {
     team: ITeam,
@@ -21,8 +23,54 @@ const TournamentSeeded = (props: {
         tournamentsMade,
     } = useUser()
 
+    let userTeam: ITeam
+    if (team != null) {
+        userTeam = team
+    }
+
+    const [fresh_tournament_data, setFresh_tournament_data] = useState<ITournament>()
+    const [riot_data, setRiot_data] = useState<any>({})
+    const changeObjectState = (team: ITeam, data: { profileIconId: any; summonerLevel: any }) => {
+        setRiot_data((riot_data: any) => ({
+            ...riot_data,
+            [team.team_tag]: {
+                profileIconId: data.profileIconId,
+                summonerLevel: data.summonerLevel
+            }
+        }));
+    };
 
 
+    useEffect(() => {
+        refreshTournamentData()
+
+        props.tournament.teams.forEach(async (team) => {
+            if (team.team_tag != '') {
+                const data = await getLolData(team.team_owner)
+                changeObjectState(team, data)
+            }
+        })
+
+
+
+    }, [])
+
+
+
+
+
+    const getLolData = async (ign: string) => {
+        const account_api_url =
+            '/api/userData?' + new URLSearchParams({ ign: ign })
+        const account_get_response = await fetch(account_api_url)
+            .then((res) => res.json())
+            .then((res) => {
+                return res
+            })
+            .catch((res) => console.log(res.error))
+        return account_get_response
+
+    }
     const seedTournament = () => {
         if (tournaments) {
             refreshTournamentData()
@@ -121,10 +169,11 @@ const TournamentSeeded = (props: {
                 <>
                     <>Waiting on tournament owner to seed. Try refreshing</>
                     <div><Button onClick={() => alert('refresh tournament round data')}>Refresh</Button></div>
+
                 </>
             }
 
-            {tournaments?.rounds && <>{tournaments.rounds.map((m: any) => {
+            {/* {tournaments?.rounds && <>{tournaments.rounds.map((m: any) => {
                 return m.matches.map((m: any) => {
                     return (
                         <MatchTidbit
@@ -143,7 +192,7 @@ const TournamentSeeded = (props: {
 
                     )
                 })
-            })}</>}
+            })}</>} */}
         </>
     )
 }

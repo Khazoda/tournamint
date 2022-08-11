@@ -246,6 +246,8 @@ const Home: NextPage<Props> = (props) => {
             setTournament_state(TOURNAMENT_STATE.ONGOING)
           }
         }
+        // !console.log(moment(new Date()) < seeding_date_time);
+        // !Something is wrong with the moment calculations. When the countdown reaches about 3 minutes, the seeding state is no longer active
       }
     }
   }
