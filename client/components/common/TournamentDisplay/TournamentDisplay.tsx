@@ -24,8 +24,37 @@ const TournamentDisplay = (props: {
   // Default prop values
   const { team = null, tournament = null, ...restProps } = props
 
+  const getTag = (round: number, match: number, team: 0 | 1): string => {
+    let tag = '- - - '
+    if (tournament && tournament.rounds) {
+      try {
+        const temp = tournament.rounds[round].matches[match].teams[team].team_tag
+        if (temp != 'ABC123' || temp != undefined || temp != null) {
+          tag = temp
+        }
+      } catch (error) {
+        tag = '- - -'
+      }
+    }
+    return tag
+  }
+  const getIconIndex = (round: number, match: number, team: 0 | 1): number => {
+    let icon_index = 0
+    if (tournament && tournament.rounds) {
+      try {
+        const temp = tournament.rounds[round].matches[match].teams[team].team_icon_path
+        if (temp != undefined || temp != null) {
+          icon_index = temp
+        }
+      } catch (error) {
+        icon_index = 10
+      }
+    }
+    return icon_index
+  }
+
   var output = <></>
-  if (tournament != null) {
+  if (tournament && tournament.rounds) {
     if (tournament.type == 4) {
       output = (
         <div>
@@ -34,22 +63,22 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(0, 0, 0)}
+                    team_1_icon_index={getIconIndex(0, 0, 0)}
+
+                    team_2_tag={getTag(0, 0, 1)}
+                    team_2_icon_index={getIconIndex(0, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(0, 1, 0)}
+                    team_1_icon_index={getIconIndex(0, 1, 0)}
+
+                    team_2_tag={getTag(0, 1, 1)}
+                    team_2_icon_index={getIconIndex(0, 1, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -59,11 +88,11 @@ const TournamentDisplay = (props: {
               <div className="relative before:absolute before:-left-2 before:top-1/2 before:h-0 before:w-2 before:border-b-[2px] before:border-black-600  dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>

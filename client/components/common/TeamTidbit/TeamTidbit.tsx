@@ -20,7 +20,7 @@ const TeamTidbit = (props: {
     <div className="flex h-full w-full flex-row bg-blue-600 ">
       <div className="relative h-full w-1/2 ">
         <Image
-          src={team_icon_path || '/images/spinner.svg'}
+          src={team_icon_path == '' ? '/images/spinner.svg' : team_icon_path}
           layout="fill"
         ></Image>
       </div>
@@ -35,7 +35,7 @@ const TeamTidbit = (props: {
       </h2>
       <div className="relative h-full w-1/2">
         <Image
-          src={team_icon_path || '/images/spinner.svg'}
+          src={team_icon_path == '' ? '/images/spinner.svg' : team_icon_path}
           layout="fill"
         ></Image>
       </div>

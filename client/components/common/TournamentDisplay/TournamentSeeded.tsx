@@ -114,9 +114,16 @@ const TournamentSeeded = (props: {
 
     return (
         <>
-            {tournaments?.organized_by_ign == ign &&
+            {(tournaments?.organized_by_ign == ign && !tournaments?.rounds) &&
                 <div><Button onClick={() => seedTournament()}>Seed Tournament</Button></div>
             }
+            {(tournaments?.organized_by_ign != ign && !tournaments?.rounds) &&
+                <>
+                    <>Waiting on tournament owner to seed. Try refreshing</>
+                    <div><Button onClick={() => alert('refresh tournament round data')}>Refresh</Button></div>
+                </>
+            }
+
             {tournaments?.rounds && <>{tournaments.rounds.map((m: any) => {
                 return m.matches.map((m: any) => {
                     return (
@@ -137,13 +144,6 @@ const TournamentSeeded = (props: {
                     )
                 })
             })}</>}
-
-            {tournaments?.organized_by_ign != ign &&
-                <>
-                    <>Waiting on tournament owner to seed. Try refreshing</>
-                    <div><Button onClick={() => alert('refresh tournament round data')}>Refresh</Button></div>
-                </>
-            }
         </>
     )
 }

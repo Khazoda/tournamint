@@ -228,13 +228,13 @@ const Home: NextPage<Props> = (props) => {
           }
         }
         // Seeding
-        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time) {
+        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time && !tournaments.rounds) {
           if (tournament_state != TOURNAMENT_STATE.SEEDED) {
             setTournament_state(TOURNAMENT_STATE.SEEDED)
           }
         }
         // In Progress
-        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start)) {
+        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start) && tournaments.rounds) {
           if (tournament_state != TOURNAMENT_STATE.ONGOING) {
             setTournament_state(TOURNAMENT_STATE.ONGOING)
           }

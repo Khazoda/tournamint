@@ -24,6 +24,7 @@ const colours: Array<string> = [
   TEAM_COLOURS.RED,
 ]
 
+
 const CreateTeamModal = (props: Props) => {
   const { onClick = null, ...restProps } = props
   const {
