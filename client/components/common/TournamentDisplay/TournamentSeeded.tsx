@@ -129,12 +129,12 @@ const TournamentSeeded = (props: {
                     return (
                         <MatchTidbit
                             team_1_tag={m.teams[0].team_tag}
-                            team_1_icon_path={
+                            team_1_icon_index={
                                 logos[m.teams[0].team_icon_path].src ||
                                 'images/team_icons/logo_0.svg'
                             }
                             team_2_tag={m.teams[1].team_tag}
-                            team_2_icon_path={
+                            team_2_icon_index={
                                 logos[m.teams[1].team_icon_path].src ||
                                 'images/team_icons/logo_0.svg'
                             }
