@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Button } from "react-daisyui"
 import { useUser } from "../../../context/UserContext"
 import { IMatch, IRound, ITeam, ITournament } from "../../../globals/types"
+import MatchTidbit from "../MatchTidbit"
+import logos from '../../../globals/team_logos'
 
 const TournamentSeeded = (props: {
     team: ITeam,
@@ -115,6 +117,27 @@ const TournamentSeeded = (props: {
             {tournaments?.organized_by_ign == ign &&
                 <div><Button onClick={() => seedTournament()}>Seed Tournament</Button></div>
             }
+            {tournaments?.rounds && <>{tournaments.rounds.map((m: any) => {
+                return m.matches.map((m: any) => {
+                    return (
+                        <MatchTidbit
+                            team_1_tag={m.teams[0].team_tag}
+                            team_1_icon_path={
+                                logos[m.teams[0].team_icon_path].src ||
+                                'images/team_icons/logo_0.svg'
+                            }
+                            team_2_tag={m.teams[1].team_tag}
+                            team_2_icon_path={
+                                logos[m.teams[1].team_icon_path].src ||
+                                'images/team_icons/logo_0.svg'
+                            }
+                        ></MatchTidbit>
+
+
+                    )
+                })
+            })}</>}
+
             {tournaments?.organized_by_ign != ign &&
                 <>
                     <>Waiting on tournament owner to seed. Try refreshing</>
