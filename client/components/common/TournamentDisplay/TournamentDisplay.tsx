@@ -20,6 +20,7 @@ const defaults: ITournamentBracket = {
 const TournamentDisplay = (props: {
   team?: ITeam | null
   tournament: ITournament | null
+
 }) => {
   // Default prop values
   const { team = null, tournament = null, ...restProps } = props

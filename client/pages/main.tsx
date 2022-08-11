@@ -78,6 +78,8 @@ const Home: NextPage<Props> = (props) => {
   const [tournament_state, setTournament_state] = useState<TOURNAMENT_STATE>(TOURNAMENT_STATE.BUFFERING)
   const [fresh_tournament_data, setFresh_tournament_data] = useState<ITournament>()
 
+  const [next_opponent, setNext_opponent] = useState<ITeam>()
+
   const getUserTournament = async (id: string) => {
     const url =
       '/api/tournament/tournament?' + new URLSearchParams({ tournament_id: id })
@@ -200,6 +202,7 @@ const Home: NextPage<Props> = (props) => {
 
   useEffect(() => {
     evaluateTournamentState()
+    getNextOpponent()
     // *** TOURNAMENT STATE LOGIC START ***
     const stateInterval = setInterval(function () {
       evaluateTournamentState()
@@ -252,7 +255,7 @@ const Home: NextPage<Props> = (props) => {
     }
   }
 
-  const getNextOpponent = (): ITeam => {
+  const getNextOpponent = () => {
     let currentRound: IRound = {
       round_id: 'ABC123',
       matches: [],
@@ -284,12 +287,10 @@ const Home: NextPage<Props> = (props) => {
           if (match.teams[1].team_tag == team?.team_tag) {
             nextOpponent = match.teams[0]
           }
-          return nextOpponent
-
+          setNext_opponent(nextOpponent)
         })
       }
     }
-    return nextOpponent
   }
 
   // !Deprecated, concurrency unsafe countdown logic implementation
@@ -408,9 +409,9 @@ const Home: NextPage<Props> = (props) => {
           <div className="relative ml-auto flex h-full w-full justify-center p-2">
             {team && vs_showing ? (
               <div className="relative  flex h-full w-11/12 flex-row gap-4 self-center">
-                {/* Skewed backgrounds */}
+                {/* Skewed backgrounds */}text-white-100 bg-rose-600  border-rose-400 border-2
                 <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00552d]"></span>
-                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#00A2FF] to-[#003a5c]"></span>
+                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#E11D48] to-[#AB1D48]"></span>
                 {/* Left Team Container */}
                 <div className="absolute left-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center text-5xl">
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
@@ -435,18 +436,18 @@ const Home: NextPage<Props> = (props) => {
                     <span className="absolute bottom-0 right-4 h-32 w-1 rotate-[30deg]  bg-[#003a5c] drop-shadow-md"></span>
                   </div>
 
-                  <span className="absolute bottom-3 left-0 font-extrabold text-secondary drop-shadow-lg">
+                  <span className="absolute bottom-3 left-0 font-extrabold text-[#E11D48] drop-shadow-lg">
                     S
                   </span>
                 </span>
                 {/* Right Team Container */}
                 <div className="absolute right-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center justify-end  text-5xl">
                   <span className="absolute right-2/3 z-50 translate-x-full font-semibold text-white-200 drop-shadow-lg">
-                    {getNextOpponent().team_tag}
+                    {next_opponent?.team_tag}
                   </span>
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">
                     <Image
-                      src={logos[getNextOpponent().team_icon_path].src}
+                      src={logos[next_opponent?.team_icon_path || 0].src}
                       width={100}
                       height={100}
                     ></Image>
