@@ -3,6 +3,8 @@ import MatchTidbit from '../MatchTidbit'
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi'
 import { ITeam, ITournament } from '../../../globals/types'
 import logos from '../../../globals/team_logos'
+import { Button } from 'react-daisyui'
+import { useUser } from '../../../context/UserContext'
 
 const typeColours = {
   default: '#444444',
@@ -24,7 +26,12 @@ const TournamentDisplay = (props: {
 }) => {
   // Default prop values
   const { team = null, tournament = null, ...restProps } = props
+  const [showAdminPanel, setShowAdminPanel] = useState<boolean>(false)
+  const {
 
+    ign,
+
+  } = useUser()
   const getTag = (round: number, match: number, team: 0 | 1): string => {
     let tag = '- - - '
     if (tournament && tournament.rounds) {
@@ -54,11 +61,38 @@ const TournamentDisplay = (props: {
     return icon_index
   }
 
+  const openTournamentPanel = () => {
+    setShowAdminPanel(true)
+  }
+
+  const adminButton = <label htmlFor="panel-modal" className="btn modal-button btn-primary mx-auto mt-2">open admin panel</label>
+  const adminPanel = (<div>
+    <input type="checkbox" id="panel-modal" className="modal-toggle" />
+    <div className="modal">
+      <div className="modal-box relative w-full dark:bg-black-600">
+        <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 className="text-lg font-bold">Control the tournament from here</h3>
+        <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
+        <p className="py-4">TODO: list of all ongoing matches, clicking a team will mark them as match winner.</p>
+        <p className="py-4">Then, algorithm waits for other match in the bracket to finish, then populates next round with winners from previous round.</p>
+        <p className="py-4">Repeat this process for each round, implementing a kind of asynchronous round system based on when matches finish, culminating in a final</p>
+
+
+      </div>
+
+    </div>
+  </div>
+  )
+
+
   var output = <></>
   if (tournament && tournament.rounds) {
     if (tournament.type == 4) {
       output = (
         <div>
+          {tournament.organized_by_ign == ign && adminButton}
+          {adminPanel}
+
           <div className="grid grid-cols-3 p-5">
             <div className="mr-4 flex flex-col justify-between">
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
@@ -105,6 +139,9 @@ const TournamentDisplay = (props: {
     if (tournament.type == 8) {
       output = (
         <div>
+          {tournament.organized_by_ign == ign && adminButton}
+          {adminPanel}
+
           <div className=" mt-auto grid grid-cols-[_minmax(300px,1fr),_minmax(300px,1fr),_minmax(300px,1fr)] gap-5 overflow-x-scroll overscroll-x-contain scroll-smooth p-2 scrollbar-none">
             {/* Left 1 */}
             <div
@@ -202,6 +239,8 @@ const TournamentDisplay = (props: {
     if (tournament.type == 16) {
       output = (
         <div className="flex h-full flex-col justify-center">
+          {tournament.organized_by_ign == ign && adminButton}
+          {adminPanel}
           <div className=" mt-auto grid grid-cols-[_minmax(300px,1fr),_minmax(300px,1fr),_minmax(300px,1fr),_minmax(300px,1fr),_minmax(300px,1fr)] gap-5 overflow-x-scroll overscroll-x-contain scroll-smooth p-5 scrollbar-none">
             {/* Left 1 */}
             <div
