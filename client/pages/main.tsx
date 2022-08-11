@@ -136,10 +136,10 @@ const Home: NextPage<Props> = (props) => {
     const countDownDate = humanReadableDate
     const countDownTime = countDownDate.getTime()
 
+
     const countdownInterval = setInterval(function () {
       var now = new Date().getTime()
       var left = countDownTime - now
-
       if (tournaments) {
         left = moment(tournaments.date_time_start).toDate().getTime() - now
       }
@@ -152,6 +152,12 @@ const Home: NextPage<Props> = (props) => {
       setCountdown_s(Math.floor((left % (1000 * 60)) / 1000))
 
     }, 1000)
+    if (moment() > moment(tournaments?.date_time_start)) {
+      if (countdownInterval) {
+        clearInterval(countdownInterval)
+      }
+      return
+    }
     // *** COUNTDOWN LOGIC END ***
 
     // *** CLEANUP ***
@@ -265,7 +271,6 @@ const Home: NextPage<Props> = (props) => {
     }
 
     if (tournaments) {
-      console.log(tournaments);
       tournaments.rounds?.forEach((round: IRound) => {
         currentRound = round
       })
