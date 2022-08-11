@@ -113,44 +113,44 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(0, 0, 0)}
+                    team_1_icon_index={getIconIndex(0, 0, 0)}
+
+                    team_2_tag={getTag(0, 0, 1)}
+                    team_2_icon_index={getIconIndex(0, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mb-4 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(0, 1, 0)}
+                    team_1_icon_index={getIconIndex(0, 1, 0)}
+
+                    team_2_tag={getTag(0, 1, 1)}
+                    team_2_icon_index={getIconIndex(0, 1, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-4 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(0, 2, 0)}
+                    team_1_icon_index={getIconIndex(0, 2, 0)}
+
+                    team_2_tag={getTag(0, 2, 1)}
+                    team_2_icon_index={getIconIndex(0, 2, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(0, 3, 0)}
+                    team_1_icon_index={getIconIndex(0, 3, 0)}
+
+                    team_2_tag={getTag(0, 3, 1)}
+                    team_2_icon_index={getIconIndex(0, 3, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -160,22 +160,22 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-b-[2px] before:border-black-600 after:absolute after:-right-6 after:top-1/2 after:h-[150%] after:w-6 after:rounded-tr-[9.6px]  after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-b-[2px] before:border-black-600 after:absolute after:-right-6 after:bottom-1/2 after:h-[150%] after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 1, 0)}
+                    team_1_icon_index={getIconIndex(1, 1, 0)}
+
+                    team_2_tag={getTag(1, 1, 1)}
+                    team_2_icon_index={getIconIndex(1, 1, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -185,11 +185,11 @@ const TournamentDisplay = (props: {
               <div className="relative before:absolute before:-left-7 before:top-1/2 before:h-0 before:w-7 before:border-b-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(2, 0, 0)}
+                    team_1_icon_index={getIconIndex(2, 0, 0)}
+
+                    team_2_tag={getTag(2, 0, 1)}
+                    team_2_icon_index={getIconIndex(2, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -210,44 +210,44 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mb-4 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-4 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -257,22 +257,22 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600 dark:before:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600  dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -282,33 +282,33 @@ const TournamentDisplay = (props: {
               <div className="relative before:absolute before:-left-[52px] before:top-1/2 before:h-0 before:w-[52px] before:border-b-[2px] before:border-black-600 after:absolute after:-right-[52px] after:top-1/2 after:h-0 after:w-[52px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative  dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative before:absolute before:-left-[52px] before:top-1/2 before:h-0 before:w-[52px] before:border-b-[2px] before:border-black-600 after:absolute after:-right-[52px] after:top-1/2 after:h-0 after:w-[52px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -318,22 +318,22 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600  dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
@@ -346,44 +346,44 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 before:absolute before:-left-6 before:top-1/2 before:h-full before:w-6 before:rounded-tl-[9.6px] before:border-l-[2px] before:border-t-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mb-4 before:absolute before:-left-6 before:bottom-1/2 before:h-full before:w-6 before:rounded-bl-[9.6px] before:border-l-[2px] before:border-b-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-4 before:absolute before:-left-6 before:top-1/2 before:h-full before:w-6 before:rounded-tl-[9.6px] before:border-l-[2px] before:border-t-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
               <div className="relative mt-2 before:absolute before:-left-6 before:bottom-1/2 before:h-full before:w-6 before:rounded-bl-[9.6px] before:border-l-[2px] before:border-b-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    team_1_tag={team?.team_tag}
-                    team_1_icon_path={
-                      logos[team?.team_icon_path].src ||
-                      'images/team_icons/logo_0.svg'
-                    }
+                    team_1_tag={getTag(1, 0, 0)}
+                    team_1_icon_index={getIconIndex(1, 0, 0)}
+
+                    team_2_tag={getTag(1, 0, 1)}
+                    team_2_icon_index={getIconIndex(1, 0, 1)}
                   ></MatchTidbit>
                 )}
               </div>
