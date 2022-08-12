@@ -100,7 +100,7 @@ const TournamentDisplay = (props: {
               return (
                 <div key={'winner-selector-' + match.match_id} className='my-1 flex flex-row h-11 w-full gap-2 items-center'>
                   Round <span className='text-lg text-center align-middle'>{round.round_id}</span>
-                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer'>
+                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer' onClick={() => alert('Team ' + match.teams[0].team_tag + ' won match ' + match.match_id + ' vs ' + match.teams[1].team_tag + ' in round ' + round.round_id)}>
                     <TeamTidbit
                       side="left"
                       team_tag={match.teams[0].team_tag}
@@ -112,7 +112,7 @@ const TournamentDisplay = (props: {
                       VS
                     </span>
                   </div>
-                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer'>
+                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer' onClick={() => alert('Team ' + match.teams[1].team_tag + ' won match ' + match.match_id + ' vs ' + match.teams[0].team_tag + ' in round ' + round.round_id)}>
                     <TeamTidbit
                       side="left"
                       team_tag={match.teams[1].team_tag}
