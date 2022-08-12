@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MatchTidbit from '../MatchTidbit'
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi'
-import { ITeam, ITournament } from '../../../globals/types'
+import { IMatch, IRound, ITeam, ITournament } from '../../../globals/types'
 import logos from '../../../globals/team_logos'
 import { Button } from 'react-daisyui'
 import { useUser } from '../../../context/UserContext'
@@ -27,6 +27,9 @@ const TournamentDisplay = (props: {
   // Default prop values
   const { team = null, tournament = null, ...restProps } = props
   const [showAdminPanel, setShowAdminPanel] = useState<boolean>(false)
+  const [showAdminPanelHelp, setShowAdminPanelHelp] = useState<boolean>(false)
+  const [currentMatchData, setCurrentMatchData] = useState<Array<any>>([])
+
   const {
 
     ign,
@@ -61,24 +64,58 @@ const TournamentDisplay = (props: {
     return icon_index
   }
 
-  const openTournamentPanel = () => {
-    setShowAdminPanel(true)
+  useEffect(() => {
+    calculateCurrentMatches()
+  }, [tournament])
+
+  const calculateCurrentMatches = () => {
+    let currentMatches: Array<IMatch> = []
+    if (!tournament) { return }
+    if (!tournament.rounds) { return }
+
+    tournament.rounds.forEach((round: IRound) => {
+      round.matches.forEach((match: IMatch) => {
+        if (match.match_winner == null) {
+          currentMatches.push(match)
+        }
+      })
+    })
+    setCurrentMatchData(currentMatches)
   }
+
 
   const adminButton = <label htmlFor="panel-modal" className="btn modal-button btn-primary mx-auto mt-2">open admin panel</label>
   const adminPanel = (<div>
     <input type="checkbox" id="panel-modal" className="modal-toggle" />
     <div className="modal">
-      <div className="modal-box relative w-full dark:bg-black-600">
-        <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-        <h3 className="text-lg font-bold">Control the tournament from here</h3>
-        <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
-        <p className="py-4">TODO: list of all ongoing matches, clicking a team will mark them as match winner.</p>
-        <p className="py-4">Then, algorithm waits for other match in the bracket to finish, then populates next round with winners from previous round.</p>
-        <p className="py-4">Repeat this process for each round, implementing a kind of asynchronous round system based on when matches finish, culminating in a final</p>
+      {!showAdminPanelHelp ?
+        <div className="modal-box relative w-full dark:bg-black-600">
+          <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+          <label className="btn btn-sm btn-circle absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
+          <h3 className="text-lg font-bold">Tournament Control Panel</h3>
+          <h4 className='text-left mt-2'>Ongoing Matches</h4>
+          <div className='flex flex-row flex-wrap'>
+            {currentMatchData.map((match: IMatch) => {
+              return (
+                <MatchTidbit team_1_tag={match.teams[0].team_tag} team_1_icon_index={match.teams[0].team_icon_path} team_2_tag={match.teams[1].team_tag} team_2_icon_index={match.teams[0].team_icon_path} />
+              )
+            })}
 
+          </div>
 
-      </div>
+        </div>
+        :
+        <div className="modal-box relative w-full dark:bg-black-600">
+          <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+          <label className="btn btn-sm btn-circle absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
+          <h3 className="text-lg font-bold">Instructions</h3>
+          <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
+          <p className="py-4">TODO: list of all ongoing matches, clicking a team will mark them as match winner.</p>
+          <p className="py-4">Then, algorithm waits for other match in the bracket to finish, then populates next round with winners from previous round.</p>
+          <p className="py-4">Repeat this process for each round, implementing a kind of asynchronous round system based on when matches finish, culminating in a final</p>
+        </div>
+      }
+
 
     </div>
   </div>
