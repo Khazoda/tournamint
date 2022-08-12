@@ -74,7 +74,7 @@ export interface IRound {
   matches: Array<IMatch>
   date_time_start: string
   date_time_end: string
-  round_winners: Array<ITeam>
+  round_winners: Array<string>
 }
 
 // One Match has two Teams
