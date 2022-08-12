@@ -32,10 +32,17 @@ const TournamentDisplay = (props: {
   const [currentMatchData, setCurrentMatchData] = useState<Array<any>>([])
 
   const {
-
+    displayName,
+    biography,
     ign,
-
+    statistics,
+    favouriteChampion,
+    rankInfo,
+    tournaments,
+    tournamentsMade,
+    setUserDetails,
   } = useUser()
+
   const getTag = (round: number, match: number, team: 0 | 1): string => {
     let tag = '- - - '
     if (tournament && tournament.rounds) {
@@ -67,16 +74,18 @@ const TournamentDisplay = (props: {
 
   useEffect(() => {
     calculateCurrentMatches()
+    console.log(tournament);
+
   }, [tournament])
 
   const calculateCurrentMatches = () => {
     let currentMatches: Array<any> = []
     if (!tournament) { return }
     if (!tournament.rounds) { return }
-
     tournament.rounds.forEach((round: IRound) => {
       round.matches.forEach((match: IMatch) => {
         if (match.match_winner == null) {
+
           currentMatches.push({ round, match })
         }
       })
@@ -84,7 +93,96 @@ const TournamentDisplay = (props: {
     setCurrentMatchData(currentMatches)
   }
 
+  const setLocalStorageUserContext = (tournament_temp: ITournament, round: IRound, match: IMatch, winner: ITeam) => {
+    // LS, UC tournament rounds set
+    if (!tournament_temp) { return }
+    if (!tournament_temp.rounds) { return }
 
+    console.log(tournament_temp);
+    let temp_rounds: IRound[] = tournament_temp.rounds
+    let temp_tournament: ITournament = tournament_temp
+
+    temp_rounds[parseInt(round.round_id)].matches[parseInt(match.match_id)].match_winner = winner
+    temp_tournament.rounds = temp_rounds
+
+    if (setUserDetails != undefined) {
+      setUserDetails(
+        displayName,
+        biography,
+        ign,
+        favouriteChampion,
+        rankInfo,
+        statistics,
+        tournamentsMade,
+        temp_tournament,
+        team
+      )
+    }
+    localStorage.setItem(
+      'userDetails',
+      JSON.stringify({
+        displayName: displayName,
+        biography: biography,
+        ign: ign,
+        favouriteChampion: favouriteChampion,
+        rankInfo: {
+          tier: rankInfo.tier,
+          rank: rankInfo.rank,
+          wins: rankInfo.wins,
+          losses: rankInfo.losses,
+        },
+        statistics: {
+          tournaments_played: statistics.tournaments_played,
+          tournaments_won: statistics.tournaments_won,
+          matches_won: statistics.matches_won,
+          people_met: statistics.people_met,
+        },
+        tournamentsMade: tournamentsMade,
+        tournaments: temp_tournament,
+        team: team,
+      })
+    )
+  }
+  const setTournamentRedis = async (tournament_temp: ITournament, round: IRound, match: IMatch, winner: ITeam) => {
+    // Redis tournament rounds set
+    if (!tournament_temp) { return }
+    if (!tournament_temp.rounds) { return }
+
+    console.log(tournament_temp);
+    let temp_rounds: IRound[] = tournament_temp.rounds
+    console.log('temp_teams:', temp_rounds);
+
+    temp_rounds[parseInt(round.round_id)].matches[parseInt(match.match_id)].match_winner = winner
+
+    const tournamentDataOut: ITournament = {
+      tournament_id: tournament_temp.tournament_id,
+      tournament_name: tournament_temp.tournament_name,
+      is_private: tournament_temp.is_private,
+      organized_by_ign: tournament_temp.organized_by_ign,
+      type: tournament_temp.type,
+      rounds: temp_rounds,
+      date_time_start: tournament_temp.date_time_start,
+      date_time_end: tournament_temp.date_time_end,
+      winning_team: tournament_temp.winning_team,
+      lobby_code: tournament_temp.lobby_code,
+      teams: tournament_temp.teams
+    }
+    const tournament_post_response = await fetch('/api/tournament/tournament', {
+      body: JSON.stringify({ data: tournamentDataOut }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PATCH',
+    })
+    calculateCurrentMatches()
+
+  }
+  const handleMatchWinner = (round: IRound, match: IMatch, winner: ITeam) => {
+    if (!tournament) { return }
+    setTournamentRedis(tournament, round, match, winner)
+    setLocalStorageUserContext(tournament, round, match, winner)
+
+  }
+
+  // alert('Team ' + match.teams[0].team_tag + ' won match ' + match.match_id + ' vs ' + match.teams[1].team_tag + ' in round ' + round.round_id)
   const adminButton = <label htmlFor="panel-modal" className="btn modal-button btn-primary mx-auto mt-2">open admin panel</label>
   const adminPanel = (<div>
     <input type="checkbox" id="panel-modal" className="modal-toggle" />
@@ -92,7 +190,7 @@ const TournamentDisplay = (props: {
       {!showAdminPanelHelp ?
         <div className="modal-box relative w-full dark:bg-black-600">
           <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-          <label className="btn btn-sm btn-circle absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
+          <label className="btn btn-sm btn-circle text-primary absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
           <h3 className="text-lg font-bold">Tournament Control Panel</h3>
           <h4 className=' mt-2'>Click on a team to select the match winner</h4>
           <div className='flex flex-col flex-wrap'>
@@ -100,7 +198,7 @@ const TournamentDisplay = (props: {
               return (
                 <div key={'winner-selector-' + match.match_id} className='my-1 flex flex-row h-11 w-full gap-2 items-center'>
                   Round <span className='text-lg text-center align-middle'>{round.round_id}</span>
-                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer' onClick={() => alert('Team ' + match.teams[0].team_tag + ' won match ' + match.match_id + ' vs ' + match.teams[1].team_tag + ' in round ' + round.round_id)}>
+                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer' onClick={() => handleMatchWinner(round, match, match.teams[0])}>
                     <TeamTidbit
                       side="left"
                       team_tag={match.teams[0].team_tag}
@@ -112,7 +210,7 @@ const TournamentDisplay = (props: {
                       VS
                     </span>
                   </div>
-                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer' onClick={() => alert('Team ' + match.teams[1].team_tag + ' won match ' + match.match_id + ' vs ' + match.teams[0].team_tag + ' in round ' + round.round_id)}>
+                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer' onClick={() => handleMatchWinner(round, match, match.teams[1])}>
                     <TeamTidbit
                       side="left"
                       team_tag={match.teams[1].team_tag}
@@ -129,7 +227,7 @@ const TournamentDisplay = (props: {
         :
         <div className="modal-box relative w-full dark:bg-black-600">
           <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-          <label className="btn btn-sm btn-circle absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
+          <label className="btn btn-sm btn-circle text-secondary absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
           <h3 className="text-lg font-bold">Instructions</h3>
           <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
           <p className="py-4">TODO: list of all ongoing matches, clicking a team will mark them as match winner.</p>
