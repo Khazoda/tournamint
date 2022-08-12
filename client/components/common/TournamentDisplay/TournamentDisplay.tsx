@@ -5,6 +5,7 @@ import { IMatch, IRound, ITeam, ITournament } from '../../../globals/types'
 import logos from '../../../globals/team_logos'
 import { Button } from 'react-daisyui'
 import { useUser } from '../../../context/UserContext'
+import TeamTidbit from '../TeamTidbit'
 
 const typeColours = {
   default: '#444444',
@@ -93,11 +94,31 @@ const TournamentDisplay = (props: {
           <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
           <label className="btn btn-sm btn-circle absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
           <h3 className="text-lg font-bold">Tournament Control Panel</h3>
-          <h4 className='text-left mt-2'>Ongoing Matches</h4>
-          <div className='flex flex-row flex-wrap'>
+          <h4 className=' mt-2'>Click on a team to select the match winner</h4>
+          <div className='flex flex-col flex-wrap'>
             {currentMatchData.map((match: IMatch) => {
               return (
-                <MatchTidbit team_1_tag={match.teams[0].team_tag} team_1_icon_index={match.teams[0].team_icon_path} team_2_tag={match.teams[1].team_tag} team_2_icon_index={match.teams[0].team_icon_path} />
+                <div key={'winner-selector-' + match.match_id} className='my-1 flex flex-row h-11 w-full gap-2'>
+                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer'>
+                    <TeamTidbit
+                      side="left"
+                      team_tag={match.teams[0].team_tag}
+                      team_icon_path={match.teams[0].team_icon_path == 10 ? '' : logos[match.teams[0].team_icon_path].src}
+                    ></TeamTidbit>
+                  </div>
+                  <div className="relative h-full w-0.5 bg-transparent z-50">
+                    <span className="absolute -left-3 top-1/2 -translate-y-1/2 animate-pulse text-xl font-semibold ">
+                      VS
+                    </span>
+                  </div>
+                  <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer'>
+                    <TeamTidbit
+                      side="left"
+                      team_tag={match.teams[1].team_tag}
+                      team_icon_path={match.teams[1].team_icon_path == 10 ? '' : logos[match.teams[1].team_icon_path].src}
+                    ></TeamTidbit>
+                  </div>
+                </div>
               )
             })}
 
