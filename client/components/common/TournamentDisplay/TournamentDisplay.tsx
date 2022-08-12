@@ -70,14 +70,14 @@ const TournamentDisplay = (props: {
   }, [tournament])
 
   const calculateCurrentMatches = () => {
-    let currentMatches: Array<IMatch> = []
+    let currentMatches: Array<any> = []
     if (!tournament) { return }
     if (!tournament.rounds) { return }
 
     tournament.rounds.forEach((round: IRound) => {
       round.matches.forEach((match: IMatch) => {
         if (match.match_winner == null) {
-          currentMatches.push(match)
+          currentMatches.push({ round, match })
         }
       })
     })
@@ -96,9 +96,10 @@ const TournamentDisplay = (props: {
           <h3 className="text-lg font-bold">Tournament Control Panel</h3>
           <h4 className=' mt-2'>Click on a team to select the match winner</h4>
           <div className='flex flex-col flex-wrap'>
-            {currentMatchData.map((match: IMatch) => {
+            {currentMatchData.map(({ round, match }: any) => {
               return (
-                <div key={'winner-selector-' + match.match_id} className='my-1 flex flex-row h-11 w-full gap-2'>
+                <div key={'winner-selector-' + match.match_id} className='my-1 flex flex-row h-11 w-full gap-2 items-center'>
+                  Round <span className='text-lg text-center align-middle'>{round.round_id}</span>
                   <div className='flex h-full w-full flex-row hover:outline-2 hover:outline outline-primary hover:cursor-pointer'>
                     <TeamTidbit
                       side="left"
