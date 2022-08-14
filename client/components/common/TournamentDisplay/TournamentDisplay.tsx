@@ -143,7 +143,7 @@ const TournamentDisplay = (props: {
       })
     )
   }
-  const setTournamentRedis = async (tournament_temp: ITournament, round: IRound, match: IMatch, winner: ITeam) => {
+  const setTournamentRedisMatchWon = async (tournament_temp: ITournament, round: IRound, match: IMatch, winner: ITeam) => {
     // Redis tournament rounds set
     if (!tournament_temp) { return }
     if (!tournament_temp.rounds) { return }
@@ -177,12 +177,105 @@ const TournamentDisplay = (props: {
     calculateCurrentMatches()
 
   }
-  const handleMatchWinner = (round: IRound, match: IMatch, winner: ITeam) => {
-    if (!tournament) { return }
-    setTournamentRedis(tournament, round, match, winner)
-    setLocalStorageUserContext(tournament, round, match, winner)
+  const setTournamentRedisNewMatch = async (tournament_temp: ITournament | null, round: number, match: IMatch,) => {
+    // Redis tournament rounds set
+    if (!tournament_temp) { return }
+    if (!tournament_temp.rounds) { return }
+
+    let temp_rounds: IRound[] = tournament_temp.rounds
+    if (temp_rounds[round] == null) {
+      temp_rounds[round] = {
+        round_id: round.toString(),
+        date_time_start: '',
+        date_time_end: '',
+        matches: [],
+        round_winners: []
+      }
+      temp_rounds[round].matches[parseInt(match.match_id)] = match
+    } else {
+      temp_rounds[round].matches[parseInt(match.match_id)] = match
+    }
+
+    const tournamentDataOut: ITournament = {
+      tournament_id: tournament_temp.tournament_id,
+      tournament_name: tournament_temp.tournament_name,
+      is_private: tournament_temp.is_private,
+      organized_by_ign: tournament_temp.organized_by_ign,
+      type: tournament_temp.type,
+      rounds: temp_rounds,
+      date_time_start: tournament_temp.date_time_start,
+      date_time_end: tournament_temp.date_time_end,
+      winning_team: tournament_temp.winning_team,
+      lobby_code: tournament_temp.lobby_code,
+      teams: tournament_temp.teams
+    }
+    const tournament_post_response = await fetch('/api/tournament/tournament', {
+      body: JSON.stringify({ data: tournamentDataOut }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PATCH',
+    })
+    calculateCurrentMatches()
 
   }
+  const handleMatchWinner = (round: IRound, match: IMatch, winner: ITeam) => {
+    if (!tournament) { return }
+    setTournamentRedisMatchWon(tournament, round, match, winner)
+    setLocalStorageUserContext(tournament, round, match, winner)
+
+    const round_id = parseInt(round.round_id)
+    const match_id = parseInt(match.match_id)
+    switch (tournament.type) {
+      case 4:
+        if ((match_id) <= 1) { }
+        break;
+      case 8:
+        if ((match_id) <= 1) { }
+        if (2 <= (match_id) && (match_id) <= 3) { }
+        break;
+      case 16:
+        if ((match_id) <= 1) {
+          if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+
+        }
+        console.log('ph');
+
+        if (2 <= (match_id) && (match_id) <= 3) { }
+        if (4 <= (match_id) && (match_id) <= 5) { }
+        if (6 <= (match_id) && (match_id) <= 7) { }
+
+        break;
+      default:
+        break;
+    }
+
+  }
+  const bracketIsFinished = (bracket_number: number, round: IRound): boolean => {
+    // bracketCounter is used to determine whether a bracket has finished (2 matches)
+    let bracketCounter = 0
+    if (round.matches[2 * bracket_number].match_winner != null) { bracketCounter += 1 }
+    if (round.matches[2 * bracket_number + 1].match_winner != null) { bracketCounter += 1 }
+    if (bracketCounter == 2) { return true } else { return false }
+  }
+
+  const createMatch = (previousRound: IRound, previousBracketNumber: number, round_num: number, winner_1: ITeam, match: IMatch) => {
+    var winner_2: ITeam | null = null
+    if (parseInt(match.match_id) % 2 == 0) { winner_2 = previousRound.matches[parseInt(match.match_id) + 1].match_winner }
+    if (parseInt(match.match_id) % 2 != 0) { winner_2 = previousRound.matches[parseInt(match.match_id) - 1].match_winner }
+    if (winner_2 == null) { return }
+
+    const newMatch: IMatch = {
+      match_id: previousBracketNumber.toString(),
+      teams: [winner_1, winner_2],
+      date_time_start: '',
+      date_time_end: '',
+      match_winner: null
+    }
+
+    setTournamentRedisNewMatch(tournament, round_num, newMatch)
+
+  }
+
+
   const getMatchWinner = (team_tag: string, round: number): ITeam | null => {
     if (!tournament) { return null }
     if (!tournament.rounds) { return null }

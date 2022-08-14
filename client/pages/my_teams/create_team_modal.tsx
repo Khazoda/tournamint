@@ -213,6 +213,7 @@ const CreateTeamModal = (props: Props) => {
         <div className="mt-2 flex w-full flex-col gap-2 px-4 text-lg">
           <div className="flex flex-row gap-2 sm:justify-between">
             <input
+              autoFocus
               id="tag_input"
               type="text"
               placeholder="TAG"

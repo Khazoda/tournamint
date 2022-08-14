@@ -168,7 +168,7 @@ const TournamentSeeded = (props: {
             {(tournaments?.organized_by_ign != ign && !tournaments?.rounds) &&
                 <>
                     <>Waiting on tournament owner to seed. Try refreshing</>
-                    <div><Button onClick={() => alert('refresh tournament round data')}>Refresh</Button></div>
+                    <div><Button onClick={() => alert('TODO: implement refresh tournament round data')}>Refresh</Button></div>
 
                 </>
             }

@@ -223,6 +223,7 @@ const Home: NextPage<Props> = (props) => {
 
       if (tournaments && tournaments.tournament_id != 'ABC123') {
 
+
         // Filling Up
         if (tournaments.teams.length < tournaments.type) {
           if (tournament_state != TOURNAMENT_STATE.FILLING_UP) {
@@ -242,6 +243,8 @@ const Home: NextPage<Props> = (props) => {
             setTournament_state(TOURNAMENT_STATE.SEEDED)
           }
         }
+
+
         // In Progress
         if (tournaments.teams.length == tournaments.type && moment(new Date()) >= moment(tournaments.date_time_start) && tournaments.rounds) {
           if (tournament_state != TOURNAMENT_STATE.ONGOING) {
@@ -249,7 +252,10 @@ const Home: NextPage<Props> = (props) => {
             setTournament_state(TOURNAMENT_STATE.ONGOING)
           }
         }
-        // !console.log(moment(new Date()) < seeding_date_time);
+        // console.log(tournament_state, tournaments.teams.length, tournaments.type);
+        // console.log(moment(new Date()) >= moment(tournaments.date_time_start) && tournaments.rounds);
+        // console.log(tournaments.rounds);
+
         // !Something is wrong with the moment calculations. When the countdown reaches about 3 minutes, the seeding state is no longer active
       }
     }
