@@ -74,7 +74,7 @@ const TournamentDisplay = (props: {
 
   useEffect(() => {
     calculateCurrentMatches()
-    console.log(tournament);
+    console.log('tournament changed, :', tournament);
 
   }, [tournament])
 
@@ -84,8 +84,8 @@ const TournamentDisplay = (props: {
     if (!tournament.rounds) { return }
     tournament.rounds.forEach((round: IRound) => {
       round.matches.forEach((match: IMatch) => {
+        if (match == null) { return }
         if (match.match_winner == null) {
-
           currentMatches.push({ round, match })
         }
       })
@@ -195,7 +195,6 @@ const TournamentDisplay = (props: {
     } else {
       temp_rounds[round].matches[parseInt(match.match_id)] = match
     }
-
     const tournamentDataOut: ITournament = {
       tournament_id: tournament_temp.tournament_id,
       tournament_name: tournament_temp.tournament_name,
@@ -209,6 +208,45 @@ const TournamentDisplay = (props: {
       lobby_code: tournament_temp.lobby_code,
       teams: tournament_temp.teams
     }
+    if (setUserDetails != undefined) {
+      setUserDetails(
+        displayName,
+        biography,
+        ign,
+        favouriteChampion,
+        rankInfo,
+        statistics,
+        tournamentsMade,
+        tournamentDataOut,
+        team
+      )
+    }
+    localStorage.setItem(
+      'userDetails',
+      JSON.stringify({
+        displayName: displayName,
+        biography: biography,
+        ign: ign,
+        favouriteChampion: favouriteChampion,
+        rankInfo: {
+          tier: rankInfo.tier,
+          rank: rankInfo.rank,
+          wins: rankInfo.wins,
+          losses: rankInfo.losses,
+        },
+        statistics: {
+          tournaments_played: statistics.tournaments_played,
+          tournaments_won: statistics.tournaments_won,
+          matches_won: statistics.matches_won,
+          people_met: statistics.people_met,
+        },
+        tournamentsMade: tournamentsMade,
+        tournaments: tournamentDataOut,
+        team: team,
+      })
+    )
+
+
     const tournament_post_response = await fetch('/api/tournament/tournament', {
       body: JSON.stringify({ data: tournamentDataOut }),
       headers: { 'Content-Type': 'application/json' },
@@ -235,13 +273,16 @@ const TournamentDisplay = (props: {
       case 16:
         if ((match_id) <= 1) {
           if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
-
         }
-        console.log('ph');
-
-        if (2 <= (match_id) && (match_id) <= 3) { }
-        if (4 <= (match_id) && (match_id) <= 5) { }
-        if (6 <= (match_id) && (match_id) <= 7) { }
+        if (2 <= (match_id) && (match_id) <= 3) {
+          if (bracketIsFinished(1, round)) { createMatch(round, 1, round_id + 1, winner, round.matches[match_id]) }
+        }
+        if (4 <= (match_id) && (match_id) <= 5) {
+          if (bracketIsFinished(2, round)) { createMatch(round, 2, round_id + 1, winner, round.matches[match_id]) }
+        }
+        if (6 <= (match_id) && (match_id) <= 7) {
+          if (bracketIsFinished(3, round)) { createMatch(round, 3, round_id + 1, winner, round.matches[match_id]) }
+        }
 
         break;
       default:
@@ -291,6 +332,47 @@ const TournamentDisplay = (props: {
     return winner
   }
 
+  const DEBUGRESETWINNERS = async () => {
+    const tournament_temp = tournament
+    // Redis tournament rounds set
+    if (!tournament_temp) { return }
+    if (!tournament_temp.rounds) { return }
+
+    let temp_rounds: IRound[] = tournament_temp.rounds
+    temp_rounds[0].matches.forEach((match) => {
+      match.match_winner = null
+    })
+    temp_rounds = [{
+      round_id: '0',
+      date_time_start: temp_rounds[0].date_time_start,
+      date_time_end: temp_rounds[0].date_time_end,
+      matches: temp_rounds[0].matches,
+      round_winners: []
+    }
+    ]
+
+    const tournamentDataOut: ITournament = {
+      tournament_id: tournament_temp.tournament_id,
+      tournament_name: tournament_temp.tournament_name,
+      is_private: tournament_temp.is_private,
+      organized_by_ign: tournament_temp.organized_by_ign,
+      type: tournament_temp.type,
+      rounds: temp_rounds,
+      date_time_start: tournament_temp.date_time_start,
+      date_time_end: tournament_temp.date_time_end,
+      winning_team: tournament_temp.winning_team,
+      lobby_code: tournament_temp.lobby_code,
+      teams: tournament_temp.teams
+    }
+    const tournament_post_response = await fetch('/api/tournament/tournament', {
+      body: JSON.stringify({ data: tournamentDataOut }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PATCH',
+    })
+    console.log(tournament_post_response);
+
+    calculateCurrentMatches()
+  }
   // alert('Team ' + match.teams[0].team_tag + ' won match ' + match.match_id + ' vs ' + match.teams[1].team_tag + ' in round ' + round.round_id)
   const adminButton = <label htmlFor="panel-modal" className="btn modal-button btn-primary mx-auto mt-2">open admin panel</label>
   const adminPanel = (<div>
@@ -339,6 +421,8 @@ const TournamentDisplay = (props: {
         <div className="modal-box relative w-full dark:bg-black-600">
           <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
           <label className="btn btn-sm btn-circle text-secondary absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
+          <label className="btn btn-sm btn-circle text-secondary absolute right-24 top-2" onClick={() => DEBUGRESETWINNERS()}>😍</label>
+
           <h3 className="text-lg font-bold">Instructions</h3>
           <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
 

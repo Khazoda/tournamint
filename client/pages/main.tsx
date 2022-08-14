@@ -186,7 +186,7 @@ const Home: NextPage<Props> = (props) => {
 
     if (tournaments != null) {
       let id = tournaments.tournament_id.toUpperCase()
-      console.log('id:', id);
+
 
       if (id != 'ABC123') {
         // Tournament Redis
@@ -196,6 +196,8 @@ const Home: NextPage<Props> = (props) => {
           .catch((res) => console.log(res.error))
 
         setFresh_tournament_data(result)
+        console.log('fresh:', fresh_tournament_data);
+        console.log('stake:', tournaments);
       }
     }
   }
@@ -287,13 +289,15 @@ const Home: NextPage<Props> = (props) => {
       })
       if (currentRound.round_id != 'ABC123') {
         currentRound.matches.forEach((match: IMatch) => {
-          if (match.teams[0].team_tag == team?.team_tag) {
-            nextOpponent = match.teams[1]
+          if (match != null) {
+            if (match.teams[0].team_tag == team?.team_tag) {
+              nextOpponent = match.teams[1]
+            }
+            if (match.teams[1].team_tag == team?.team_tag) {
+              nextOpponent = match.teams[0]
+            }
+            setNext_opponent(nextOpponent)
           }
-          if (match.teams[1].team_tag == team?.team_tag) {
-            nextOpponent = match.teams[0]
-          }
-          setNext_opponent(nextOpponent)
         })
       }
     }
