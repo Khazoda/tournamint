@@ -293,7 +293,19 @@ const TournamentDisplay = (props: {
             if (bracketIsFinished(1, round)) { createMatch(round, 1, round_id + 1, winner, round.matches[match_id]) }
           }
         }
-
+        if (round_id == 2) {
+          if ((match_id) == 0) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+          if (match_id == 1) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+        }
+        if (round_id == 3) {
+          if ((match_id) == 0) {
+            alert('TODO: CODE THE WINNER DATA SETTING FOR TEAM' + winner.team_name)
+          }
+        }
         break;
       default:
         break;
@@ -327,18 +339,28 @@ const TournamentDisplay = (props: {
   }
 
 
-  const getMatchWinner = (team_tag: string, round: number): ITeam | null => {
+  const getMatchWinner = (team_1_tag: string, team_2_tag: string, round: number): ITeam | null => {
     if (!tournament) { return null }
     if (!tournament.rounds) { return null }
     if (!tournament.rounds[round]) { return null }
     var winner: ITeam | null = null
 
-    if (tournament.rounds[round].round_winners.includes(team_tag))
+    if (tournament.rounds[round].round_winners.includes(team_1_tag)) {
       tournament.teams.forEach((team) => {
-        if (team.team_tag == team_tag) {
+        if (team.team_tag == team_1_tag) {
           winner = team
         }
       })
+    }
+    if (tournament.rounds[round].round_winners.includes(team_2_tag)) {
+      tournament.teams.forEach((team) => {
+        if (team.team_tag == team_2_tag) {
+          winner = team
+        }
+      })
+    }
+
+
     return winner
   }
 
@@ -460,7 +482,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 0, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 0, 0), getTag(0, 0, 1), 0)}
 
                     team_1_tag={getTag(0, 0, 0)}
                     team_1_icon_index={getIconIndex(0, 0, 0)}
@@ -473,7 +495,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 1, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 1, 0), getTag(0, 1, 1), 0)}
                     team_1_tag={getTag(0, 1, 0)}
                     team_1_icon_index={getIconIndex(0, 1, 0)}
 
@@ -488,7 +510,7 @@ const TournamentDisplay = (props: {
               <div className="relative before:absolute before:-left-2 before:top-1/2 before:h-0 before:w-2 before:border-b-[2px] before:border-black-600  dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 0, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 0, 0), getTag(1, 0, 1), 1)}
                     team_1_tag={getTag(1, 0, 0)}
                     team_1_icon_index={getIconIndex(1, 0, 0)}
 
@@ -517,7 +539,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 0, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 0, 0), getTag(0, 0, 1), 0)}
                     team_1_tag={getTag(0, 0, 0)}
                     team_1_icon_index={getIconIndex(0, 0, 0)}
 
@@ -529,7 +551,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 1, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 1, 0), getTag(0, 1, 1), 0)}
                     team_1_tag={getTag(0, 1, 0)}
                     team_1_icon_index={getIconIndex(0, 1, 0)}
 
@@ -541,7 +563,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-4 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 2, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 2, 0), getTag(0, 2, 1), 0)}
                     team_1_tag={getTag(0, 2, 0)}
                     team_1_icon_index={getIconIndex(0, 2, 0)}
 
@@ -553,7 +575,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 3, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 3, 0), getTag(0, 3, 1), 0)}
                     team_1_tag={getTag(0, 3, 0)}
                     team_1_icon_index={getIconIndex(0, 3, 0)}
 
@@ -568,7 +590,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-b-[2px] before:border-black-600 after:absolute after:-right-6 after:top-1/2 after:h-[150%] after:w-6 after:rounded-tr-[9.6px]  after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 0, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 0, 0), getTag(1, 0, 1), 1)}
                     team_1_tag={getTag(1, 0, 0)}
                     team_1_icon_index={getIconIndex(1, 0, 0)}
 
@@ -580,7 +602,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-b-[2px] before:border-black-600 after:absolute after:-right-6 after:bottom-1/2 after:h-[150%] after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 1, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 1, 0), getTag(1, 1, 1), 1)}
                     team_1_tag={getTag(1, 1, 0)}
                     team_1_icon_index={getIconIndex(1, 1, 0)}
 
@@ -595,7 +617,7 @@ const TournamentDisplay = (props: {
               <div className="relative before:absolute before:-left-7 before:top-1/2 before:h-0 before:w-7 before:border-b-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(2, 0, 0), 2)}
+                    winner={getMatchWinner(getTag(2, 0, 0), getTag(2, 0, 1), 2)}
                     team_1_tag={getTag(2, 0, 0)}
                     team_1_icon_index={getIconIndex(2, 0, 0)}
 
@@ -623,7 +645,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 0, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 0, 0), getTag(0, 0, 1), 0)}
                     team_1_tag={getTag(0, 0, 0)}
                     team_1_icon_index={getIconIndex(0, 0, 0)}
 
@@ -635,7 +657,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 1, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 1, 0), getTag(0, 1, 1), 0)}
                     team_1_tag={getTag(0, 1, 0)}
                     team_1_icon_index={getIconIndex(0, 1, 0)}
 
@@ -647,7 +669,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-4 after:absolute after:-right-6 after:top-1/2 after:h-full after:w-6 after:rounded-tr-[9.6px] after:border-r-[2px] after:border-t-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 2, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 2, 0), getTag(0, 2, 1), 0)}
                     team_1_tag={getTag(0, 2, 0)}
                     team_1_icon_index={getIconIndex(0, 2, 0)}
 
@@ -659,7 +681,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-2 after:absolute after:-right-6 after:bottom-1/2 after:h-full after:w-6 after:rounded-br-[9.6px] after:border-r-[2px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 3, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 3, 0), getTag(0, 3, 1), 0)}
                     team_1_tag={getTag(0, 3, 0)}
                     team_1_icon_index={getIconIndex(0, 3, 0)}
 
@@ -674,7 +696,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600 dark:before:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 0, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 0, 0), getTag(1, 0, 1), 1)}
                     team_1_tag={getTag(1, 0, 0)}
                     team_1_icon_index={getIconIndex(1, 0, 0)}
 
@@ -686,7 +708,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600  dark:before:border-white-300 dark:after:border-white-300 after:absolute after:h-36 after:w-6 after:border-b-[2px] after:border-r-[2px]  after:-right-6 after:bottom-4 after:rounded-br-xl after:border-black-800">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 1, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 1, 0), getTag(1, 1, 1), 1)}
                     team_1_tag={getTag(1, 1, 0)}
                     team_1_icon_index={getIconIndex(1, 1, 0)}
 
@@ -701,7 +723,7 @@ const TournamentDisplay = (props: {
               <div className="relative before:absolute before:-left-[52px] before:top-1/2 before:h-0 before:w-[52px] before:border-b-[2px] before:border-black-600  dark:before:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(2, 0, 0), 2)}
+                    winner={getMatchWinner(getTag(2, 0, 0), getTag(2, 0, 1), 2)}
                     team_1_tag={getTag(2, 0, 0)}
                     team_1_icon_index={getIconIndex(2, 0, 0)}
 
@@ -713,7 +735,7 @@ const TournamentDisplay = (props: {
               <div className="relative  dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(3, 0, 0), 3)}
+                    winner={getMatchWinner(getTag(3, 0, 0), getTag(3, 0, 1), 3)}
                     team_1_tag={getTag(3, 0, 0)}
                     team_1_icon_index={getIconIndex(3, 0, 0)}
 
@@ -725,7 +747,7 @@ const TournamentDisplay = (props: {
               <div className="relative  after:absolute after:-right-[52px] after:top-1/2 after:h-0 after:w-[52px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(2, 1, 0), 2)}
+                    winner={getMatchWinner(getTag(2, 1, 0), getTag(2, 1, 1), 2)}
                     team_1_tag={getTag(2, 1, 0)}
                     team_1_icon_index={getIconIndex(2, 1, 0)}
 
@@ -741,7 +763,7 @@ const TournamentDisplay = (props: {
  ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 2, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 2, 0), getTag(1, 2, 1), 1)}
                     team_1_tag={getTag(1, 2, 0)}
                     team_1_icon_index={getIconIndex(1, 2, 0)}
 
@@ -753,7 +775,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600  dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(1, 3, 0), 1)}
+                    winner={getMatchWinner(getTag(1, 3, 0), getTag(1, 3, 1), 1)}
                     team_1_tag={getTag(1, 3, 0)}
                     team_1_icon_index={getIconIndex(1, 3, 0)}
 
@@ -771,7 +793,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-2 before:absolute before:-left-6 before:top-1/2 before:h-full before:w-6 before:rounded-tl-[9.6px] before:border-l-[2px] before:border-t-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 4, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 4, 0), getTag(0, 4, 1), 0)}
                     team_1_tag={getTag(0, 4, 0)}
                     team_1_icon_index={getIconIndex(0, 4, 0)}
 
@@ -783,7 +805,7 @@ const TournamentDisplay = (props: {
               <div className="relative mb-4 before:absolute before:-left-6 before:bottom-1/2 before:h-full before:w-6 before:rounded-bl-[9.6px] before:border-l-[2px] before:border-b-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 5, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 5, 0), getTag(0, 5, 1), 0)}
                     team_1_tag={getTag(0, 5, 0)}
                     team_1_icon_index={getIconIndex(0, 5, 0)}
 
@@ -795,7 +817,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-4 before:absolute before:-left-6 before:top-1/2 before:h-full before:w-6 before:rounded-tl-[9.6px] before:border-l-[2px] before:border-t-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 6, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 6, 0), getTag(0, 6, 1), 0)}
                     team_1_tag={getTag(0, 6, 0)}
                     team_1_icon_index={getIconIndex(0, 6, 0)}
 
@@ -807,7 +829,7 @@ const TournamentDisplay = (props: {
               <div className="relative mt-2 before:absolute before:-left-6 before:bottom-1/2 before:h-full before:w-6 before:rounded-bl-[9.6px] before:border-l-[2px] before:border-b-[2px] before:border-black-600 dark:before:border-white-300 dark:after:border-white-300">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(0, 7, 0), 0)}
+                    winner={getMatchWinner(getTag(0, 7, 0), getTag(0, 7, 1), 0)}
                     team_1_tag={getTag(0, 7, 0)}
                     team_1_icon_index={getIconIndex(0, 7, 0)}
 
