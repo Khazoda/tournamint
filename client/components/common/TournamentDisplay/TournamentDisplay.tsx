@@ -271,17 +271,27 @@ const TournamentDisplay = (props: {
         if (2 <= (match_id) && (match_id) <= 3) { }
         break;
       case 16:
-        if ((match_id) <= 1) {
-          if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+        if (round_id == 0) {
+          if ((match_id) <= 1) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+          if (2 <= (match_id) && (match_id) <= 3) {
+            if (bracketIsFinished(1, round)) { createMatch(round, 1, round_id + 1, winner, round.matches[match_id]) }
+          }
+          if (4 <= (match_id) && (match_id) <= 5) {
+            if (bracketIsFinished(2, round)) { createMatch(round, 2, round_id + 1, winner, round.matches[match_id]) }
+          }
+          if (6 <= (match_id) && (match_id) <= 7) {
+            if (bracketIsFinished(3, round)) { createMatch(round, 3, round_id + 1, winner, round.matches[match_id]) }
+          }
         }
-        if (2 <= (match_id) && (match_id) <= 3) {
-          if (bracketIsFinished(1, round)) { createMatch(round, 1, round_id + 1, winner, round.matches[match_id]) }
-        }
-        if (4 <= (match_id) && (match_id) <= 5) {
-          if (bracketIsFinished(2, round)) { createMatch(round, 2, round_id + 1, winner, round.matches[match_id]) }
-        }
-        if (6 <= (match_id) && (match_id) <= 7) {
-          if (bracketIsFinished(3, round)) { createMatch(round, 3, round_id + 1, winner, round.matches[match_id]) }
+        if (round_id == 1) {
+          if ((match_id) <= 1) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+          if (2 <= (match_id) && (match_id) <= 3) {
+            if (bracketIsFinished(1, round)) { createMatch(round, 1, round_id + 1, winner, round.matches[match_id]) }
+          }
         }
 
         break;
@@ -673,7 +683,7 @@ const TournamentDisplay = (props: {
                   ></MatchTidbit>
                 )}
               </div>
-              <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600  dark:before:border-white-300 dark:after:border-white-300">
+              <div className="relative mt-4 before:absolute before:-left-3 before:top-1/2 before:h-0 before:w-3 before:border-t-[2px]  before:border-black-600  dark:before:border-white-300 dark:after:border-white-300 after:absolute after:h-36 after:w-6 after:border-b-[2px] after:border-r-[2px]  after:-right-6 after:bottom-4 after:rounded-br-xl after:border-black-800">
                 {team != null && (
                   <MatchTidbit
                     winner={getMatchWinner(getTag(1, 1, 0), 1)}
@@ -688,7 +698,7 @@ const TournamentDisplay = (props: {
             </div>
             {/* Center */}
             <div className="mx-4 flex flex-col justify-around  ">
-              <div className="relative before:absolute before:-left-[52px] before:top-1/2 before:h-0 before:w-[52px] before:border-b-[2px] before:border-black-600 after:absolute after:-right-[52px] after:top-1/2 after:h-0 after:w-[52px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
+              <div className="relative before:absolute before:-left-[52px] before:top-1/2 before:h-0 before:w-[52px] before:border-b-[2px] before:border-black-600  dark:before:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
                     winner={getMatchWinner(getTag(2, 0, 0), 2)}
@@ -712,22 +722,23 @@ const TournamentDisplay = (props: {
                   ></MatchTidbit>
                 )}
               </div>
-              <div className="relative before:absolute before:-left-[52px] before:top-1/2 before:h-0 before:w-[52px] before:border-b-[2px] before:border-black-600 after:absolute after:-right-[52px] after:top-1/2 after:h-0 after:w-[52px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
+              <div className="relative  after:absolute after:-right-[52px] after:top-1/2 after:h-0 after:w-[52px] after:border-b-[2px] after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
                 {team != null && (
                   <MatchTidbit
-                    winner={getMatchWinner(getTag(2, 0, 0), 2)}
-                    team_1_tag={getTag(2, 0, 0)}
-                    team_1_icon_index={getIconIndex(2, 0, 0)}
+                    winner={getMatchWinner(getTag(2, 1, 0), 2)}
+                    team_1_tag={getTag(2, 1, 0)}
+                    team_1_icon_index={getIconIndex(2, 1, 0)}
 
-                    team_2_tag={getTag(2, 0, 1)}
-                    team_2_icon_index={getIconIndex(2, 0, 1)}
+                    team_2_tag={getTag(2, 1, 1)}
+                    team_2_icon_index={getIconIndex(2, 1, 1)}
                   ></MatchTidbit>
                 )}
               </div>
             </div>
             {/* Right 2 */}
             <div className="ml-4 flex flex-col justify-around">
-              <div className="relative mb-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600 dark:before:border-white-300 dark:after:border-white-300 ">
+              <div className="relative mb-4 after:absolute after:-right-3 after:top-1/2 after:h-0 after:w-3 after:border-t-[2px]  after:border-black-600  dark:after:border-white-300 dark:before:border-white-300 before:absolute before:h-36 before:w-6 before:border-t-[2px] before:border-l-[2px]  before:-left-6 before:top-4 before:rounded-tl-xl before:border-black-800
+ ">
                 {team != null && (
                   <MatchTidbit
                     winner={getMatchWinner(getTag(1, 2, 0), 1)}
