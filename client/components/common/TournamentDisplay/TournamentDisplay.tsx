@@ -732,7 +732,7 @@ const TournamentDisplay = (props: {
                   ></MatchTidbit>
                 )}
               </div>
-              <div className="relative  dark:before:border-white-300 dark:after:border-white-300 ">
+              <div className="relative px-2 scale-110 ">
                 {team != null && (
                   <MatchTidbit
                     winner={getMatchWinner(getTag(3, 0, 0), getTag(3, 0, 1), 3)}
