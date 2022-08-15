@@ -267,8 +267,24 @@ const TournamentDisplay = (props: {
         if ((match_id) <= 1) { }
         break;
       case 8:
-        if ((match_id) <= 1) { }
-        if (2 <= (match_id) && (match_id) <= 3) { }
+        if (round_id == 0) {
+          if ((match_id) <= 1) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+          if (2 <= (match_id) && (match_id) <= 3) {
+            if (bracketIsFinished(1, round)) { createMatch(round, 1, round_id + 1, winner, round.matches[match_id]) }
+          }
+        }
+        if (round_id == 1) {
+          if ((match_id) <= 1) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+        }
+        if (round_id == 2) {
+          if ((match_id) == 0) {
+            alert('TODO: CODE THE WINNER DATA SETTING FOR TEAM' + winner.team_name)
+          }
+        }
         break;
       case 16:
         if (round_id == 0) {
