@@ -420,8 +420,8 @@ const Home: NextPage<Props> = (props) => {
             {team && vs_showing ? (
               <div className="relative  flex h-full w-11/12 flex-row gap-4 self-center">
                 {/* Skewed backgrounds */}
-                <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00552d]"></span>
-                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#E11D48] to-[#AB1D48]"></span>
+                <span className=" absolute right-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-l from-[#00FF88] to-[#00C288]"></span>
+                <span className=" absolute left-0 top-1/2 h-16 w-1/2 -translate-y-1/2 -skew-x-[30deg] bg-gradient-to-r from-[#0284C7] to-[#02848C]"></span>
                 {/* Left Team Container */}
                 <div className="absolute left-0 top-1/2 flex h-16 w-1/2 -translate-y-1/2 items-center text-5xl">
                   <span className="absolute max-h-16 w-16 rounded-md drop-shadow-lg ">

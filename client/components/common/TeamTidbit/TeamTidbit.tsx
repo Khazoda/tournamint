@@ -23,7 +23,7 @@ const TeamTidbit = (props: {
     team,
   } = useUser()
   return side == 'left' ? (
-    <div style={winner?.team_tag == team_tag ? { borderTop: 'lime solid 2px' } : winner?.team_tag == null ? {} : { background: 'gray', color: 'darkgray', borderTop: 'red solid 2px' }} className={`${team?.team_tag == team_tag ? 'text-white-100 bg-sky-600  ' : 'bg-orange-500 dark:bg-orange-700 text-white-200'} flex h-full w-full flex-row `}>
+    <div style={winner?.team_tag == team_tag ? { borderTop: 'lime solid 2px' } : winner?.team_tag == null ? {} : { background: 'gray', color: 'darkgray', borderTop: 'red solid 2px' }} className={`${team?.team_tag == team_tag ? 'text-white-100 bg-sky-600  ' : 'bg-emerald-500 dark:bg-emerald-700 text-white-200'} flex h-full w-full flex-row `}>
       <div style={winner?.team_tag == null ? { filter: 'none' } : {}} className={`${winner?.team_tag == team_tag ? '' : 'grayscale'} relative h-full w-1/2`}>
         <Image
           src={team_icon_path == '' ? '/images/spinner.svg' : team_icon_path}
@@ -35,7 +35,7 @@ const TeamTidbit = (props: {
       </h2>
     </div>
   ) : (
-    <div style={winner?.team_tag == team_tag ? { borderTop: 'lime solid 2px' } : winner?.team_tag == null ? {} : { background: 'gray', color: 'darkgray', borderTop: 'red solid 2px' }} className={`${team?.team_tag == team_tag ? 'text-white-100 bg-sky-600 ' : 'bg-orange-500 dark:bg-orange-700 text-white-200'} flex h-full w-full flex-row `}>
+    <div style={winner?.team_tag == team_tag ? { borderTop: 'lime solid 2px' } : winner?.team_tag == null ? {} : { background: 'gray', color: 'darkgray', borderTop: 'red solid 2px' }} className={`${team?.team_tag == team_tag ? 'text-white-100 bg-sky-600 ' : 'bg-emerald-500 dark:bg-emerald-700 text-white-200'} flex h-full w-full flex-row `}>
       <h2 className="w-3/4 self-center pl-6 text-left text-2xl font-bold ">
         {team_tag}
       </h2>

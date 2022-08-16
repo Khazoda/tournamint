@@ -264,7 +264,10 @@ const TournamentDisplay = (props: {
     const match_id = parseInt(match.match_id)
     switch (tournament.type) {
       case 4:
-        if ((match_id) <= 1) { }
+        if ((match_id) <= 1) {
+
+          // AAAAAAAAAAA
+        }
         break;
       case 8:
         if (round_id == 0) {
