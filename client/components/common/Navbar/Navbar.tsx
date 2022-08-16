@@ -32,6 +32,7 @@ export default function Navbar(props: Props) {
     team,
     tournaments,
     tournamentsMade,
+    settings
   } = useUser()
   const router = useRouter()
 
@@ -67,9 +68,9 @@ export default function Navbar(props: Props) {
     }
   }
   return (
-    <div className="fixed z-50 flex h-20 w-full flex-row-reverse items-center justify-between border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]">
+    <div className={`${settings?.centered_navbar ? 'justify-center' : "justify-between"} fixed z-50 flex h-20 w-full flex-row-reverse items-center border-b-white-500 bg-white-200 px-3 py-1 drop-shadow-md dark:border-b-black-500 dark:bg-black-600 md:border-b-[1px]`} >
       {/* Profile */}
-      <div className="inline-flex w-[250px] place-content-end text-right">
+      <div className="inline-flex w-[250px] place-content-end text-right" >
         <div className="flex w-8 flex-col items-end justify-between pr-1 md:w-auto md:pr-3">
           <div className="flex h-full flex-col content-center gap-1 md:h-auto md:flex-row ">
             <button
@@ -110,9 +111,9 @@ export default function Navbar(props: Props) {
                 userData.profileIconId === undefined
                   ? '/images/spinner.svg'
                   : DD_PREFIX +
-                    'img/profileicon/' +
-                    userData.profileIconId +
-                    '.png'
+                  'img/profileicon/' +
+                  userData.profileIconId +
+                  '.png'
               }
               alt="Profile picture"
               layout="fill"
@@ -126,13 +127,13 @@ export default function Navbar(props: Props) {
             </span>
           </div>
         </Link>
-      </div>
+      </div >
       {/* Team */}
-      <div className=" w-[250px] justify-center gap-3 lg:inline-flex">
+      < div className=" w-[250px] justify-center gap-3 lg:inline-flex" >
         <Link href="/my_teams">
           <a href="" className="font-heading hover:font-bold">
             {(team == null || team.team_tag == 'ABC') &&
-            router.pathname == '/main' ? (
+              router.pathname == '/main' ? (
               <Button
                 variant="outline"
                 startIcon={<FiUsers />}
@@ -161,9 +162,9 @@ export default function Navbar(props: Props) {
             )}
           </a>
         </Link>
-      </div>
+      </div >
       {/* Logo */}
-      <div className="flex w-[250px] align-middle">
+      < div className="flex w-[250px] align-middle" >
         <Link href="/main">
           <a
             title="Home"
@@ -177,7 +178,7 @@ export default function Navbar(props: Props) {
             ></Image>
           </a>
         </Link>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }

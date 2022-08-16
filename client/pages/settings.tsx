@@ -144,19 +144,15 @@ function Settings(props: Props) {
         {/* Footer */}
         <div className="">
           <div className="divider dark:before:bg-white-800 dark:after:bg-white-800"></div>
-          <div className="align-center flex flex-row items-center justify-between ">
-            <label>Delete Account</label>
-            <Button
-              text="DELETE"
-              type="negative"
-              fixedWidth
-              onClick={() => alert('TODO: impl account deletion')}
-            ></Button>
-          </div>
+
           <ul>
             <li className="text-gray-500 dark:text-gray-400">
-              Deleting your account removes all identifiable user data
-              associated with you from this Tournamint distribution.
+              If you wish to permanently delete your account, please
+              contact the administrator of this Tournamint distribution.
+              <br />
+              <span className='text-gray-400 dark:text-gray-600'>Deleting your account removes all identifiable user data
+                associated with you from this Tournamint distribution.
+              </span>
             </li>
           </ul>
         </div>
