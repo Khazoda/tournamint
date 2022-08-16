@@ -264,9 +264,16 @@ const TournamentDisplay = (props: {
     const match_id = parseInt(match.match_id)
     switch (tournament.type) {
       case 4:
-        if ((match_id) <= 1) {
+        if (round_id == 0) {
 
-          // AAAAAAAAAAA
+          if ((match_id) <= 1) {
+            if (bracketIsFinished(0, round)) { createMatch(round, 0, round_id + 1, winner, round.matches[match_id]) }
+          }
+        }
+        if (round_id == 1) {
+          if ((match_id) == 0) {
+            alert('TODO: CODE THE WINNER DATA SETTING FOR TEAM' + winner.team_name)
+          }
         }
         break;
       case 8:
