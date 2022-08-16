@@ -38,6 +38,7 @@ const CreateTeamModal = (props: Props) => {
     tournamentsMade,
     tournaments,
     team,
+    settings
   } = useUser()
 
   const TEAM = team
@@ -127,7 +128,8 @@ const CreateTeamModal = (props: Props) => {
             statistics,
             tournamentsMade,
             tournaments,
-            dataOut
+            dataOut,
+            settings
           )
           localStorage.setItem(
             'userDetails',
@@ -179,6 +181,8 @@ const CreateTeamModal = (props: Props) => {
               passcode: get_data.passcode,
               team_tag: tag_out.toUpperCase(),
               tournament_id: get_data.tournament_id,
+              settings: get_data.settings
+
             }
             const account_post_response = await fetch('/api/account', {
               body: JSON.stringify({ data: dataOut }),

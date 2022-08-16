@@ -24,6 +24,7 @@ export default function create_tournament({ }: Props) {
     tournaments,
     tournamentsMade,
     favouriteChampion,
+    settings
   } = useUser()
   const [name, setName] = useState('')
   const [number_of_teams, setNumber_of_teams] = useState<4 | 8 | 16>(8)
@@ -131,7 +132,8 @@ export default function create_tournament({ }: Props) {
                 statistics,
                 tournamentsMade + 1,
                 dataOut,
-                team
+                team,
+                settings
               )
               localStorage.setItem(
                 'userDetails',
@@ -183,6 +185,8 @@ export default function create_tournament({ }: Props) {
                   passcode: get_data.passcode,
                   team_tag: get_data.team_tag,
                   tournament_id: dataOut.tournament_id,
+                  settings: get_data.settings
+
                 }
                 const account_post_response = await fetch('/api/account', {
                   body: JSON.stringify({ data: accountDataOut }),

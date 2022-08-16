@@ -31,6 +31,7 @@ export default function join_tournament(props: Props) {
     tournaments,
     tournamentsMade,
     setUserDetails,
+    settings
   } = useUser()
 
   const handleTournamentJoinFormSubmit = (
@@ -97,6 +98,8 @@ export default function join_tournament(props: Props) {
                   passcode: account_data.passcode,
                   team_tag: account_data.team_tag,
                   tournament_id: id,
+                  settings: account_data.settings
+
                 }
                 // console.log('data_out', dataOut)
 
@@ -118,7 +121,8 @@ export default function join_tournament(props: Props) {
                   statistics,
                   tournamentsMade,
                   tournament_temp,
-                  team
+                  team,
+                  settings
                 )
               }
               localStorage.setItem(

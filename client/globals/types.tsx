@@ -95,4 +95,11 @@ export interface IAccountData {
   passcode: string
   team_tag: string
   tournament_id: string
+  settings: ISettings
+}
+
+// Settings for visual and accessibility
+
+export interface ISettings {
+  centered_navbar: boolean
 }

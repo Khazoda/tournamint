@@ -25,6 +25,7 @@ const JoinTeamModal = (props: Props) => {
     tournaments,
     tournamentsMade,
     setUserDetails,
+    settings
   } = useUser()
 
   const handleUserDetailsFormSubmit = (
@@ -104,7 +105,8 @@ const JoinTeamModal = (props: Props) => {
                       statistics,
                       tournamentsMade,
                       tournaments_temp,
-                      team_temp
+                      team_temp,
+                      settings
                     )
 
                     localStorage.setItem(
@@ -141,7 +143,8 @@ const JoinTeamModal = (props: Props) => {
                       statistics,
                       tournamentsMade,
                       tournaments,
-                      team_temp
+                      team_temp,
+                      settings
                     )
 
                     localStorage.setItem(
@@ -196,6 +199,8 @@ const JoinTeamModal = (props: Props) => {
                     passcode: get_data.passcode,
                     team_tag: tag,
                     tournament_id: team_temp.tournament_id,
+                    settings: get_data.settings
+
                   }
                   const account_post_response = await fetch('/api/account', {
                     body: JSON.stringify({ data: dataOut }),

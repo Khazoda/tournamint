@@ -55,6 +55,9 @@ const Home: NextPage = (props) => {
     tournamentsMade: 0,
     tournaments: null,
     team: null,
+    settings: {
+      centered_navbar: false
+    }
   }
 
   useEffect(() => {
@@ -126,6 +129,10 @@ const Home: NextPage = (props) => {
       passcode: pass,
       team_tag: 'ABC',
       tournament_id: 'ABC123',
+      settings: {
+        centered_navbar: false
+      }
+
     }
     const account_post_response = await fetch('/api/account', {
       body: JSON.stringify({ data: dataOut }),
@@ -240,7 +247,8 @@ const Home: NextPage = (props) => {
           },
           seed_data.tournamentsMade,
           tournament_data,
-          team_data
+          team_data,
+          account_data.settings
         )
 
         localStorage.setItem(
@@ -265,6 +273,7 @@ const Home: NextPage = (props) => {
             tournamentsMade: seed_data.tournamentsMade,
             tournaments: tournament_data,
             team: team_data,
+            settings: account_data.settings
           })
         )
       }

@@ -42,6 +42,7 @@ function Profile(props: Props) {
     team,
     tournaments,
     tournamentsMade,
+    settings
   } = useUser()
   const [name, setName] = useState<string>('Default')
   const [bio, setBio] = useState<string>('Default Biography')
@@ -280,14 +281,14 @@ function Profile(props: Props) {
     if (match == undefined) {
       setSplashURL(
         'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
-          Capitalize(favouriteChampion[0]) +
-          '_0.jpg'
+        Capitalize(favouriteChampion[0]) +
+        '_0.jpg'
       )
     } else if (match?.length > 0) {
       setSplashURL(
         'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
-          Capitalize(favouriteChampion[1]) +
-          '_0.jpg'
+        Capitalize(favouriteChampion[1]) +
+        '_0.jpg'
       )
     }
   }
@@ -309,7 +310,8 @@ function Profile(props: Props) {
               statistics,
               tournamentsMade,
               tournaments,
-              team
+              team,
+              settings
             )
             localStorage.setItem(
               'userDetails',
@@ -358,6 +360,7 @@ function Profile(props: Props) {
                 passcode: get_data.passcode,
                 team_tag: get_data.team_tag,
                 tournament_id: get_data.tournament_id,
+                settings: get_data.settings
               }
               // console.log('data_out', dataOut)
 
@@ -428,9 +431,9 @@ function Profile(props: Props) {
                 userData.profileIconId === undefined
                   ? '/images/spinner.svg'
                   : DD_PREFIX +
-                    'img/profileicon/' +
-                    userData.profileIconId +
-                    '.png'
+                  'img/profileicon/' +
+                  userData.profileIconId +
+                  '.png'
               }
               alt="Profile picture"
               layout="fill"
@@ -518,16 +521,15 @@ function Profile(props: Props) {
             </div>
             <div className="relative text-left">
               <span
-                className={`${
-                  Number(
-                    (
-                      (userData.wins / (userData.losses + userData.wins)) *
-                      100
-                    ).toPrecision(3)
-                  ) >= 50
-                    ? 'text-lime-700 dark:text-lime-500'
-                    : 'text-orange-500'
-                }`}
+                className={`${Number(
+                  (
+                    (userData.wins / (userData.losses + userData.wins)) *
+                    100
+                  ).toPrecision(3)
+                ) >= 50
+                  ? 'text-lime-700 dark:text-lime-500'
+                  : 'text-orange-500'
+                  }`}
               >
                 {(
                   (userData.wins / (userData.losses + userData.wins)) *

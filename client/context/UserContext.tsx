@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { IRankInfo, IStatistics, ITeam, ITournament } from '../globals/types'
+import { IRankInfo, ISettings, IStatistics, ITeam, ITournament } from '../globals/types'
 
 const defaultStatistics = {
   tournaments_played: 5,
@@ -24,6 +24,7 @@ export type userContextType = {
   tournamentsMade: number
   tournaments: ITournament | null
   team: ITeam | null
+  settings: ISettings | null
 
   setUserDetails?: (
     displayName: string,
@@ -34,7 +35,9 @@ export type userContextType = {
     statistics: IStatistics,
     tournamentsMade: number,
     tournaments: ITournament | null,
-    team: ITeam | null
+    team: ITeam | null,
+    settings: ISettings | null
+
   ) => void
 }
 
@@ -76,6 +79,11 @@ const userContextDefaultValues: userContextType = {
     tournament_id: 'ABC123'
   },
   setUserDetails: () => { },
+
+  settings: {
+    centered_navbar: false
+  },
+
 }
 const UserContext = createContext<userContextType>(userContextDefaultValues)
 
@@ -101,7 +109,8 @@ export function UserProvider({ children }: Props) {
     statistics: IStatistics,
     tournamentsMade: number,
     tournaments: any,
-    team: ITeam | null
+    team: ITeam | null,
+    settings: ISettings | null
   ) => {
     updateUserDetails({
       displayName: name,
@@ -113,6 +122,8 @@ export function UserProvider({ children }: Props) {
       tournamentsMade: tournamentsMade,
       tournaments: tournaments,
       team: team,
+
+      settings: settings
     })
     // !DISABLED TUD TO OVERWRITING LOCALSTORAGE
     // if (localStorage?.userDetails != null) {
@@ -141,6 +152,8 @@ export function UserProvider({ children }: Props) {
       const tournamentsMade: number = LSuserDetails.tournamentsMade
       const tournaments: any = LSuserDetails.tournaments
       const team: ITeam | null = LSuserDetails.team
+
+      const settings: ISettings = LSuserDetails.settings
       setUserDetails(
         displayName,
         biography,
@@ -150,7 +163,9 @@ export function UserProvider({ children }: Props) {
         statistics,
         tournamentsMade,
         tournaments,
-        team
+        team,
+
+        settings
       )
       // console.log(userDetails)
 
@@ -193,6 +208,8 @@ export function UserProvider({ children }: Props) {
     team: userDetails.team,
     favouriteChampion: userDetails.favouriteChampion,
     setUserDetails,
+
+    settings: userDetails.settings,
   }
 
   return (

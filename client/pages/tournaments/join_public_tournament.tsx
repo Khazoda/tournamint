@@ -22,6 +22,7 @@ const FindTournamentPage = (props: Props) => {
         tournaments,
         tournamentsMade,
         setUserDetails,
+        settings
     } = useUser()
 
     useEffect(() => {
@@ -124,6 +125,8 @@ const FindTournamentPage = (props: Props) => {
                                     passcode: account_data.passcode,
                                     team_tag: account_data.team_tag,
                                     tournament_id: id,
+                                    settings: account_data.settings
+
                                 }
                                 // console.log('data_out', dataOut)
 
@@ -145,7 +148,8 @@ const FindTournamentPage = (props: Props) => {
                                     statistics,
                                     tournamentsMade,
                                     tournament_temp,
-                                    team
+                                    team,
+                                    settings
                                 )
                             }
                             localStorage.setItem(

@@ -40,6 +40,7 @@ const TournamentDisplay = (props: {
     rankInfo,
     tournaments,
     tournamentsMade,
+    settings,
     setUserDetails,
   } = useUser()
 
@@ -115,7 +116,8 @@ const TournamentDisplay = (props: {
         statistics,
         tournamentsMade,
         temp_tournament,
-        team
+        team,
+        settings
       )
     }
     localStorage.setItem(
@@ -218,7 +220,8 @@ const TournamentDisplay = (props: {
         statistics,
         tournamentsMade,
         tournamentDataOut,
-        team
+        team,
+        settings
       )
     }
     localStorage.setItem(

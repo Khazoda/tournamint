@@ -446,7 +446,7 @@ const Home: NextPage<Props> = (props) => {
                     <span className="absolute bottom-0 right-4 h-32 w-1 rotate-[30deg]  bg-[#003a5c] drop-shadow-md"></span>
                   </div>
 
-                  <span className="absolute bottom-3 left-0 font-extrabold text-[#E11D48] drop-shadow-lg">
+                  <span className="absolute bottom-3 left-0 font-extrabold text-[#0284C7] drop-shadow-lg">
                     S
                   </span>
                 </span>
