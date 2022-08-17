@@ -449,7 +449,8 @@ function Profile(props: Props) {
           </div>
         </div>
         {/* TROPHIES & RANK */}
-        <div className="relative flex  h-[350px] w-full flex-row gap-2 drop-shadow-lg sm:h-full">
+        <div className="relative flex  h-[350px] w-full flex-col gap-2 drop-shadow-lg sm:h-full bg-green-200 dark:bg-black-600 p-2 rounded-md ">
+          <span className='row-start-1 row-end-1 col-start-1 col-end-3 '>Solo Queue Statistics</span>
           <div className="relative flex h-full w-full items-center justify-start rounded-md bg-gray-200 p-3 dark:bg-black-500">
             <div className="h-full w-full rounded-sm drop-shadow-sm">
               <Image
@@ -469,7 +470,51 @@ function Profile(props: Props) {
                   : userData.tier + ' ' + userData.rank}
               </span>
             </div>
+
           </div>
+          {/* WINRATE */}
+          {userData.wins == 0 || userData.losses == 0 ? (
+            <></>
+          ) : (
+            <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
+              <div className="relative text-right">
+                <span className="absolute left-0">Wins </span>
+                <span className="text-green-700 dark:text-green-500">
+                  {userData.wins}
+                </span>
+              </div>
+              <div className="relative text-left">
+                <span className="text-red-500">{userData.losses}</span>
+                <span className="absolute right-0"> Losses</span>
+              </div>
+              <div className="relative text-right">
+                <span className="absolute left-0">Games </span>
+                <span className="text-blue-500">
+                  {userData.wins + userData.losses}
+                </span>
+              </div>
+              <div className="relative text-left">
+                <span
+                  className={`${Number(
+                    (
+                      (userData.wins / (userData.losses + userData.wins)) *
+                      100
+                    ).toPrecision(3)
+                  ) >= 50
+                    ? 'text-lime-700 dark:text-lime-500'
+                    : 'text-orange-500'
+                    }`}
+                >
+                  {(
+                    (userData.wins / (userData.losses + userData.wins)) *
+                    100
+                  ).toPrecision(2)}
+                  %
+                </span>
+                <span className="absolute right-0"> WR</span>
+              </div>
+            </div>
+          )}
           {/* <div className="flex w-12 flex-col justify-around gap-1 rounded-md bg-gray-200 p-1 dark:bg-black-500">
             <FiAward
               title="Valerian Cup 2019"
@@ -498,54 +543,12 @@ function Profile(props: Props) {
           </div> */}
         </div>
 
-        {/* WINRATE */}
-        {userData.wins == 0 || userData.losses == 0 ? (
-          <></>
-        ) : (
-          <div className="relative grid w-full grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 rounded-md bg-gray-200 p-3 pt-2 drop-shadow-lg dark:bg-black-500">
-            <div className="relative text-right">
-              <span className="absolute left-0">Wins </span>
-              <span className="text-green-700 dark:text-green-500">
-                {userData.wins}
-              </span>
-            </div>
-            <div className="relative text-left">
-              <span className="text-red-500">{userData.losses}</span>
-              <span className="absolute right-0"> Losses</span>
-            </div>
-            <div className="relative text-right">
-              <span className="absolute left-0">Games </span>
-              <span className="text-blue-500">
-                {userData.wins + userData.losses}
-              </span>
-            </div>
-            <div className="relative text-left">
-              <span
-                className={`${Number(
-                  (
-                    (userData.wins / (userData.losses + userData.wins)) *
-                    100
-                  ).toPrecision(3)
-                ) >= 50
-                  ? 'text-lime-700 dark:text-lime-500'
-                  : 'text-orange-500'
-                  }`}
-              >
-                {(
-                  (userData.wins / (userData.losses + userData.wins)) *
-                  100
-                ).toPrecision(2)}
-                %
-              </span>
-              <span className="absolute right-0"> Winrate</span>
-            </div>
-          </div>
-        )}
+
       </div>
       {/* Center */}
       <div
         id="statistics_wrapper"
-        className="flex flex-col items-center gap-3 sm:h-[550px]  "
+        className="flex flex-col items-center gap-3 sm:h-[550px] sm:ml-4  "
       >
         <div className="flex h-full w-full flex-col items-center justify-around gap-1 rounded-md bg-gray-200 p-4 text-center shadow dark:bg-black-500 sm:w-[300px] ">
           {cardStatistics.map((card) => {
