@@ -47,7 +47,7 @@ const Home: NextPage = (props) => {
       losses: 0,
     },
     statistics: {
-      tournaments_played: 0,
+      log_ins: 0,
       tournaments_won: 0,
       matches_won: 0,
       people_met: 0,
@@ -131,6 +131,12 @@ const Home: NextPage = (props) => {
       tournament_id: 'ABC123',
       settings: {
         centered_navbar: false
+      },
+      statistics: {
+        matches_won: 0,
+        people_met: 0,
+        log_ins: 0,
+        tournaments_won: 0
       }
 
     }
@@ -226,6 +232,9 @@ const Home: NextPage = (props) => {
     team_data: any,
     tournament_data: any
   ) => {
+    var new_log_ins = account_data.statistics.log_ins
+    new_log_ins = new_log_ins + 1
+
     if (setUserDetails != null) {
       if (localStorage !== null) {
         setUserDetails(
@@ -240,15 +249,15 @@ const Home: NextPage = (props) => {
             rank: seed_data.rankInfo.rank,
           },
           {
-            tournaments_played: seed_data.statistics.tournaments_played,
-            tournaments_won: seed_data.statistics.tournaments_won,
-            matches_won: seed_data.statistics.matches_won,
-            people_met: seed_data.statistics.people_met,
+            log_ins: new_log_ins,
+            tournaments_won: account_data.statistics.tournaments_won,
+            matches_won: account_data.statistics.matches_won,
+            people_met: account_data.statistics.people_met,
           },
           seed_data.tournamentsMade,
           tournament_data,
           team_data,
-          account_data.settings
+          account_data.settings,
         )
 
         localStorage.setItem(
@@ -265,19 +274,41 @@ const Home: NextPage = (props) => {
               losses: seed_data.rankInfo.losses,
             },
             statistics: {
-              tournaments_played: seed_data.statistics.tournaments_played,
-              tournaments_won: seed_data.statistics.tournaments_won,
-              matches_won: seed_data.statistics.matches_won,
-              people_met: seed_data.statistics.people_met,
+              log_ins: new_log_ins,
+              tournaments_won: account_data.statistics.tournaments_won,
+              matches_won: account_data.statistics.matches_won,
+              people_met: account_data.statistics.people_met,
             },
             tournamentsMade: seed_data.tournamentsMade,
             tournaments: tournament_data,
             team: team_data,
-            settings: account_data.settings
+            settings: account_data.settings,
           })
         )
       }
     }
+    const dataOut: IAccountData = {
+      ign: account_data.ign,
+      username: account_data.username,
+      bio: account_data.bio,
+      favourite_champion: account_data.favourite_champion,
+      passcode: account_data.passcode,
+      team_tag: account_data.team_tag,
+      tournament_id: account_data.tournament_id,
+      settings: account_data.settings,
+      statistics: {
+        matches_won: account_data.statistics.matches_won,
+        people_met: account_data.statistics.people_met,
+        log_ins: new_log_ins,
+        tournaments_won: account_data.statistics.tournaments_won
+      }
+
+    }
+    const account_post_response = await fetch('/api/account', {
+      body: JSON.stringify({ data: dataOut }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    })
   }
 
   return (

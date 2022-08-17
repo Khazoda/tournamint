@@ -1,5 +1,5 @@
 export interface IStatistics {
-  tournaments_played: number
+  log_ins: number
   tournaments_won: number
   matches_won: number
   people_met: number
@@ -96,6 +96,7 @@ export interface IAccountData {
   team_tag: string
   tournament_id: string
   settings: ISettings
+  statistics: IStatistics
 }
 
 // Settings for visual and accessibility

@@ -278,7 +278,7 @@ const Home: NextPage<Props> = (props) => {
       team_owner: '',
       team_members: [],
       team_name: '',
-      team_statistics: { tournaments_played: 0, tournaments_won: 0, matches_won: 0, people_met: 0 },
+      team_statistics: { log_ins: 0, tournaments_won: 0, matches_won: 0, people_met: 0 },
       team_join_key: '',
       tournament_id: ''
     }

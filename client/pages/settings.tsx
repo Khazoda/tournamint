@@ -109,7 +109,8 @@ function Settings(props: Props) {
         passcode: get_data.passcode,
         team_tag: get_data.team_tag,
         tournament_id: get_data.tournament_id,
-        settings: settings
+        settings: settings,
+        statistics: get_data.statistics
       }
       // console.log('data_out', dataOut)
 

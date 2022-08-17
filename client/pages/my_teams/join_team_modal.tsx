@@ -123,7 +123,7 @@ const JoinTeamModal = (props: Props) => {
                           losses: rankInfo.losses,
                         },
                         statistics: {
-                          tournaments_played: statistics.tournaments_played,
+                          log_ins: statistics.log_ins,
                           tournaments_won: statistics.tournaments_won,
                           matches_won: statistics.matches_won,
                           people_met: statistics.people_met,
@@ -161,7 +161,7 @@ const JoinTeamModal = (props: Props) => {
                           losses: rankInfo.losses,
                         },
                         statistics: {
-                          tournaments_played: statistics.tournaments_played,
+                          log_ins: statistics.log_ins,
                           tournaments_won: statistics.tournaments_won,
                           matches_won: statistics.matches_won,
                           people_met: statistics.people_met,
@@ -199,7 +199,9 @@ const JoinTeamModal = (props: Props) => {
                     passcode: get_data.passcode,
                     team_tag: tag,
                     tournament_id: team_temp.tournament_id,
-                    settings: get_data.settings
+                    settings: get_data.settings,
+                    statistics: get_data.statistics
+
 
                   }
                   const account_post_response = await fetch('/api/account', {

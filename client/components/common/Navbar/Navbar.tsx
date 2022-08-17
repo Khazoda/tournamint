@@ -51,7 +51,7 @@ export default function Navbar(props: Props) {
             rank: '',
           },
           {
-            tournaments_played: 0,
+            log_ins: 0,
             tournaments_won: 0,
             matches_won: 0,
             people_met: 0,

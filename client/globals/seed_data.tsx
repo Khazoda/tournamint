@@ -42,7 +42,7 @@ export const default_card_statistics: Array<ICardStatistics> = [
   {
     icon: <FiGrid className="h-full w-full" color="#ce326e"></FiGrid>,
     title: 'Participant',
-    value_key: 'tournaments_played',
-    type: 'tournaments played',
+    value_key: 'log_ins',
+    type: "Number of log-ins",
   },
 ]

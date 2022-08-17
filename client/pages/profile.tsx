@@ -327,7 +327,7 @@ function Profile(props: Props) {
                   losses: userData.losses,
                 },
                 statistics: {
-                  tournaments_played: statistics.tournaments_played,
+                  log_ins: statistics.log_ins,
                   tournaments_won: statistics.tournaments_won,
                   matches_won: statistics.matches_won,
                   people_met: statistics.people_met,
@@ -360,7 +360,8 @@ function Profile(props: Props) {
                 passcode: get_data.passcode,
                 team_tag: get_data.team_tag,
                 tournament_id: get_data.tournament_id,
-                settings: get_data.settings
+                settings: get_data.settings,
+                statistics
               }
               // console.log('data_out', dataOut)
 

@@ -134,7 +134,7 @@ const TournamentDisplay = (props: {
           losses: rankInfo.losses,
         },
         statistics: {
-          tournaments_played: statistics.tournaments_played,
+          log_ins: statistics.log_ins,
           tournaments_won: statistics.tournaments_won,
           matches_won: statistics.matches_won,
           people_met: statistics.people_met,
@@ -238,7 +238,7 @@ const TournamentDisplay = (props: {
           losses: rankInfo.losses,
         },
         statistics: {
-          tournaments_played: statistics.tournaments_played,
+          log_ins: statistics.log_ins,
           tournaments_won: statistics.tournaments_won,
           matches_won: statistics.matches_won,
           people_met: statistics.people_met,

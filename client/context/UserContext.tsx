@@ -9,7 +9,7 @@ import {
 import { IRankInfo, ISettings, IStatistics, ITeam, ITournament } from '../globals/types'
 
 const defaultStatistics = {
-  tournaments_played: 5,
+  log_ins: 5,
   tournaments_won: 2,
   matches_won: 40,
   people_met: 162,
@@ -36,7 +36,7 @@ export type userContextType = {
     tournamentsMade: number,
     tournaments: ITournament | null,
     team: ITeam | null,
-    settings: ISettings | null
+    settings: ISettings | null,
 
   ) => void
 }

@@ -125,7 +125,9 @@ const FindTournamentPage = (props: Props) => {
                                     passcode: account_data.passcode,
                                     team_tag: account_data.team_tag,
                                     tournament_id: id,
-                                    settings: account_data.settings
+                                    settings: account_data.settings,
+                                    statistics: account_data.statistics
+
 
                                 }
                                 // console.log('data_out', dataOut)
@@ -166,7 +168,7 @@ const FindTournamentPage = (props: Props) => {
                                         losses: rankInfo.losses,
                                     },
                                     statistics: {
-                                        tournaments_played: statistics.tournaments_played,
+                                        log_ins: statistics.log_ins,
                                         tournaments_won: statistics.tournaments_won,
                                         matches_won: statistics.matches_won,
                                         people_met: statistics.people_met,
