@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import MatchTidbit from '../MatchTidbit'
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi'
-import { IMatch, IRound, ITeam, ITournament } from '../../../globals/types'
+import { IAccountData, IMatch, IRound, ITeam, ITournament, IUser } from '../../../globals/types'
 import logos from '../../../globals/team_logos'
 import { Button } from 'react-daisyui'
 import { useUser } from '../../../context/UserContext'
 import TeamTidbit from '../TeamTidbit'
+import { Capitalize } from '../../../globals/global_functions'
 
 const typeColours = {
   default: '#444444',
@@ -258,6 +259,120 @@ const TournamentDisplay = (props: {
     calculateCurrentMatches()
 
   }
+
+  // const patchUserStatistics = async (team_tag: string, data: {}) => {
+
+  //   tournament?.teams.forEach((team) => {
+  //     if (team.team_tag == team_tag) {
+  //       team.team_members.forEach((member) => {
+  //         var new_member_data: IAccountData | null = {}}
+  //         getAccountData(member).then((res) => {
+  //           new_member_data = {
+  //             ign: res.ign,
+  //             username: res.username,
+  //             bio: res.bio,
+  //             favourite_champion: res.favourite_champion,
+  //             passcode: res.passcode,
+  //             team_tag: res.team_tag,
+  //             tournament_id: res.tournament_id,
+  //             settings: res.settings,
+  //             statistics: {
+  //               matches_won: res.statistics.matches_won,
+  //               people_met: res.statistics.people_met,
+  //               log_ins: res.statistics.log_ins,
+  //               tournaments_won: res.statistics.tournaments_won
+  //             }
+  //           }
+  //         }).then((data: any) => {
+  //           new_member_data.statistics[data[0]] = data[1]
+  //         })
+
+
+  //       })
+  //     }
+  //   })
+
+  //   const account_post_response = await fetch('/api/account', {
+  //     body: JSON.stringify({ data: dataOut }),
+  //     headers: { 'Content-Type': 'application/json' },
+  //     method: 'POST',
+  //   })
+  // }
+  const getAccountData = async (ign: string) => {
+    // Get Team data from cloud
+    const account_api_url =
+      '/api/account?' + new URLSearchParams({ ign: Capitalize(ign) })
+    const result = await fetch(account_api_url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    let team_temp = result.response
+    return team_temp
+  }
+  const patchTeamStatistics = async (team: ITeam | null) => {
+    if (!team) { return }
+    incrementPeopleMet(team.team_tag)
+
+  }
+  const incrementPeopleMet = async (tag: string) => {
+    const url = '/api/teamData?' + new URLSearchParams({ team_tag: tag })
+    const temp_team = await fetch(url)
+      .then((res) => res.json())
+      .catch((res) => console.log(res.error))
+
+    var team_temp = temp_team.response
+    console.log('TEAMIES', temp_team);
+
+    team_temp.team_statistics.people_met += 5
+
+    const response = await fetch('/api/teamData', {
+      body: JSON.stringify({ data: team_temp }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PATCH',
+    })
+
+    if (setUserDetails != undefined) {
+      if (tag == team?.team_tag) {
+        setUserDetails(
+          displayName,
+          biography,
+          ign,
+          favouriteChampion,
+          rankInfo,
+          statistics,
+          tournamentsMade,
+          tournaments,
+          team_temp,
+          settings
+        )
+
+        localStorage.setItem(
+          'userDetails',
+          JSON.stringify({
+            displayName: displayName,
+            biography: biography,
+            ign: ign,
+            favouriteChampion: favouriteChampion,
+            rankInfo: {
+              tier: rankInfo.tier,
+              rank: rankInfo.rank,
+              wins: rankInfo.wins,
+              losses: rankInfo.losses,
+            },
+            statistics: {
+              log_ins: statistics.log_ins,
+              tournaments_won: statistics.tournaments_won,
+              matches_won: statistics.matches_won,
+              people_met: statistics.people_met,
+            },
+            tournamentsMade: tournamentsMade,
+            tournaments: tournaments,
+            team: team_temp,
+          })
+        )
+      }
+    }
+  }
   const handleMatchWinner = (round: IRound, match: IMatch, winner: ITeam) => {
     if (!tournament) { return }
     setTournamentRedisMatchWon(tournament, round, match, winner)
@@ -265,6 +380,12 @@ const TournamentDisplay = (props: {
 
     const round_id = parseInt(round.round_id)
     const match_id = parseInt(match.match_id)
+
+
+    // patchUserStatistics(winner.team_tag, { 'matches_won': 1 })
+    patchTeamStatistics(winner)
+    patchTeamStatistics(getLoser(round, winner, round.matches[match_id]))
+
     switch (tournament.type) {
       case 4:
         if (round_id == 0) {
@@ -296,6 +417,7 @@ const TournamentDisplay = (props: {
         if (round_id == 2) {
           if ((match_id) == 0) {
             alert('TODO: CODE THE WINNER DATA SETTING FOR TEAM' + winner.team_name)
+
           }
         }
         break;
@@ -333,6 +455,7 @@ const TournamentDisplay = (props: {
         if (round_id == 3) {
           if ((match_id) == 0) {
             alert('TODO: CODE THE WINNER DATA SETTING FOR TEAM' + winner.team_name)
+
           }
         }
         break;
@@ -347,6 +470,15 @@ const TournamentDisplay = (props: {
     if (round.matches[2 * bracket_number].match_winner != null) { bracketCounter += 1 }
     if (round.matches[2 * bracket_number + 1].match_winner != null) { bracketCounter += 1 }
     if (bracketCounter == 2) { return true } else { return false }
+  }
+
+  const getLoser = (round: IRound, winner: ITeam, match: IMatch): ITeam | null => {
+    var loser: ITeam | null = null
+
+    if (round.matches[parseInt(match.match_id)].teams[0].team_tag == winner.team_tag) { loser = round.matches[parseInt(match.match_id)].teams[1] }
+    if (round.matches[parseInt(match.match_id)].teams[1].team_tag == winner.team_tag) { loser = round.matches[parseInt(match.match_id)].teams[0] }
+
+    return loser
   }
 
   const createMatch = (previousRound: IRound, previousBracketNumber: number, round_num: number, winner_1: ITeam, match: IMatch) => {

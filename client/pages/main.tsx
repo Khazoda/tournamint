@@ -380,6 +380,7 @@ const Home: NextPage<Props> = (props) => {
         <div>
           final things to do
           0-----------------0
+          - ONLY ALLOW TEAMS TO JOIN TOURNAMENT WHEN THEY HAVE 5 PLAYERS (make this dev togglable as it's insane for dev testing)
           - add player stats
           - add team stats (people met)
 

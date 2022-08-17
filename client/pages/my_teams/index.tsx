@@ -265,7 +265,7 @@ const MyTeamsPage = (props: Props) => {
                       className="mx-4 min-h-full w-0.5 bg-white-100"
                     ></div>
                   </div>
-                  <div className="text-lg">
+                  <div className="text-xl">
                     <span
                       className={
                         `${team.team_colour_hex != null
@@ -277,12 +277,7 @@ const MyTeamsPage = (props: Props) => {
                     >
                       {team.team_name}
                     </span>
-                    <div>
-                      <span className="mr-2">
-                        {'Tournaments won: ' +
-                          team.team_statistics.tournaments_won}
-                      </span>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -366,7 +361,7 @@ const MyTeamsPage = (props: Props) => {
               ></span>
               <div className="mt-2 flex flex-row justify-between">
                 <span>
-                  {'Total number of people met: ' +
+                  {'Total number of people the team has fought: ' +
                     team.team_statistics.people_met}
                 </span>
                 <div className="flex flex-row gap-2">
