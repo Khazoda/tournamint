@@ -130,14 +130,20 @@ function Settings(props: Props) {
       id="wrapper"
       className="container mx-auto h-full min-h-screen overflow-y-auto px-4 pt-24 pb-4"
     >
-      <article className="prose prose-slate mx-auto flex h-full flex-col justify-between text-black-700 dark:text-white-200">
+      <article className="prose prose-slate mx-auto flex h-full flex-col justify-between text-black-700 dark:text-white-200 ">
         {/* Settings */}
         <div>
           <h1 className="text-black-700 dark:text-white-200">Settings</h1>
-          <div className="align-center flex flex-row items-center justify-between">
+          <div className="align-center flex flex-row items-center justify-between my-2">
             <label>Center the navbar</label>
             <input type="checkbox" className="toggle" defaultChecked={temp_settings?.centered_navbar} onChange={(e: any) => {
               handleSettingChange('centered_navbar', e.target.checked)
+            }} />
+          </div>
+          <div className="align-center flex flex-row items-center justify-between my-2">
+            <label>Reduce information clutter</label>
+            <input type="checkbox" className="toggle" defaultChecked={temp_settings?.centered_navbar} onChange={(e: any) => {
+              alert('TODO: implement setting (stuff like hiding people fought in teams page)')
             }} />
           </div>
         </div>
