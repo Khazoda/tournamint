@@ -6,6 +6,7 @@ import { Props, useEffect, useRef, useState } from 'react'
 import { useUser } from '../context/UserContext'
 import { Capitalize } from '../globals/global_functions'
 import { IAccountData } from '../globals/types'
+import { IoEggOutline } from 'react-icons/io5'
 
 const Home: NextPage = (props) => {
   const {
@@ -313,6 +314,8 @@ const Home: NextPage = (props) => {
 
   return (
     <div className="hero absolute z-50 h-full min-h-screen w-full bg-base-200 bg-gradient-to-br from-[#00b963] to-[#006faf] font-heading">
+      <a href='https://junefaleiro.com' target='_blank' className='absolute top-2 right-2 hover:scale-105 hover:cursor-pointer' title='Explore my work'><IoEggOutline className='animate-wiggle' size={30}></IoEggOutline></a>
+      <div className='absolute bottom-2 left-1/2 -translate-x-1/2 text-blue-300'>Copyright &copy; 2022 - June Faleiro</div>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img
           src="images/logo_detailed.png"
