@@ -377,7 +377,7 @@ const Home: NextPage<Props> = (props) => {
 
       <main className="mx-auto grid h-full w-full max-w-[1920px] items-center gap-4 text-center md:grid-cols-[_minmax(100px,1fr),300px] md:grid-rows-[180px,_minmax(100px,1fr)] md:gap-2 ">
         {/* Left Half */}
-        <div>
+        {/* <div>
           final things to do
           0-----------------0
           - ONLY ALLOW TEAMS TO JOIN TOURNAMENT WHEN THEY HAVE 5 PLAYERS (make this dev togglable as it's insane for dev testing)
@@ -386,7 +386,7 @@ const Home: NextPage<Props> = (props) => {
 
           -- End tournament, reset team to tournament-less, add team stats
 
-        </div>
+        </div> */}
         <div
           id="top_left"
           className={`${(team != null && tournaments?.tournament_id != 'ABC123' ? ' col-start-1 col-end-4' : '')} ${(team == null && tournaments?.tournament_id == 'ABC123' ? ' col-start-1 col-end-4' : '')} relative row-start-1 row-end-2 ml-0 flex h-full flex-row justify-around rounded-md bg-green-100 text-center text-black-800 scrollbar-hide dark:bg-black-600`}
