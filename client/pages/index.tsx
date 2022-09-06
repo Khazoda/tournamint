@@ -336,7 +336,9 @@ const Home: NextPage = (props) => {
               ? 'Please enter your League of Legends® summoner name to get started'
               : null}
           </p>
-
+          {passcode_showing && !db_account_exists
+            ? <p className='p-2 border-2 border-orange-400 bg-red-600 rounded-md mb-2 text-white-100'>Please use a passcode that you have not used anywhere else. Data you provide is not encrypted, and is stored in plaintext.</p> : <></>
+          }
           <form
             className="flex w-full flex-row justify-between gap-4"
             onSubmit={(e) => {
