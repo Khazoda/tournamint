@@ -140,6 +140,7 @@ const MyTeamsPage = (props: Props) => {
       }
     }
   }
+  
 
   const leaveTeam = async () => {
     if (team != null) {

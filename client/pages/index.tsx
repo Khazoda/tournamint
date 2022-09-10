@@ -141,23 +141,27 @@ const Home: NextPage = (props) => {
       }
 
     }
-    const account_post_response = await fetch('/api/account', {
-      body: JSON.stringify({ data: dataOut }),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    })
-    if (account_post_response.status == 200) {
-      // setAccount_data({ dataOut })
-      // console.log(account_post_response)
+    // Passcode format validity check
+    const regex = new RegExp('([0-9]*[0-9]){6}')
+    if (regex.test(pass)) {
+      const account_post_response = await fetch('/api/account', {
+        body: JSON.stringify({ data: dataOut }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+      if (account_post_response.status == 200) {
+        const team_data = await getTeamData(dataOut)
+        const tournament_data = await getTournamentData(dataOut.tournament_id)
+        populateUserData(dataOut, team_data, tournament_data)
 
-      const team_data = await getTeamData(dataOut)
-      const tournament_data = await getTournamentData(dataOut.tournament_id)
-      populateUserData(dataOut, team_data, tournament_data)
-
-      setTimeout(() => {
-        window.location.href = '/profile'
-      }, 500)
+        setTimeout(() => {
+          window.location.href = '/profile'
+        }, 500)
+      }
+    } else {
+      // Invalid passcode
     }
+
   }
 
   async function loginAccount(ign: string, pass: string) {
@@ -390,7 +394,7 @@ const Home: NextPage = (props) => {
                   ref={passInputRef}
                   type="text"
                   inputMode="numeric"
-                  pattern="([0-9]*[0-9])"
+                  pattern="([0-9]*[0-9]){6}"
                   placeholder="000000"
                   maxLength={6}
                   className={`w-0/5 input input-secondary absolute top-0 -right-2 animate-none text-center transition-all invalid:bg-red-200 invalid:text-red-800 ${passcode_showing ? 'w-1/5 opacity-100 ' : 'w-0 opacity-0'
