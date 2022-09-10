@@ -618,11 +618,6 @@ const TournamentDisplay = (props: {
 
           <h3 className="text-lg font-bold">Instructions</h3>
           <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
-
-          <p className="py-4">TODO: When match is marked as finished, algorithm waits for the other match in the bracket to finish [0,1][2,3], then populates next round with winners from previous round.</p>
-          <p className="py-4">In the meantime, the match that just finished should grey out the match loser</p>
-
-          <p className="py-4">Repeat this process for each round, implementing a kind of asynchronous round system based on when matches finish, culminating in a final</p>
         </div>
       }
     </div>
