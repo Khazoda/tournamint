@@ -279,7 +279,7 @@ const FindTournamentPage = (props: Props) => {
                                 <div className="card-body">
                                     <h2 className="card-title">{Capitalize(e.tournament_name)}</h2>
                                     <div className="flex flex-row justify-between"><p>Organizer: {e.organized_by_ign}</p>
-                                        <p className={`${e.teams.length / e.type < 0.5 ? 'text-lime-500' : ''} ${e.teams.length / e.type > 0.5 ? 'text-orange-500' : ''} flex justify-end`}>{e.teams.length} / {e.type} Teams</p></div>
+                                        <p className={`${e.teams.length / e.type <= 0.5 ? 'text-lime-500' : ''} ${e.teams.length / e.type > 0.5 ? 'text-orange-500' : ''} flex justify-end`}>{e.teams.length} / {e.type} Teams</p></div>
 
                                     <p className="text-secondary">{new Date(e.date_time_start).toLocaleString()}</p>
 

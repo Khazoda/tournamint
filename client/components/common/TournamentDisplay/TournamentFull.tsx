@@ -103,7 +103,7 @@ const TournamentFull = (props: {
     return (
         <>
             {/* <div>{fresh_tournament_data != undefined && fresh_tournament_data.teams.length} / {props.tournament.type} teams have joined</div> */}
-            <div className="mt-4 text-lg text-yellow-600 dark:text-yellow-400">The tournament is full. Brackets will be visible {human_time_until_seed} <span className="text-orange-400">(1hr before tournament start)</span></div>
+            <div className="my-4 text-lg text-yellow-600 dark:text-yellow-400">The tournament is full. Brackets will be visible {human_time_until_seed} <span className="text-orange-400">(1hr before tournament start)</span></div>
             <div className="w-full h-full flex flex-row flex-wrap gap-4 mt-8 justify-center">
                 {fresh_tournament_data != undefined && fresh_tournament_data.teams.map((team: ITeam) => {
 

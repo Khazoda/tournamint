@@ -239,8 +239,9 @@ const Home: NextPage<Props> = (props) => {
             setTournament_state(TOURNAMENT_STATE.FULL)
           }
         }
+
         // Seeding
-        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time && !tournaments.rounds) {
+        if (tournaments.teams.length == tournaments.type && moment(new Date()) >= seeding_date_time && moment(new Date()) < moment(tournaments.date_time_start)) {
           if (tournament_state != TOURNAMENT_STATE.SEEDED) {
             setTournament_state(TOURNAMENT_STATE.SEEDED)
           }
