@@ -614,10 +614,13 @@ const TournamentDisplay = (props: {
         <div className="modal-box relative w-full dark:bg-black-600">
           <label htmlFor="panel-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
           <label className="btn btn-sm btn-circle text-secondary absolute right-12 top-2" onClick={() => setShowAdminPanelHelp(!showAdminPanelHelp)}>?</label>
-          <label className="btn btn-sm btn-circle text-secondary absolute right-24 top-2" onClick={() => DEBUGRESETWINNERS()}>😍</label>
+          <label className="btn btn-sm btn-circle text-secondary absolute right-24 top-2" onClick={() => DEBUGRESETWINNERS()}>♻️</label>
 
           <h3 className="text-lg font-bold">Instructions</h3>
           <p className="py-4">After a match has finished, please log the winning team in this panel. This will update the tournament information for everyone.</p>
+          <p className="py-4">To do this, click or tap the team that won. Your admin panel will update with the updated brackets, so feel free to keep it open while the tournament is running.</p>
+          <p className="py-4 text-orange-400">If you make a mistake and select the incorrect team, please click or tap the ♻️ button. This will reset all the tournament's match winners.</p>
+
         </div>
       }
     </div>
