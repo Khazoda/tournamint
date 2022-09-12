@@ -1,4 +1,0 @@
-Open Terminal
-navigate to client/
-execute `npm install` to generate npm packages
-execute `next dev`
