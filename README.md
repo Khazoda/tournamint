@@ -23,3 +23,5 @@ Next, add your Riot Games API key to your fork's /globals/riot_consts.tsx file. 
 
 Your Tournamint distribution is now live. Edit your fork's code to make changes to your deployment. If you encounter bugs or wish to leave feedback, please open a [Pull Request](https://github.com/Khazoda/tournamint/pulls) or add an issue to the [Issue Tracker](https://github.com/Khazoda/tournamint/issues)
 
+## Additional Information
+As Tournamint is not ready for production use there is no permissive license attached yet. Once the application reaches a certain level of maturity, a permissive copyleft license will be provided with the software.
