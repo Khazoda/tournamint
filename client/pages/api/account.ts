@@ -58,7 +58,6 @@ export default async function handler(
   // *****************
   if (req.method == 'GET') {
     const ign: any = req.query.ign
-    // console.log('team_tag param:', team_tag);
     let response = null;
 
     try {
